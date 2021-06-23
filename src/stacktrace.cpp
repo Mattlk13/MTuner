@@ -34,7 +34,7 @@ bool QToolTipper::eventFilter(QObject* _object, QEvent* _event)
 
 		// only elided text
 		if ((itemTextWidth > rectWidth) && !itemTooltip.isEmpty())
-			QToolTip::showText(helpEvent->globalPos(), itemTooltip, view, rect);
+			QToolTip::showText(helpEvent->globalPos(), itemTooltip, view);
 		else
 			{
 				QToolTip::hideText();
@@ -196,13 +196,8 @@ void StackTrace::updateView()
 		rdebug::StackFrame frame;
 		m_context->resolveStackFrame(address, frame);
 
-		QString sourcefile	= QString::fromUtf8(frame.m_file);
 		QString func		= QString::fromUtf8(frame.m_func);
 		QString symStoreDir	= QString::fromUtf8(m_context->getSymbolStoreDir().c_str());
-
-		QFileInfo info(QDir(symStoreDir), sourcefile);
-		if (info.exists())
-			sourcefile = info.absoluteFilePath();
 
 		QTableWidgetItem* item = new QTableWidgetItem(frame.m_moduleName);
 		item->setToolTip(frame.m_moduleName);
@@ -251,7 +246,7 @@ void StackTrace::saveState(QSettings& _settings)
 	_settings.endGroup();
 }
 
-void StackTrace::incClicked()
+void StackTrace::incPressed()
 {
 	if (m_currentTraceIdx == (m_currentTraceCnt-1))
 		return;
@@ -259,7 +254,7 @@ void StackTrace::incClicked()
 	updateView();
 }
 
-void StackTrace::decClicked()
+void StackTrace::decPressed()
 {
 	if (m_currentTraceIdx == 0)
 		return;

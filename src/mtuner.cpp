@@ -33,7 +33,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Shlobj.h>
 #include <versionhelpers.h>
-#endif
+#endif // RTM_PLATFORM_WINDOWS
 
 namespace rqt {
 	rtm_string appPreProcessStyleSheet(const rtm_string& _in);
@@ -55,7 +55,7 @@ void setupLoaderToolchain(CaptureContext* _context, const QString& _file, GCCSet
 	rdebug::Toolchain tc;
 	rtm_string executable;
 
-	// if not a windows toolchain - locate the executable
+	// if not a MSVC toolchain - locate the executable
 	if (_context->m_capture->getToolchain() != rmem::ToolChain::Win_MSVC)
 	{
 		const char* extensions = "All files (*.*)";
@@ -131,10 +131,12 @@ void setupLoaderToolchain(CaptureContext* _context, const QString& _file, GCCSet
 	{
 		tc.m_type = rdebug::Toolchain::MSVC;
 		strcpy(tc.m_toolchainPath, _symSource.toUtf8());
-		executable = _context->m_capture->getModuleInfos()[0].m_modulePath;
+		rtm_vector<rdebug::ModuleInfo>& modInfos = _context->m_capture->getModuleInfos();
+		if (modInfos.size())
+			executable = _context->m_capture->getModuleInfos()[0].m_modulePath;
 	}
 
-	_context->setToolchain(tc, executable);
+	_context->setupResolver(tc, executable);
 }
 
 MTuner::MTuner(QWidget* _parent, Qt::WindowFlags _flags) :
@@ -184,6 +186,8 @@ MTuner::MTuner(QWidget* _parent, Qt::WindowFlags _flags) :
 
 	connect(ui.action_Save_capture_window_layout, SIGNAL(triggered(bool)), this, SLOT(saveCaptureWindowLayout()));
 	ui.action_Save_capture_window_layout->setEnabled(false);
+
+	connect(ui.action_Contents, SIGNAL(triggered(bool)), this, SLOT(openDocumentation()));
 
 	readSettings();
 	emit binLoaded(false);
@@ -364,7 +368,7 @@ void MTuner::saveCaptureWindowLayout()
 	}
 }
 
-void MTuner::readDocumentation()
+void MTuner::openDocumentation()
 {
 	QDesktopServices::openUrl(QUrl("https://milostosic.github.io/MTuner/", QUrl::TolerantMode));
 }
@@ -414,7 +418,7 @@ void MTuner::setDockWindowIcon(DockWidget* _widget, const QString& _icon)
 {
 	QWidget* title = new QWidget();
 	QHBoxLayout* l = new QHBoxLayout();
-	l->setMargin(2);
+	l->setContentsMargins(QMargins(2,2,2,2));
 
 	QLabel* iconLabel = new QLabel();
 	iconLabel->setPixmap(QIcon(_icon).pixmap(QSize(16, 16)));
@@ -475,14 +479,6 @@ void MTuner::setupDockWindows()
 	addDockWidget(Qt::LeftDockWidgetArea, m_heapsDock);
 	addDockWidget(Qt::RightDockWidgetArea, m_stackAndSourceDock);
 	addDockWidget(Qt::RightDockWidgetArea, m_modulesDock);
-
-	connect(m_graphDock,			SIGNAL(visibilityChanged(bool)), ui.action_View_Memory_Graph,		SLOT(setChecked(bool)));
-	connect(m_statsDock,			SIGNAL(visibilityChanged(bool)), ui.action_View_Memory_Stats,		SLOT(setChecked(bool)));
-	connect(m_histogramDock,		SIGNAL(visibilityChanged(bool)), ui.action_View_Histograms,			SLOT(setChecked(bool)));
-	connect(m_tagTreeDock,			SIGNAL(visibilityChanged(bool)), ui.action_View_Tag_Tree,			SLOT(setChecked(bool)));
-	connect(m_stackAndSourceDock,	SIGNAL(visibilityChanged(bool)), ui.action_View_StackTrace,			SLOT(setChecked(bool)));
-	connect(m_heapsDock,			SIGNAL(visibilityChanged(bool)), ui.action_View_Heaps_Allocators,	SLOT(setChecked(bool)));
-	connect(m_modulesDock,			SIGNAL(visibilityChanged(bool)), ui.action_view_ModulesDock,		SLOT(setChecked(bool)));
 
 	m_graphDock->setVisible(true);
 	m_statsDock->setVisible(true);
@@ -658,7 +654,7 @@ bool isProcessRunning(uint64_t _pid)
 	return ret == WAIT_TIMEOUT;
 }
 #else
-bool isProcessRunning(uint64_t pid)
+bool isProcessRunning(uint64_t)
 {
 	return false;
 }
@@ -696,7 +692,7 @@ void MTuner::showWelcomeDialog()
 	{
 		WelcomeDialog w(this);
 		connect(&w, &WelcomeDialog::setupSymbols, this, &MTuner::setupSymbols);
-		connect(&w, &WelcomeDialog::readDocumentation, this, &MTuner::readDocumentation);
+		connect(&w, &WelcomeDialog::readDocumentation, this, &MTuner::openDocumentation);
 		w.exec();
 		m_showWelcomeDialog = w.shouldShowNextTime();
 	}
@@ -711,10 +707,6 @@ void MTuner::readSettings()
 	uint8_t major  = 0;
 	uint8_t minor  = 0;
 	uint8_t detail = 0;
-
-	const uint8_t verMajor = MTunerVersion[0] - '0';
-	const uint8_t verMinor = MTunerVersion[2] - '0';
-	const uint8_t verDetail = MTunerVersion[4] - '0';
 
 	settings.beginGroup("Version");
 	if (settings.contains("major"))		major  = (uint8_t)settings.value("major").toInt();

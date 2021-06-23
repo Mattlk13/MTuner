@@ -56,7 +56,7 @@ class Capture
 		bool							m_swapEndian;
 		bool							m_64bit;
 		rmem::ToolChain::Enum			m_toolchain;
-		ChunkAllocator<MemoryOperation>	m_operationPool;
+		ChunkAllocator<MemoryOperation> m_operationPool;
 		StackAllocator					m_stackPool;
 		rtm_vector<MemoryOperation*>	m_operations;
 		rtm_vector<MemoryOperation*>	m_operationsInvalid;
@@ -155,7 +155,7 @@ class Capture
 		void								setCurrentModule(rdebug::ModuleInfo* _module) { m_currentModule = _module; }
 
 	private:
-		bool		loadModuleInfo(BinLoader& _loader, uint64_t inFileSize );
+		bool		loadModuleInfo(BinLoader& _loader, uint64_t inFileSize);
 		bool		setLinksAndRemoveInvalid(uint64_t inMinMarkerTime);
 		void		addModule(const char* inName, uint64_t inModBase, uint64_t inModSize);
 		void		calculateGlobalStats();

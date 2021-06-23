@@ -146,7 +146,7 @@ extern void getStoragePath(wchar_t _path[512]);
 
 void ProjectsManager::run(const QString& _executable, const QString& _cmd, const QString& _workingDir, const QStringList& _environment, bool _inheritEnv, int _allocator, bool _shouldCapture, bool _shouldLoad)
 {
-	QString currpath = QDir::currentPath();
+	QString currpath = QCoreApplication::applicationDirPath();
 
 	QString watchDir;
 	if (_workingDir.length() == 0)
@@ -182,6 +182,14 @@ void ProjectsManager::run(const QString& _executable, const QString& _cmd, const
 	process->setProgram(exePath);
 	process->setWorkingDirectory(_workingDir);
 	process->setArguments(QStringList() << arguments);
+
+#if RTM_PLATFORM_WINDOWS
+	process->setCreateProcessArgumentsModifier(
+		[](QProcess::CreateProcessArguments *args) {
+		args->flags |= CREATE_NEW_CONSOLE;
+		args->startupInfo->dwFlags &= ~STARTF_USESTDHANDLES;
+	});
+#endif // RTM_PLATFORM_WINDOWS
 
 	QStringList env;
 	if (_inheritEnv)

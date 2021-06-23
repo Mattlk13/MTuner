@@ -53,7 +53,10 @@ private:
 	QAction*				m_actionSelectFromMarker;
 	QAction*				m_actionSelectToMarker;
 	QLocale					m_locale;
+	QTimer*					m_timer;
 
+	QString					m_toolTip;
+	QPoint					m_toolTipPos;
 public:
 	static const int	s_marginLeft	= 45;
 	static const int	s_marginRight	= 21;
@@ -103,7 +106,10 @@ protected:
 	void createCustomContextMenu();
 	void animateRange(uint64_t _min, uint64_t _max);
 
+	bool	event(QEvent *event);
+
 public Q_SLOTS:
+	void myShowTooltip();
 	void zoomIn();
 	void zoomOut();
 	void zoomReset();
@@ -113,6 +119,7 @@ public Q_SLOTS:
 	void markerSelectFrom();
 	void markerSelectTo();
 	void showToolTip();
+	void leaveContextMenu();
 	void selectFromTimes(uint64_t, uint64_t);
 
 Q_SIGNALS:
