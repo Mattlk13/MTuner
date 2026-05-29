@@ -571,9 +571,11 @@ void MTuner::setWidgetSources(CaptureContext* _context)
 
 	if (binView)
 	{
-		connect(binView, SIGNAL(highlightTime(uint64_t)), m_graph, SLOT(highlightTime(uint64_t)));
-		connect(binView, SIGNAL(selectRange(uint64_t,uint64_t)), m_graph->getGraphWidget(), SLOT(selectFromTimes(uint64_t, uint64_t)));
-		connect(binView, SIGNAL(highlightRange(uint64_t, uint64_t)), m_graph, SLOT(highlightRange(uint64_t, uint64_t)));
+		// UniqueConnection: re-selecting the same tab calls this again with the same binView,
+		// which would otherwise stack duplicate connections (highlight/range fired N times).
+		connect(binView, SIGNAL(highlightTime(uint64_t)), m_graph, SLOT(highlightTime(uint64_t)), Qt::UniqueConnection);
+		connect(binView, SIGNAL(selectRange(uint64_t,uint64_t)), m_graph->getGraphWidget(), SLOT(selectFromTimes(uint64_t, uint64_t)), Qt::UniqueConnection);
+		connect(binView, SIGNAL(highlightRange(uint64_t, uint64_t)), m_graph, SLOT(highlightRange(uint64_t, uint64_t)), Qt::UniqueConnection);
 		m_heapsWidget->setCurrentHeap(binView->getCurrentHeap());
 		m_modulesWidget->setCurrentModule(binView->getCurrentModule());
 		GraphWidget* graphWidget = m_graph->getGraphWidget();
@@ -681,10 +683,11 @@ void MTuner::checkCaptureStatus()
 		captureSetProcessID(0);
 		m_statusBarRedDot->setVisible(false);
 
+		if (m_watchTimer)			// capture finished: load once and stop polling (was restarting forever)
+			m_watchTimer->stop();
+
 		openFileFromPath(m_watchedFile);
 		m_watchedFile = "";
-		if (m_watchTimer)
-			m_watchTimer->start();
 	}
 	else
 	{

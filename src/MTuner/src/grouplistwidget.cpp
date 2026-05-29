@@ -263,7 +263,9 @@ struct pSortCountPeakPercentNVC
 		rtm::MemoryOperationGroup* grp1 = (*m_allGroups)[_val1];
 		rtm::MemoryOperationGroup* grp2 = (*m_allGroups)[_val2];
 
-		return float(grp1->m_liveCountPeak * grp2->m_liveCountPeakGlobal) < float(grp2->m_liveCountPeak * grp1->m_liveCountPeakGlobal);
+		// compute the cross-products in double: uint32*uint32 overflows for realistic counts,
+		// which breaks std::sort's strict-weak-ordering requirement.
+		return (double)grp1->m_liveCountPeak * grp2->m_liveCountPeakGlobal < (double)grp2->m_liveCountPeak * grp1->m_liveCountPeakGlobal;
 	}
 };
 
@@ -311,7 +313,8 @@ struct pSortGroupSizePeakPercentNVC
 		rtm::MemoryOperationGroup* grp1 = (*m_allGroups)[_val1];
 		rtm::MemoryOperationGroup* grp2 = (*m_allGroups)[_val2];
 
-		return grp1->m_peakSize * grp2->m_peakSizeGlobal < grp2->m_peakSize * grp1->m_peakSizeGlobal;
+		// double cross-products avoid int64 overflow for large peak sizes (keeps SWO valid).
+		return (double)grp1->m_peakSize * grp2->m_peakSizeGlobal < (double)grp2->m_peakSize * grp1->m_peakSizeGlobal;
 	}
 };
 

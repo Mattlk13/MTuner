@@ -39,6 +39,14 @@ void TreeMapWidget::setContext(CaptureContext* _context)
 {
 	m_context = _context;
 	m_graphicsView->setContext(_context);
+
+	if (m_map)						// drop the previous item instead of orphaning it in the scene
+	{
+		m_scene->removeItem(m_map);
+		delete m_map;
+		m_map = nullptr;
+	}
+
 	m_map = new TreeMapGraphicsItem(m_graphicsView, _context, &m_locale);
 	m_scene->addItem(m_map);
 }

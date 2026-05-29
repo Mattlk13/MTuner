@@ -237,6 +237,8 @@ void HotspotsWidget::leaksSortingDone(GroupMapping* _group)
 
 void HotspotsWidget::rowSelected(QTableWidgetItem* _item)
 {
+	if (!_item)
+		return;
 	updateStackTrace(_item->tableWidget());
 }
 

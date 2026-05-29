@@ -612,5 +612,6 @@ void OperationsList::selectNextBySize(uint64_t _size)
 
 void OperationsList::toggleLeaksOnly(bool _show)
 {
-	m_tableSource->m_list->m_tableSource->prepareData(_show);
+	m_tableSource->prepareData(_show);
+	m_operationList->resetView();		// row count changes when filtering; refresh the view & scrollbar
 }

@@ -246,13 +246,26 @@ void TagTreeWidget::setContext(CaptureContext* _context)
 	if (m_context)
 		setupTree();
 	else
+	{
+		QAbstractItemModel* oldModel = m_tree->model();
 		m_tree->setModel(nullptr);
+		delete oldModel;			// setModel() does not delete the previous model
+	}
+}
+
+TagTreeWidget::~TagTreeWidget()
+{
+	QAbstractItemModel* model = m_tree->model();
+	m_tree->setModel(nullptr);
+	delete model;
 }
 
 void TagTreeWidget::setupTree()
 {
+	QAbstractItemModel* oldModel = m_tree->model();
 	TagTreeModel* model = new TagTreeModel(m_context);
 	m_tree->setModel(model);
+	delete oldModel;				// setModel() doesn't delete the previous model
 	m_tree->setSelectionMode(QAbstractItemView::SingleSelection);
 	connect(m_tree->selectionModel(), SIGNAL(currentRowChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(rowClicked(const QModelIndex&)));
 	m_tree->setRootIsDecorated(true);

@@ -513,7 +513,9 @@ void GraphWidget::resizeEvent(QResizeEvent* _event)
 
 void GraphWidget::wheelEvent(QWheelEvent* _event)
 {
-	RTM_UNUSED(_event);
+	if (!m_context)		// zoomIn/zoomOut deref m_context->m_capture; guard like the other handlers
+		return;
+
 	int delta = _event->angleDelta().y();
 	QPointF position = _event->position();
 	uint64_t relTime = mapPosToTime(position.x());

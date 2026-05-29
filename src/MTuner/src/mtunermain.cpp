@@ -219,13 +219,13 @@ int handleCommandLine(int argc, char const* argv[])
 		{
 			wchar_t inFilePathW[1024];
 			GetCurrentDirectoryW(1024, inFilePathW);
-			strcpy(inFilePath, rtm::WideToMulti(inFilePathW));
-			strcat(inFilePath, "\\");
-			strcat(inFilePath, filePath);
+			rtm::strlCpy(inFilePath, RTM_NUM_ELEMENTS(inFilePath), rtm::WideToMulti(inFilePathW));
+			rtm::strlCat(inFilePath, RTM_NUM_ELEMENTS(inFilePath), "\\");
+			rtm::strlCat(inFilePath, RTM_NUM_ELEMENTS(inFilePath), filePath);
 		}
 		else
 #endif
-			strcpy(inFilePath, filePath);
+			rtm::strlCpy(inFilePath, RTM_NUM_ELEMENTS(inFilePath), filePath);
 	}
 	
 	const char* symSource = nullptr;
@@ -466,7 +466,7 @@ int main(int argc, const char* argv[])
 		for (int i=1; i<argc; ++i)
 		{
 			char buffer[1024];
-			strcpy(buffer, argv[i]);
+			rtm::strlCpy(buffer, RTM_NUM_ELEMENTS(buffer), argv[i]);
 			rtm::strToUpper(buffer);
 			if ((strstr(buffer, ".MTUNER") == 0) && (strstr(buffer, ".EXE") == 0))
 			{

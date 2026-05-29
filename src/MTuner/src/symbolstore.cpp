@@ -55,6 +55,16 @@ QString	SymbolStore::getSymbolStoreString() const
 #endif
 	}
 
+	// The local symbol store field also doubles as one or more ';'-separated directories
+	// to search directly for PDBs - e.g. point it at your Qt/SDK bin folder when its PDBs
+	// aren't sitting next to the loaded binaries (DIA already treats ';' as a separator).
+	if (!m_localStore->text().isEmpty())
+	{
+		if (ret.length())
+			ret = ret + QString(";");
+		ret = ret + m_localStore->text();
+	}
+
 	// Default to the Microsoft public symbol server when none is configured, so system
 	// and third-party modules (ntdll, kernel32, ucrtbase, ...) can be resolved.
 	QString publicUrl = m_publicStore->text();

@@ -1457,7 +1457,12 @@ bool Capture::setLinksAndRemoveInvalid(uint64_t inMinMarkerTime)
 					oldOp->m_chainNext = op;
 				}
 
-				opMap[op->m_pointer] = op;
+				// Only a valid op may become the live block at this address. Inserting an
+				// invalid realloc here orphaned the real live block in the map, corrupting
+				// later free linkage and producing false leaks (the alloc/free cases above
+				// already skip the map on invalid).
+				if (op->m_isValid)
+					opMap[op->m_pointer] = op;
 			}
 			break;
 

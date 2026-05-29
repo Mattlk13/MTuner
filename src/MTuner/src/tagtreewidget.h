@@ -44,6 +44,7 @@ class TagTreeWidget : public QWidget
 
 public:
 	TagTreeWidget(QWidget* _parent = 0, Qt::WindowFlags _flags = (Qt::WindowFlags)0);
+	virtual ~TagTreeWidget();
 
 	void changeEvent(QEvent* event);
 	void setContext(CaptureContext* _context);

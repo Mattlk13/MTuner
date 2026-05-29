@@ -364,7 +364,10 @@ void TreeMapGraphicsItem::redraw()
 
 QRectF TreeMapGraphicsItem::boundingRect() const
 {
-	return QRectF(m_treeView->pos(), m_treeView->pos() + QPointF(m_treeView->width(), m_treeView->height()));
+	// Cover the scene region paint() actually draws into (it lays out via mapToScene of the
+	// viewport). Using the view widget's layout position as scene coords was wrong whenever
+	// the view had a non-zero offset / scroll.
+	return m_treeView->mapToScene(QRect(0, 0, m_treeView->width(), m_treeView->height())).boundingRect();
 }
 
 static inline void drawBlockText(const QString& _text, QPainter* _painter, int _fontHeight, const QFontMetrics& _metrics, QRectF& _rect, bool _highlight)

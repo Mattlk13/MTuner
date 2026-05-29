@@ -172,6 +172,8 @@ void Histogram::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _optio
 	_painter->setFont(font);
 
 	int delta = (right-left) / (rtm::MemoryStats::NUM_HISTOGRAM_BINS);
+	if (delta <= 0)		// panel too narrow to lay out bins; avoids negative bar thickness/rects
+		return;
 
 	QRectF boundRect = boundingRect();
 	int deltaW = (boundRect.width() - (right-left))/2;

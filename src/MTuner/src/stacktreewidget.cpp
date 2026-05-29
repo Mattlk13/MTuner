@@ -298,6 +298,15 @@ TreeItem::TreeItem(CaptureContext* _context, const rtm::StackTraceTree* _tree, T
 	m_parent	= _parent;
 	m_depth		= _depth;
 
+	// Initialize the lazily-resolved fields: the sort comparators read them across the
+	// whole tree (incl. never-displayed items), so leaving them uninitialized is a
+	// uninitialized-read / inconsistent-comparator (UB) hazard when sorting by
+	// Name/Module/File/Line before rows are resolved.
+	m_module	= 0;
+	m_file		= 0;
+	m_func		= 0;
+	m_line		= 0;
+
 	if (m_parent)
 		m_parent->appendChild(this);
 }
@@ -310,8 +319,7 @@ TreeItem::~TreeItem()
 
 void TreeItem::appendChild(TreeItem* _item)
 {
-	m_children.push_back(_item);
-	m_children.shrink_to_fit();
+	m_children.push_back(_item);	// no per-append shrink_to_fit: that made building a node O(n^2)
 }
 
 TreeItem *TreeItem::child(int _row)
@@ -389,14 +397,14 @@ QVariant TreeItem::data(int _column) const
 
 		switch (_column)
 		{
-			case Header::Name:		return m_func;
-			case Header::Module:	return m_module;
+			case Header::Name:		return getFunction();	// resolve the interned hash IDs to their strings
+			case Header::Module:	return getModule();		// (returning the raw uint32 ID showed a number)
 			case Header::Usage:		return m_tree->m_memUsage		? ((float(m_tree->m_memUsage)		* 100.0f) / float(m_root->m_memUsage))		: 0;
 			case Header::PeakUsage:	return m_tree->m_memUsagePeak	? ((float(m_tree->m_memUsagePeak)	* 100.0f) / float(m_root->m_memUsagePeak))	: 0;
 			case Header::Allocs:	return formatPercentageView(m_tree->m_opCount[rtm::StackTraceTree::Alloc  ], m_root->m_opCount[rtm::StackTraceTree::Alloc  ]);
 			case Header::Frees:		return formatPercentageView(m_tree->m_opCount[rtm::StackTraceTree::Free   ], m_root->m_opCount[rtm::StackTraceTree::Free   ]);
 			case Header::Reallocs:	return formatPercentageView(m_tree->m_opCount[rtm::StackTraceTree::Realloc], m_root->m_opCount[rtm::StackTraceTree::Realloc]);
-			case Header::File:		return m_file;
+			case Header::File:		return getFile();
 			case Header::Line:		return QString::number(m_line);
 		};
 		return "";
@@ -503,7 +511,9 @@ QSize ProgressBarDelegate::sizeHint(const QStyleOptionViewItem& _option, const Q
 TreeModel::TreeModel(CaptureContext* _context, QObject* _parent) :
 	QAbstractItemModel(_parent)
 {
-	m_context = _context;
+	m_context		= _context;
+	m_savedColumn	= Header::Usage;			// set before any sort(), as saveState() reads these
+	m_savedOrder	= Qt::DescendingOrder;
 	updateData();
 }
 
@@ -524,6 +534,16 @@ int TreeModel::columnCount(const QModelIndex& _parent) const
 
 void TreeModel::sort(int _column, Qt::SortOrder _order)
 {
+	emit layoutAboutToBeChanged();
+
+	// Remember which item each persistent index points to so the current selection /
+	// expansion survive the in-place reorder below.
+	const QModelIndexList oldIndexes = persistentIndexList();
+	std::vector<TreeItem*> persistentItems;
+	persistentItems.reserve((size_t)oldIndexes.size());
+	for (const QModelIndex& idx : oldIndexes)
+		persistentItems.push_back(static_cast<TreeItem*>(idx.internalPointer()));
+
 	switch (_column)
 	{
 	case Header::Name:
@@ -591,6 +611,19 @@ void TreeModel::sort(int _column, Qt::SortOrder _order)
 
 	m_savedColumn	= _column;
 	m_savedOrder	= _order;
+
+	// Re-map persistent indexes to the items' new rows and notify the view; without this
+	// the reorder isn't displayed and the current selection points at the wrong row.
+	QModelIndexList newIndexes;
+	newIndexes.reserve(oldIndexes.size());
+	for (int i=0; i<oldIndexes.size(); ++i)
+	{
+		TreeItem* it = persistentItems[(size_t)i];
+		newIndexes.append(it ? createIndex(it->row(), oldIndexes[i].column(), it) : QModelIndex());
+	}
+	changePersistentIndexList(oldIndexes, newIndexes);
+
+	emit layoutChanged();
 }
 
 QVariant TreeModel::data(const QModelIndex& _index, int _role) const
@@ -714,7 +747,9 @@ StackTreeWidget::StackTreeWidget(QWidget* _parent, Qt::WindowFlags _flags) :
 
 StackTreeWidget::~StackTreeWidget()
 {
+	QAbstractItemModel* model = m_tree->model();
 	m_tree->setModel(0);
+	delete model;					// setModel() does not take ownership / delete the old model
 }
 
 void StackTreeWidget::changeEvent(QEvent* _event)
@@ -780,8 +815,10 @@ bool StackTreeWidget::getFilteringState() const
 
 void StackTreeWidget::setupTree()
 {
+	QAbstractItemModel* oldModel = m_tree->model();
 	TreeModel* model = new TreeModel(m_context);
 	m_tree->setModel(model);
+	delete oldModel;				// setModel() doesn't delete the previous model
 
 	if (!m_headerStateRestored)
 	{

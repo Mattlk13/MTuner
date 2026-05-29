@@ -54,7 +54,7 @@ BigTable::BigTable(QWidget* _parent, Qt::WindowFlags _flags)
 	m_tree		= findChild<BigTableTableWidget*>("tableWidget");
 	m_scroll	= findChild<QScrollBar*>("verticalScrollBar");
 
-	m_tree->setItemDelegate(new ForegroundColorItemDelegate());
+	m_tree->setItemDelegate(new ForegroundColorItemDelegate(m_tree));	// parent it so it isn't leaked
 
 	// hidden by default
 	m_scroll->setVisible(false);

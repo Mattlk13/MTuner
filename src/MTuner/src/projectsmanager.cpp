@@ -134,6 +134,8 @@ void ProjectsManager::buttonAdd()
 void ProjectsManager::buttonRemove()
 {
 	int row = m_listProjects->currentIndex().row();
+	if (row < 0 || row >= (int)m_projects.size())
+		return;
 	m_projects.erase(m_projects.begin() + row);
 	m_projectListModified = true;
 	m_listProjects->setCurrentIndex(QModelIndex());
@@ -349,7 +351,9 @@ void ProjectsManager::dirChanged(const QString& _dir)
 			m_watcher = 0;
 		}
 		QString name = list.at(0);
-		QString captureFile = QDir::toNativeSeparators(_dir + name);
+		// _dir (from QFileSystemWatcher) has no trailing separator - join properly so the
+		// path isn't "...MTunerCapture.MTuner" instead of "...\MTuner\Capture.MTuner".
+		QString captureFile = QDir::toNativeSeparators(QDir(_dir).filePath(name));
 		m_currentCaptureFile = captureFile;
 		emit captureCreated(captureFile);
 	}

@@ -222,6 +222,12 @@ void GraphGrid::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _optio
 	uint64_t highlightTimeStart = m_graphWidget->getHighlightTime();
 	uint64_t highlightTimeEnd	= m_graphWidget->getHighlightTimeEnd();
 
+	// Skip when the highlight range is entirely outside the visible window - otherwise
+	// only one side was clamped, producing a backwards/oversized rect drawn off-screen.
+	// (Also covers the no-highlight (uint64_t)-1 sentinel.)
+	if ((highlightTimeEnd < minTime) || (highlightTimeStart > maxTime))
+		return;
+
 	if (highlightTimeStart < minTime)
 		highlightTimeStart = minTime;
 	if (highlightTimeEnd > maxTime)
