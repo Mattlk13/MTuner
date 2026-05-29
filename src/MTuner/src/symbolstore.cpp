@@ -55,8 +55,14 @@ QString	SymbolStore::getSymbolStoreString() const
 #endif
 	}
 
+	// Default to the Microsoft public symbol server when none is configured, so system
+	// and third-party modules (ntdll, kernel32, ucrtbase, ...) can be resolved.
+	QString publicUrl = m_publicStore->text();
+	if (publicUrl.isEmpty())
+		publicUrl = "https://msdl.microsoft.com/download/symbols";
+
 	// http server need a local cache folder to store the symbol
-	if (m_publicStore->text().contains(QRegularExpression("https?://")))
+	if (publicUrl.contains(QRegularExpression("https?://")))
 	{
 		if (ret.length())
 			ret = ret + QString(";");
@@ -70,7 +76,7 @@ QString	SymbolStore::getSymbolStoreString() const
 			ret = ret + QDir::toNativeSeparators(QDir::temp().absoluteFilePath("symbolcache"));
 
 		ret = ret + QString("*");
-		ret = ret + m_publicStore->text();
+		ret = ret + publicUrl;
 	}
 
 	return ret;
