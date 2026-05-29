@@ -85,6 +85,7 @@ StackTrace::StackTrace(QWidget* _parent, Qt::WindowFlags _flags) :
 	m_table = findChild<QTableWidget*>("tableWidget");
 	m_table->horizontalHeader()->setHighlightSections(false);
 	m_table->setGridStyle(Qt::NoPen);
+	m_table->viewport()->installEventFilter(new QToolTipper(m_table, this));
 	connect(m_table, SIGNAL(currentCellChanged(int, int, int, int)), this, SLOT(currentCellChanged(int, int, int, int)));
 
 	m_buttonDec		= findChild<QToolButton*>("button_dec");
@@ -204,7 +205,6 @@ void StackTrace::updateView()
 
 	const uint32_t rows = m_currentTrace[m_currentTraceIdx]->m_numFrames;
 	m_table->model()->removeRows(0, m_table->model()->rowCount());
-	m_table->viewport()->installEventFilter(new QToolTipper(m_table, this));
 	m_table->setRowCount(rows);
 	uint32_t selectedRow = rows;
 

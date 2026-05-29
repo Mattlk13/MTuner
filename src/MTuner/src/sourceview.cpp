@@ -157,13 +157,14 @@ void SourceView::openFile(const QString& _file, int _row, int _col)
 		}
 	}
 
-	if (m_currentLine != -1)
+	if (m_currentLine > 0)
 	{
 		QTextCursor cursor = textCursor();
 		cursor.setPosition(0, QTextCursor::KeepAnchor);
-		cursor.movePosition(QTextCursor::Down, QTextCursor::KeepAnchor, _row-1);
+		cursor.movePosition(QTextCursor::Down, QTextCursor::KeepAnchor, m_currentLine-1);
 		cursor.movePosition(QTextCursor::StartOfLine, QTextCursor::MoveAnchor);
 		setTextCursor(cursor);
+		centerCursor();			// make sure the highlighted line is actually visible
 		highlightCurrentLine();
 	}
 	else
@@ -248,16 +249,26 @@ void SourceView::setTabWidthTo8()
 
 void SourceView::openInEditor()
 {
-	QString args = m_editorDialog->getEditorArgs();
-	args.replace("%F", m_currentFile);
+	QString argsTemplate = m_editorDialog->getEditorArgs();
 
 	QTextCursor cursor = textCursor();
 	int y = cursor.blockNumber() + 1;
-	args.replace("%L", QString::number(y));
-	
+
+	// Split the argument template into separate tokens first, then substitute, so
+	// each editor argument (e.g. "-g" and the file:line) is passed as its own argv
+	// entry and a file path containing spaces stays within a single argument.
+	QStringList args;
+	const QStringList tokens = argsTemplate.split(' ', Qt::SkipEmptyParts);
+	for (QString tok : tokens)
+	{
+		tok.replace("%F", m_currentFile);
+		tok.replace("%L", QString::number(y));
+		args << tok;
+	}
+
 	QProcess* launchEditor = new QProcess(this);
 	launchEditor->setProgram(m_editorDialog->getEditorPath());
-	launchEditor->setArguments(QStringList(args));
+	launchEditor->setArguments(args);
 
 	if (!launchEditor->startDetached())
 	{

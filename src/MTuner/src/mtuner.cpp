@@ -79,13 +79,17 @@ void setupLoaderToolchain(CaptureContext* _context, const QString& _file, GCCSet
 		bool symSrcFound = false;
 		if (_context->m_capture->getToolchain() == rmem::ToolChain::Win_gcc)
 		{
-			const char* exe = _context->m_capture->getModuleInfos()[0].m_modulePath;
-			if (strstr(exe, ".exe") || strstr(exe, ".elf"))
+			std::vector<rdebug::ModuleInfo>& modInfos = _context->m_capture->getModuleInfos();
+			if (modInfos.size())
 			{
-				if (QFileInfo(QString::fromUtf8(exe)).exists())
+				const char* exe = modInfos[0].m_modulePath;
+				if (strstr(exe, ".exe") || strstr(exe, ".elf"))
 				{
-					executable = exe;
-					symSrcFound = true;
+					if (QFileInfo(QString::fromUtf8(exe)).exists())
+					{
+						executable = exe;
+						symSrcFound = true;
+					}
 				}
 			}
 		}
@@ -133,7 +137,7 @@ void setupLoaderToolchain(CaptureContext* _context, const QString& _file, GCCSet
 	else
 	{
 		tc.m_type = rdebug::Toolchain::MSVC;
-		strcpy(tc.m_toolchainPath, _symSource.toUtf8());
+		rtm::strlCpy(tc.m_toolchainPath, RTM_NUM_ELEMENTS(tc.m_toolchainPath), _symSource.toUtf8().constData());
 		std::vector<rdebug::ModuleInfo>& modInfos = _context->m_capture->getModuleInfos();
 		if (modInfos.size())
 			executable = _context->m_capture->getModuleInfos()[0].m_modulePath;
@@ -629,12 +633,14 @@ static const uint32_t g_watchInterval = 230;
 
 void MTuner::startCaptureStatusTimer()
 {
-	if (m_watchTimer)
-		m_watchTimer->stop();
+	if (!m_watchTimer)
+	{
+		m_watchTimer = new QTimer(this);
+		m_watchTimer->setInterval(g_watchInterval);
+		connect(m_watchTimer, SIGNAL(timeout()), this, SLOT(checkCaptureStatus()));
+	}
 
-	m_watchTimer = new QTimer(this);
-	m_watchTimer->setInterval(g_watchInterval);
-	connect(m_watchTimer, SIGNAL(timeout()), this, SLOT(checkCaptureStatus()));
+	m_watchTimer->stop();
 	m_watchTimer->start();
 }
 

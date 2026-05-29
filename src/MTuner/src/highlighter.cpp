@@ -61,12 +61,12 @@ Highlighter::Highlighter(QTextDocument* _parent)
 	}
 
 	m_quotationFormat.setForeground(QColor(214, 157, 133));
-	rule.m_pattern = QRegularExpression("\".*\"");
+	rule.m_pattern = QRegularExpression("\"[^\"]*\"");
 	rule.m_format = m_quotationFormat;
 	m_highlightingRules.append(rule);
 
 	m_includeFormat.setForeground(QColor(214, 157, 133));
-	rule.m_pattern = QRegularExpression("<.*>");
+	rule.m_pattern = QRegularExpression("<[^>]*>");
 	rule.m_format = m_includeFormat;
 	m_highlightingRules.append(rule);
 
@@ -95,26 +95,36 @@ Highlighter::Highlighter(QTextDocument* _parent)
 
 void Highlighter::highlightBlock(const QString& _text)
 {
-    foreach (const HighlightingRule &rule, m_highlightingRules) {
-		QRegularExpression expression(rule.m_pattern);
-        QRegularExpressionMatch match = expression.match(_text);
-
-		int last = match.lastCapturedIndex();
-        while (last >= 0) {
-            int length = match.capturedLength(last);
-			int index = match.capturedStart(last);
-			setFormat(index, length, rule.m_format);
-            --last;
-        }
+	// Apply each rule to ALL occurrences on the line (not just the first match).
+	foreach (const HighlightingRule &rule, m_highlightingRules) {
+		QRegularExpressionMatchIterator it = rule.m_pattern.globalMatch(_text);
+		while (it.hasNext()) {
+			QRegularExpressionMatch match = it.next();
+			setFormat(match.capturedStart(), match.capturedLength(), rule.m_format);
+		}
 	}
 
-	QRegularExpression comment("/\\*(.*?)\\*/", QRegularExpression::DotMatchesEverythingOption);
+	// Multi-line /* ... */ comments, tracked across blocks via the block state.
+	static const QRegularExpression commentStart("/\\*");
+	static const QRegularExpression commentEnd("\\*/");
 
-	QRegularExpressionMatch matches = comment.match(_text);
-	for (int i=0; i<matches.lastCapturedIndex(); i++) {
-		int length = matches.capturedLength(i);
-		int index = matches.capturedStart(i);
-		setFormat(index, length, m_multiLineCommentFormat);
-	}
 	setCurrentBlockState(0);
+
+	int startIndex = 0;
+	if (previousBlockState() != 1)
+		startIndex = _text.indexOf(commentStart);
+
+	while (startIndex >= 0) {
+		QRegularExpressionMatch endMatch;
+		int endIndex = _text.indexOf(commentEnd, startIndex, &endMatch);
+		int commentLength;
+		if (endIndex == -1) {
+			setCurrentBlockState(1);
+			commentLength = _text.length() - startIndex;
+		} else {
+			commentLength = endIndex - startIndex + endMatch.capturedLength();
+		}
+		setFormat(startIndex, commentLength, m_multiLineCommentFormat);
+		startIndex = _text.indexOf(commentStart, startIndex + commentLength);
+	}
 }

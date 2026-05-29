@@ -128,7 +128,7 @@ bool Capture::saveLog(const char* _path, uintptr_t _symResolver )
 		MemoryOperation* opEx = m_operations[i];
 		const char* opType = gGetStringFromOperation(opEx->m_operationType);
 
-		fprintf(f, "\n%s  size: %d\n", opType, opEx->m_allocSize);
+		fprintf(f, "\n%s  size: %u\n", opType, opEx->m_allocSize);
 
 		StackTrace* trace = opEx->m_stackTrace;
 	
@@ -215,9 +215,9 @@ bool Capture::saveGroupsLog(const char* _path, eGroupSort _sorting, uintptr_t _s
 		const char* opType = gGetStringFromOperation(opEx->m_operationType);
 
 		if (group->m_minSize != group->m_maxSize)
-			fprintf(f, "\n%s  size: %d-%d   group operations: %d\n", opType, group->m_minSize, group->m_maxSize, group->m_count);
+			fprintf(f, "\n%s  size: %u-%u   group operations: %u\n", opType, group->m_minSize, group->m_maxSize, group->m_count);
 		else
-			fprintf(f, "\n%s  size: %d   group operations: %d\n", opType, group->m_minSize, group->m_count);
+			fprintf(f, "\n%s  size: %u   group operations: %u\n", opType, group->m_minSize, group->m_count);
 
 		StackTrace* trace = opEx->m_stackTrace;
 	
@@ -243,6 +243,28 @@ bool Capture::saveGroupsLog(const char* _path, eGroupSort _sorting, uintptr_t _s
 //--------------------------------------------------------------------------
 /// Saves information about all memory operations to the file
 //--------------------------------------------------------------------------
+// Escapes XML-special characters so symbol/path text (which routinely contains
+// '<', '>', '&' in C++ names) doesn't produce malformed XML.
+static std::string xmlEscape(const char* _str)
+{
+	std::string out;
+	if (!_str)
+		return out;
+	for (const char* p = _str; *p; ++p)
+	{
+		switch (*p)
+		{
+			case '&':  out += "&amp;";  break;
+			case '<':  out += "&lt;";   break;
+			case '>':  out += "&gt;";   break;
+			case '"':  out += "&quot;"; break;
+			case '\'': out += "&apos;"; break;
+			default:   out += *p;       break;
+		}
+	}
+	return out;
+}
+
 bool Capture::saveGroupsLogXML(const char* _path, eGroupSort _sorting, uintptr_t _symResolver)
 {
 	std::vector<MemoryOperationGroup*> sortedGroups;
@@ -273,7 +295,7 @@ bool Capture::saveGroupsLogXML(const char* _path, eGroupSort _sorting, uintptr_t
 
 	fprintf(f, "<?xml version=\"1.0\"?>\n");
 	fprintf(f, "<MTuner File=\"");
-	fprintf(f, "%s", m_loadedFile.c_str());
+	fprintf(f, "%s", xmlEscape(m_loadedFile.c_str()).c_str());
 	fprintf(f, "\">\n");
 
 	char buffer[256];
@@ -327,11 +349,11 @@ bool Capture::saveGroupsLogXML(const char* _path, eGroupSort _sorting, uintptr_t
 		const char* opType = gGetStringFromOperation(opEx->m_operationType);
 
 		fprintf(f, "    <Group>\n");
-		fprintf(f, "        <Type>%s</Type>\n",opType);
-		fprintf(f, "        <SizeMin>%d</SizeMin>\n", group->m_minSize);
-		fprintf(f, "        <SizeMax>%d</SizeMax>\n", group->m_maxSize);
-		fprintf(f, "        <Operations>%d</Operations>\n", group->m_count);
-		fprintf(f, "        <Leaked>%" PRIx64 "</Leaked>\n", group->m_liveSize);
+		fprintf(f, "        <Type>%s</Type>\n", xmlEscape(opType).c_str());
+		fprintf(f, "        <SizeMin>%u</SizeMin>\n", group->m_minSize);
+		fprintf(f, "        <SizeMax>%u</SizeMax>\n", group->m_maxSize);
+		fprintf(f, "        <Operations>%u</Operations>\n", group->m_count);
+		fprintf(f, "        <Leaked>%" PRId64 "</Leaked>\n", group->m_liveSize);
 
 		StackTrace* trace = opEx->m_stackTrace;
 
@@ -345,11 +367,11 @@ bool Capture::saveGroupsLogXML(const char* _path, eGroupSort _sorting, uintptr_t
 			symbolResolverGetFrame(_symResolver, trace->m_frames[e], &st);
 
 			fprintf(f, "        <Frame>\n");
-			fprintf(f, "            <Module>%s</Module>\n", st.m_moduleName);
-			fprintf(f, "            <Func>%s</Func>\n", st.m_func);
+			fprintf(f, "            <Module>%s</Module>\n", xmlEscape(st.m_moduleName).c_str());
+			fprintf(f, "            <Func>%s</Func>\n", xmlEscape(st.m_func).c_str());
 			if (st.m_line != 0)
 			{
-				fprintf(f, "            <File>%s</File>\n", st.m_file);
+				fprintf(f, "            <File>%s</File>\n", xmlEscape(st.m_file).c_str());
 				fprintf(f, "            <Line>%d</Line>\n", st.m_line);
 			}
 			else

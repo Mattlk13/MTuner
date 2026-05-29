@@ -58,7 +58,10 @@ void CentralWidget::addTab(CaptureContext* _context, const QString& _name)
 
 void CentralWidget::removeCurrentTab()
 {
-	m_tabWidget->removeTab(m_tabWidget->currentIndex());
+	const int index = m_tabWidget->currentIndex();
+	QWidget* widget = m_tabWidget->widget(index);
+	m_tabWidget->removeTab(index);
+	delete widget;	// removeTab only detaches; deleting frees the BinLoaderView and its CaptureContext
 	emit contextChanged(NULL);
 }
 
