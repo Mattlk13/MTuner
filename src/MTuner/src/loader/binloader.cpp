@@ -91,20 +91,33 @@ int BinLoader::read(void* _ptr, size_t _size)
 
 		dst += bytesLeft;
 
-		const int32_t remaining = (int32_t)_size - bytesLeft;
+		int32_t remaining = (int32_t)_size - bytesLeft;
 
-		if (m_dataPos == m_dataAvailable)
+		// A single request may span more than one compressed chunk, and a chunk
+		// may hold fewer than 'remaining' bytes, so walk chunks and never copy
+		// more than the current chunk actually contains.
+		while (true)
 		{
-			m_bytesRead += m_dataAvailable;
-			if (!loadChunk())
-				return (remaining == 0) ? 1 : 0;
-			m_dataPos = 0;
-		}
+			if (m_dataPos == m_dataAvailable)
+			{
+				m_bytesRead += m_dataAvailable;
+				if (!loadChunk())
+					return (remaining == 0) ? 1 : 0;
+				m_dataPos = 0;
+			}
 
-		if (remaining > 0)
-		{
-			memcpy(dst, &m_data[m_dataPos], remaining);
-			m_dataPos	+= remaining;
+			if (remaining <= 0)
+				break;
+
+			const int32_t avail  = m_dataAvailable - m_dataPos;
+			const int32_t toCopy = (remaining < avail) ? remaining : avail;
+			if (toCopy <= 0)
+				return 0; // empty/short chunk - cannot make progress
+
+			memcpy(dst, &m_data[m_dataPos], toCopy);
+			m_dataPos	+= toCopy;
+			dst			+= toCopy;
+			remaining	-= toCopy;
 		}
 		return 1;
 	}

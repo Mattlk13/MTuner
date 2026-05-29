@@ -94,7 +94,11 @@ void Graph::zoomChanged()
 		double newMin = (double)m_context->m_capture->getMinTime() + hVisRange;
 		double newMax = (double)m_context->m_capture->getMaxTime() - hVisRange;
 
-		m_scroll->setValue((int)(m_scroll->maximum() * (m_graph->minTime() - m_context->m_capture->getMinTime()) / (newMax - newMin)));
+		const double denom = newMax - newMin;
+		if (denom != 0.0)
+			m_scroll->setValue((int)(m_scroll->maximum() * (m_graph->minTime() - m_context->m_capture->getMinTime()) / denom));
+		else
+			m_scroll->setValue(0);
 	}
 	else
 	{

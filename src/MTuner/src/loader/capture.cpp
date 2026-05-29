@@ -268,7 +268,10 @@ inline static uint32_t getStackTraceAndFramesSize(uint32_t numFrames)
 
 inline static uint32_t getStackTraceNextArraySize(uint32_t numFrames)
 {
-	return (uint32_t)(sizeof(StackTrace*) * numFrames);
+	// The next array is indexed [0..numFrames]: index 0 holds the root list and
+	// indices 1..numFrames hold the per-node list for each frame depth, so we
+	// need numFrames+1 entries (see addToTree).
+	return (uint32_t)(sizeof(StackTrace*) * (numFrames + 1));
 }
 
 inline uint32_t StackTrace::calculateSize(uint32_t numFrames)
@@ -279,8 +282,10 @@ inline uint32_t StackTrace::calculateSize(uint32_t numFrames)
 
 inline void StackTrace::init(StackTrace* st, uint32_t numFrames)
 {
-	rtm::memSet(StackTrace::getNextArray(st), 0, sizeof(StackTrace*) * numFrames);
+	// m_numFrames must be set first: getNextArray() derives its offset from it.
 	st->m_numFrames = numFrames;
+	// The next array holds numFrames+1 entries (see getStackTraceNextArraySize).
+	rtm::memSet(StackTrace::getNextArray(st), 0, sizeof(StackTrace*) * (numFrames + 1));
 }
 
 StackTrace** StackTrace::getNextArray(StackTrace* st)
@@ -1108,9 +1113,9 @@ void Capture::selectTag(uint32_t _tagHash)
 //--------------------------------------------------------------------------
 void Capture::deselectTag()
 {
-	if (m_filter.m_tagHash != 0xffffffff)
+	if (m_filter.m_tagHash != 0)
 	{
-		m_filter.m_tagHash = 0xffffffff;
+		m_filter.m_tagHash = 0;
 		calculateSnapshotStats();
 	}
 }

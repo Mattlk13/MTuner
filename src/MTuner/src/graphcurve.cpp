@@ -53,6 +53,9 @@ void GraphCurve::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _opti
 	int right = rect.width() + rect.x();
 	int bottom = rect.height() + rect.y();
 
+	if (right <= left)
+		return; // degenerate draw area - nothing to render (avoids resize/divide by zero below)
+
 	uint64_t minTime = m_graphWidget->minTime();
 	uint64_t maxTime = m_graphWidget->maxTime();
 

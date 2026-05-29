@@ -223,8 +223,8 @@ bool GCCSetup::resolveToolchain(Toolchain& _toolchain, bool _64bit, rdebug::Tool
 		(QFileInfo(fullPath + append20).exists() || QFileInfo(fullPath + append21).exists()) &&
 		(QFileInfo(fullPath + append30).exists() || QFileInfo(fullPath + append31).exists()))
 	{
-		strcpy(_tc.m_toolchainPath,		fullPath.toUtf8());
-		strcpy(_tc.m_toolchainPrefix,	prefix.toUtf8());
+		rtm::strlCpy(_tc.m_toolchainPath,	RTM_NUM_ELEMENTS(_tc.m_toolchainPath),	fullPath.toUtf8().constData());
+		rtm::strlCpy(_tc.m_toolchainPrefix,	RTM_NUM_ELEMENTS(_tc.m_toolchainPrefix),	prefix.toUtf8().constData());
 
 		_tc.m_type				= getTCType(_toolchain.m_toolchain);
 		return true;
@@ -236,10 +236,14 @@ bool GCCSetup::resolveToolchain(Toolchain& _toolchain, bool _64bit, rdebug::Tool
 #if RTM_PLATFORM_WINDOWS
 		std::wstring env = (wchar_t*)envVar.utf16();
 		wchar_t* envData = _wgetenv(env.c_str());
+		if (!envData)
+			return false;
 		basePath = QString::fromUtf16((const char16_t*)envData) + QString("/");
 #else
 		auto env = envVar.toUtf8();
 		const char *const envData = getenv(env.constData());
+		if (!envData)
+			return false;
 		basePath = QString::fromUtf8(envData) + QString("/");
 #endif
 
@@ -259,8 +263,8 @@ bool GCCSetup::resolveToolchain(Toolchain& _toolchain, bool _64bit, rdebug::Tool
 			(QFileInfo(fullPath + append20).exists() || QFileInfo(fullPath + append21).exists()) &&
 			(QFileInfo(fullPath + append30).exists() || QFileInfo(fullPath + append31).exists()))
 		{
-			strcpy(_tc.m_toolchainPath,		basePath.toUtf8());
-			strcpy(_tc.m_toolchainPrefix,	prefix.toUtf8());
+			rtm::strlCpy(_tc.m_toolchainPath,	RTM_NUM_ELEMENTS(_tc.m_toolchainPath),	basePath.toUtf8().constData());
+			rtm::strlCpy(_tc.m_toolchainPrefix,	RTM_NUM_ELEMENTS(_tc.m_toolchainPrefix),	prefix.toUtf8().constData());
 
 			_tc.m_type				= getTCType(_toolchain.m_toolchain);
 			return true;

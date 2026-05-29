@@ -177,6 +177,8 @@ uint64_t GraphWidget::mapPosToTime(int _x) const
 		
 	float offset = scenePos.x() - float(drawRect.x());
 	float w = drawRect.width();
+	if ((w <= 0.0f) || (m_maxTime == m_minTime))
+		return m_minTime;
 	uint64_t time = ((offset) * (m_maxTime - m_minTime)) / w;
 	time += m_minTime;
 	return time;
@@ -188,9 +190,11 @@ int	GraphWidget::mapTimeToPos(uint64_t _x) const
 		return 0;
 	
 	QRectF drawRect = getDrawRect();
+	if (m_maxTime == m_minTime)
+		return (int)drawRect.x();
 	uint64_t offset = ((_x - m_minTime) * drawRect.width()) / (m_maxTime - m_minTime);
-	
-	return drawRect.x() + offset;	
+
+	return drawRect.x() + offset;
 }
 
 void GraphWidget::highlightTime(uint64_t _time)

@@ -555,12 +555,14 @@ void OperationsList::selectionChanged(void* _item)
 
 void OperationsList::selectPrevious()
 {
-	m_operationList->select(m_currentItem->m_chainPrev);
+	if (m_currentItem)
+		m_operationList->select(m_currentItem->m_chainPrev);
 }
 
 void OperationsList::selectNext()
 {
-	m_operationList->select(m_currentItem->m_chainNext);
+	if (m_currentItem)
+		m_operationList->select(m_currentItem->m_chainNext);
 }
 
 void OperationsList::selectNextByAddress(uint64_t _address)

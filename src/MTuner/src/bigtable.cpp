@@ -149,7 +149,7 @@ void BigTable::resetView()
 
 	m_tree->setRowCount(2);
 	uint32_t rowHeight = m_tree->rowHeight(0);
-	uint32_t numRows = m_tree->size().height() / rowHeight;
+	uint32_t numRows = rowHeight ? (m_tree->size().height() / rowHeight) : 0;
 
 	uint32_t visibleRows = numRows ? numRows-1 : 0;
 
@@ -191,7 +191,7 @@ void BigTable::resizeEvent(QResizeEvent* _event)
 	m_tree->setHorizontalHeaderLabels(m_header);
 	m_tree->setRowCount(2);
 	uint32_t rowHeight = m_tree->rowHeight(0);
-	uint32_t numRows = m_tree->size().height() / rowHeight;
+	uint32_t numRows = rowHeight ? (m_tree->size().height() / rowHeight) : 0;
 
 	uint32_t visibleRows = numRows ? numRows-1 : 0;
 	uint32_t numItems = m_source->getNumberOfRows();
@@ -232,7 +232,10 @@ void BigTable::wheelEvent(QWheelEvent* _event)
 		if (lastVisibleRow + delta < m_source->getNumberOfRows())
 			m_firstVisible += delta;
 		else
-			m_firstVisible = m_source->getNumberOfRows() - m_visibleRows;
+		{
+			const int32_t maxFirst = (int32_t)m_source->getNumberOfRows() - m_visibleRows;
+			m_firstVisible = (maxFirst > 0) ? maxFirst : 0;
+		}
 	}
 	m_scroll->setValue(m_firstVisible);
 	updateTable();
@@ -286,6 +289,15 @@ void BigTable::keyPressEvent(QKeyEvent* _event)
 	if (_event->key() == Qt::Key_End)
 		m_selectedRows = (int32_t)m_source->getNumberOfRows() - 1;
 
+	// Clamp into range and bail on an empty table so getItem() is never called
+	// with an out-of-range index.
+	const int32_t numRows = (int32_t)m_source->getNumberOfRows();
+	if (numRows <= 0)
+		return;
+	if (m_selectedRows < 0)
+		m_selectedRows = 0;
+	if (m_selectedRows >= numRows)
+		m_selectedRows = numRows - 1;
 
 	void* item = 0;
 	m_source->getItem(m_selectedRows,&item);
@@ -305,6 +317,9 @@ void BigTable::scroll(int _position)
 
 void BigTable::rowSelected(QTableWidgetItem* _item)
 {
+	if (_item == nullptr)
+		return;
+
 	m_selectedRows = _item->row() + m_firstVisible;
 	void* item = nullptr;
 	m_source->getItem(m_selectedRows,&item);

@@ -69,7 +69,10 @@ static QString	s_typeName[rmem::LogMarkers::OpCount] = {
 
 static rtm::MemoryOperationGroup* getGroupFromMapping(GroupMapping* _group, int _index)
 {
-	uint32_t idx = _group->m_sortedIdx[_group->m_sortedIdx.size() - _index - 1];
+	const size_t count = _group->m_sortedIdx.size();
+	if ((_index < 0) || ((size_t)_index >= count))
+		return nullptr;
+	uint32_t idx = _group->m_sortedIdx[count - (size_t)_index - 1];
 	rtm::MemoryOperationGroup* group = _group->m_allGroups->operator[](idx);
 	return group;
 }
@@ -240,7 +243,10 @@ void HotspotsWidget::rowSelected(QTableWidgetItem* _item)
 void HotspotsWidget::updateStackTrace(QTableWidget* _table)
 {
 	QTableWidget* w = _table;
-	int row = w->currentItem()->row();
+	QTableWidgetItem* currentItem = w->currentItem();
+	if (!currentItem)
+		return;
+	int row = currentItem->row();
 	rtm::MemoryOperationGroup* group = 0;
 
 	if (w == m_usageTable)
