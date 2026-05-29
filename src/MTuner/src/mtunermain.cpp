@@ -99,6 +99,8 @@ bool handleInject(rtm::CommandLine& _cmdLine)
 void resolverCallBack(const char* _name, void* _customData)
 {
 	MTuner* mt = (MTuner*)_customData;
+	if (!mt)		// command-line mode passes no MTuner instance - nothing to update
+		return;
 
 	mt->statusBar()->showMessage(QString("Loading symbols for: ") + QString(_name), 2300);
 	mt->statusBar()->repaint();
