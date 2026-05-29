@@ -38,26 +38,26 @@ Documentation
 Build
 ======
 
-**MTuner** uses [**Qt**](https://www.qt.io/) framework for user interface so it needs to be installed on the build machine. The build system is based on [**GENie**](https://github.com/bkaradzic/GENie) and [**build**](https://github.com/RudjiGames/build) in order to dramatically simplify managing build configurations and dependencies.
+**MTuner** uses [**Qt**](https://www.qt.io/) framework for user interface so it needs to be installed on the build machine. The build system is based on [**GENie**](https://github.com/bkaradzic/GENie) and [**zidar**](https://github.com/RudjiGames/zidar) in order to dramatically simplify managing build configurations and dependencies.
 
 After cloning the repository and dependencies, here are the steps to build *MTuner*.
 
 **MinGW**
 
-	$ cd MTuner/genie
+	$ cd MTuner/scripts
 	$ genie --gcc=mingw-gcc gmake
-	$ cd ../../.build/windows/mingw-gcc/MTuner/projects/
+	$ cd ../../.zidar/windows/mingw-gcc/MTuner/projects/
 	$ make
 MINGW environment variable must be set and point to the MinGW installation directory.  
 Tested with [TDM64 MinGW](http://tdm-gcc.tdragon.net/download) using [OpenMP package](http://sourceforge.net/projects/tdm-gcc/files/TDM-GCC%205%20series/5.1.0-tdm64-1/gcc-5.1.0-tdm64-1-openmp.zip/download)
 
 **Visual Studio**
 
-	> cd MTuner/genie
+	> cd MTuner/scripts
 	> genie vs2022
-Solution will be located here: *{Clone root}/.build/windows/vs2022/projects/MTuner/MTuner.sln*
+Solution will be located here: *{Clone root}/.zidar/windows/vs2022/projects/MTuner/MTuner.sln*
 
-NB: building [**Qt**](https://www.qt.io/) based projects with [**build**](https://github.com/RudjiGames/build) requires Lua to be installed.
+NB: building [**Qt**](https://www.qt.io/) based projects with [**zidar**](https://github.com/RudjiGames/zidar) requires Lua to be installed.
 
 Environment variables are used to locate [**Qt**](https://www.qt.io/) installation, example:
 

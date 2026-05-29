@@ -263,9 +263,29 @@ struct pSortCountPeakPercentNVC
 		rtm::MemoryOperationGroup* grp1 = (*m_allGroups)[_val1];
 		rtm::MemoryOperationGroup* grp2 = (*m_allGroups)[_val2];
 
-		// compute the cross-products in double: uint32*uint32 overflows for realistic counts,
-		// which breaks std::sort's strict-weak-ordering requirement.
-		return (double)grp1->m_liveCountPeak * grp2->m_liveCountPeakGlobal < (double)grp2->m_liveCountPeak * grp1->m_liveCountPeakGlobal;
+		// Compare liveCountPeak/liveCountPeakGlobal ratios. A zero denominator is treated as
+		// ratio 0, with deterministic tie-breakers, to keep a valid strict-weak-ordering -
+		// plain cross-multiplication breaks transitivity when denominators are 0 (and uint32
+		// products overflow). uint64 cross-products are exact here (counts are uint32).
+		const bool z1 = (grp1->m_liveCountPeakGlobal == 0);
+		const bool z2 = (grp2->m_liveCountPeakGlobal == 0);
+		if (z1 && z2)
+			return grp1 < grp2;
+		else if (z1)
+			return grp2->m_liveCountPeak > 0;
+		else if (z2)
+			return grp1->m_liveCountPeak == 0;
+		else
+		{
+			const uint64_t r1 = (uint64_t)grp1->m_liveCountPeak * (uint64_t)grp2->m_liveCountPeakGlobal;
+			const uint64_t r2 = (uint64_t)grp2->m_liveCountPeak * (uint64_t)grp1->m_liveCountPeakGlobal;
+			if (r1 != r2)
+				return r1 < r2;
+		}
+
+		if (grp1->m_liveCountPeak != grp2->m_liveCountPeak)
+			return grp1->m_liveCountPeak < grp2->m_liveCountPeak;
+		return grp1 < grp2;
 	}
 };
 
@@ -313,8 +333,29 @@ struct pSortGroupSizePeakPercentNVC
 		rtm::MemoryOperationGroup* grp1 = (*m_allGroups)[_val1];
 		rtm::MemoryOperationGroup* grp2 = (*m_allGroups)[_val2];
 
-		// double cross-products avoid int64 overflow for large peak sizes (keeps SWO valid).
-		return (double)grp1->m_peakSize * grp2->m_peakSizeGlobal < (double)grp2->m_peakSize * grp1->m_peakSizeGlobal;
+		// Compare peakSize/peakSizeGlobal ratios. A zero denominator is treated as ratio 0,
+		// with deterministic tie-breakers, to keep a valid strict-weak-ordering (plain
+		// cross-multiplication breaks transitivity when denominators are 0). Sizes are int64
+		// and can be multi-GB, so cross-multiply in double to avoid overflow.
+		const bool z1 = (grp1->m_peakSizeGlobal == 0);
+		const bool z2 = (grp2->m_peakSizeGlobal == 0);
+		if (z1 && z2)
+			return grp1 < grp2;
+		else if (z1)
+			return grp2->m_peakSize > 0;
+		else if (z2)
+			return grp1->m_peakSize == 0;
+		else
+		{
+			const double r1 = (double)grp1->m_peakSize * (double)grp2->m_peakSizeGlobal;
+			const double r2 = (double)grp2->m_peakSize * (double)grp1->m_peakSizeGlobal;
+			if (r1 != r2)
+				return r1 < r2;
+		}
+
+		if (grp1->m_peakSize != grp2->m_peakSize)
+			return grp1->m_peakSize < grp2->m_peakSize;
+		return grp1 < grp2;
 	}
 };
 
