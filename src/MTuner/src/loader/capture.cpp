@@ -1758,14 +1758,16 @@ void Capture::calculateFilteredData()
 
 	uint32_t minTimedIdx;
 	uint32_t maxTimedIdx;
-	const uint32_t minTimeOpIndex = getIndexBefore(m_filter.m_minTimeSnapshot,minTimedIdx);
-	uint32_t maxTimeOpIndex = getIndexBefore(m_filter.m_maxTimeSnapshot,maxTimedIdx) + 1;
+	uint32_t minTimeOpIndex = getIndexBefore(m_filter.m_minTimeSnapshot, minTimedIdx);
+	if (minTimeOpIndex != 0)
+		minTimeOpIndex++;														// first op at/after minTime (window start)
+	uint32_t maxTimeOpIndex = getIndexAfter(m_filter.m_maxTimeSnapshot, maxTimedIdx);	// first op past maxTime (exclusive end)
 
-	if (maxTimeOpIndex >= m_operations.size())
-	{
-		maxTimeOpIndex = (uint32_t) m_operations.size() - 1;
-	}
-	
+	if (maxTimeOpIndex > (uint32_t)m_operations.size())
+		maxTimeOpIndex = (uint32_t)m_operations.size();
+	if (maxTimeOpIndex < minTimeOpIndex)										// degenerate/empty selection
+		maxTimeOpIndex = minTimeOpIndex;
+
 	m_filter.m_operations.clear();
 	m_filter.m_operations.reserve(maxTimeOpIndex - minTimeOpIndex);
 
@@ -1782,10 +1784,10 @@ void Capture::calculateFilteredData()
 	uint64_t liveBlocks	= 0;
 	uint64_t liveSize	= 0;
 
-	for (uint32_t i=minTimeOpIndex; i<=maxTimeOpIndex; i++)
+	for (uint32_t i=minTimeOpIndex; i<maxTimeOpIndex; i++)
 	{
 		MemoryOperation* op = m_operations[i];
-		
+
 		if ((i > nextProgressPoint) && m_loadProgressCallback)
 		{
 			float percent = float(i-minTimedIdx) / float(numOpsOver100);
@@ -1815,7 +1817,8 @@ void Capture::calculateFilteredData()
 }
 
 //--------------------------------------------------------------------------
-/// Returns the index of first operation before the given time
+/// Returns the index of the last operation strictly before the given time
+/// (or 0 if none). Callers add 1 to get the first operation at/after _time.
 //--------------------------------------------------------------------------
 uint32_t Capture::getIndexBefore(uint64_t _time, uint32_t& _outTimedIndex) const
 {
@@ -1860,10 +1863,13 @@ uint32_t Capture::getIndexBefore(uint64_t _time, uint32_t& _outTimedIndex) const
 
 		if (endIdx-startIdx == 1)
 		{
-			if (m_operations[startIdx]->m_operationTime >= _time)
-				return (startIdx == 0) ? startIdx : startIdx - 1;
-			else
-				return endIdx;
+			// Return the last operation strictly before _time (or 0 if none).
+			// Previously this returned endIdx (the first op at/after _time), which
+			// is one op too far - it broke getGraphAtTime (showed the next op's
+			// usage) and the snapshot/filter window start (the '+1' callers add).
+			if (m_operations[startIdx]->m_operationTime < _time)
+				return startIdx;
+			return (startIdx == 0) ? 0 : startIdx - 1;
 		}
 	}
 
@@ -2003,7 +2009,7 @@ void Capture::calculateSnapshotStats()
 			m_statsSnapshot.m_histogram[i].m_count		= ts.m_stats.m_histogram[i].m_count;
 		}
 
-		GetRangedStats(m_statsSnapshot, startIndex2, maxTimeOpIndex+1);
+		GetRangedStats(m_statsSnapshot, startIndex2, maxTimeOpIndex);	// half-open [.., maxTimeOpIndex), matching the manual branch above
 	}
 }
 
