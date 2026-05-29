@@ -10,6 +10,7 @@
 HeapsWidget::HeapsWidget(QWidget* _parent, Qt::WindowFlags _flags)
 	: QWidget(_parent, _flags)
 	, m_currentItem(0)
+	, m_context(0)
 {
 	ui.setupUi(this);
 	

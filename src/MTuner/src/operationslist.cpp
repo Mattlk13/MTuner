@@ -414,10 +414,14 @@ void OperationTableSource::sortColumn(uint32_t _columnIndex, Qt::SortOrder _sort
 
 void* OperationTableSource::FindNextByAddress(uint64_t _address, uint32_t _startIndex)
 {
+	// _startIndex is a display row (from getItemIndex); iterate downward in display
+	// order, mapping each display row back to its sorted position so the search
+	// direction is correct in both ascending and descending sort order.
 	uint32_t numItems = (uint32_t)m_mapping.m_sortedIndex.size();
-	for (uint32_t i=_startIndex+1; i<numItems; ++i)
+	for (uint32_t d=_startIndex+1; d<numItems; ++d)
 	{
-		uint32_t index = m_mapping.m_sortedIndex[i];
+		uint32_t sortedPos = (m_sortOrder == Qt::DescendingOrder) ? (numItems - 1 - d) : d;
+		uint32_t index = m_mapping.m_sortedIndex[sortedPos];
 		rtm::MemoryOperation* op = m_allOps->operator[](index);
 		if (op->m_pointer == _address)
 			return op;
@@ -429,9 +433,10 @@ void* OperationTableSource::FindNextByAddress(uint64_t _address, uint32_t _start
 void* OperationTableSource::FindNextBySize(uint64_t _size, uint32_t _startIndex)
 {
 	uint32_t numItems = (uint32_t)m_mapping.m_sortedIndex.size();
-	for (uint32_t i=_startIndex+1; i<numItems; ++i)
+	for (uint32_t d=_startIndex+1; d<numItems; ++d)
 	{
-		uint32_t index = m_mapping.m_sortedIndex[i];
+		uint32_t sortedPos = (m_sortOrder == Qt::DescendingOrder) ? (numItems - 1 - d) : d;
+		uint32_t index = m_mapping.m_sortedIndex[sortedPos];
 		rtm::MemoryOperation* op = m_allOps->operator[](index);
 		if (op->m_allocSize == _size)
 			return op;

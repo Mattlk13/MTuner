@@ -153,8 +153,9 @@ static inline void addOpToTag(MemoryTagTree* _tag, int64_t _size, int64_t _overh
 
 void tagAddOp(MemoryTagTree& _rootTag, MemoryOperation* _op, MemoryTagTree*& _prevTag)
 {
-	MemoryTagTree* tag;
-	tagFind(_rootTag, _op->m_tag, tag, _prevTag);
+	MemoryTagTree* tag = &_rootTag;
+	if (!tagFind(_rootTag, _op->m_tag, tag, _prevTag))
+		tag = &_rootTag;	// unknown/orphaned tag - attribute to root rather than a stale node
 
 	int64_t size = _op->m_allocSize;
 	int64_t overhead = _op->m_overhead;
@@ -176,10 +177,13 @@ void tagAddOp(MemoryTagTree& _rootTag, MemoryOperation* _op, MemoryTagTree*& _pr
 		case rmem::LogMarkers::OpReallocAligned:
 		case rmem::LogMarkers::OpRealloc:
 			{
-				MemoryTagTree* tagPrev;
+				MemoryTagTree* tagPrev = &_rootTag;
 				if (_op->m_chainPrev)
 				{
-					tagFind(_rootTag, _op->m_chainPrev->m_tag, tagPrev, _prevTag);
+					// use a throwaway cache var so the chainPrev lookup doesn't poison _prevTag
+					MemoryTagTree* prevCache = nullptr;
+					if (!tagFind(_rootTag, _op->m_chainPrev->m_tag, tagPrev, prevCache))
+						tagPrev = &_rootTag;
 
 					int64_t sizePrev = _op->m_chainPrev->m_allocSize;
 					int64_t overheadPrev = _op->m_chainPrev->m_overhead;

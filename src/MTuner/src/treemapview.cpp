@@ -151,14 +151,19 @@ void squaredLayout(std::vector<TreeMapNode>& _nodes, int _start, int _end, QRect
 
 static inline uint64_t getNodeValueByType(TreeMapNode& _tree, uint32_t _type)
 {
+	// Source fields are signed (int64_t usage / int32_t overhead) and can go
+	// negative for filtered call sites whose frees exceed allocs in the window.
+	// Clamp to 0 so a negative value doesn't become a huge uint64_t that swallows
+	// the whole treemap.
+	int64_t v = 0;
 	switch (_type)
 	{
-		case 0: return _tree.m_tree->m_memUsage;
-		case 1: return _tree.m_tree->m_memUsagePeak;
-		case 2: return _tree.m_tree->m_overhead;
-		case 3: return _tree.m_tree->m_overheadPeak;
+		case 0: v = _tree.m_tree->m_memUsage;		break;
+		case 1: v = _tree.m_tree->m_memUsagePeak;	break;
+		case 2: v = _tree.m_tree->m_overhead;		break;
+		case 3: v = _tree.m_tree->m_overheadPeak;	break;
 	};
-	return 0;
+	return (v < 0) ? 0 : (uint64_t)v;
 }
 
 TreeMapView::TreeMapView(QWidget* _parent) :

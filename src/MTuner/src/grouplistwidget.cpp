@@ -126,7 +126,7 @@ struct pSortCountPeakPercent
 	{
 		rtm::MemoryOperationGroup* grp = (*m_allGroups)[_val];
 		if (grp->m_liveCountPeakGlobal)
-			return float(grp->m_liveCountPeak * 10000) / float(grp->m_liveCountPeakGlobal);
+			return float(grp->m_liveCountPeak) * 10000.0f / float(grp->m_liveCountPeakGlobal);
 		else
 			return 0;
 	}
@@ -177,7 +177,7 @@ struct pSortGroupSizePeakPercent
 	{
 		rtm::MemoryOperationGroup* grp = (*m_allGroups)[_val];
 		if (grp->m_peakSizeGlobal)
-			return float(grp->m_peakSize * 10000) / float(grp->m_peakSizeGlobal);
+			return float(grp->m_peakSize) * 10000.0f / float(grp->m_peakSizeGlobal);
 		else
 			return 0;
 	}
@@ -365,6 +365,7 @@ void GroupTableSource::prepareData()
 	m_numColumns	= GroupColumn::ColumnCount;
 	m_numRows		= (uint32_t)groups->size();
 	m_currentGroupMapping	= NULL;
+	m_currentColumn			= GroupColumn::GroupPeakSize;	// matches the default mapping set below
 	m_sortOrder				= Qt::DescendingOrder;
 
 	// populate array of groups

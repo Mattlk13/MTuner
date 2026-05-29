@@ -139,7 +139,10 @@ void GraphGrid::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _optio
 		if (maxSize < minSize)
 			break;
 
-		int ycoord = bottom - ((bottom - top) * (maxSize-min) / max);
+		// Match the curve's normalization (graphcurve divides by peak-min, not raw peak),
+		// otherwise gridlines are misaligned with the curve whenever min usage > 0 (auto-zoom).
+		const uint64_t denom = (max > min) ? (max - min) : 1;
+		int ycoord = bottom - ((bottom - top) * (maxSize-min) / denom);
 		if (ycoord - prevY < 10)
 			break;
 	

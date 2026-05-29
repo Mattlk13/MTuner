@@ -109,6 +109,9 @@ void BigTable::setSource(BigTableSource* _source)
 
 void BigTable::select(void* _item)
 {
+	if (!_item)
+		return;
+
 	m_selectedRows = m_source->getItemIndex(_item);
 	ensureSelectionVisible();
 	emit itemSelected(_item);
