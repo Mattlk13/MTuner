@@ -50,6 +50,7 @@ QString getDirFromFile(const QString& _file)
 }
 
 void resolverCallBack(const char* _name, void* _customData);
+void symbolStatusCallBack(const char* _message, void* _customData);
 
 void setupLoaderToolchain(CaptureContext* _context, const QString& _file, GCCSetup* _gccSetup,
 						  QFileDialog* _fileDialog, MTuner* _mtuner, const QString& _symSource, rdebug::module_load_cb _callBack)
@@ -173,6 +174,9 @@ MTuner::MTuner(QWidget* _parent, Qt::WindowFlags _flags) :
 	m_statusBarRedDot->setPixmap(QPixmap(":/MTuner/resources/images/red_dot.png"));
 	statusBar()->insertPermanentWidget(1,m_statusBarRedDot);
 	m_statusBarRedDot->setVisible(false);
+
+	// Surface symbol-resolution status (e.g. symbol-server downloads) in the status bar.
+	rdebug::symbolResolverSetStatusCallback(symbolStatusCallBack, this);
 
 	m_fileDialog	= new QFileDialog(this);
 	m_symbolStore	= new SymbolStore(this);

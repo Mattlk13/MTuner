@@ -106,6 +106,18 @@ void resolverCallBack(const char* _name, void* _customData)
 	mt->statusBar()->repaint();
 }
 
+void symbolStatusCallBack(const char* _message, void* _customData)
+{
+	MTuner* mt = (MTuner*)_customData;
+	if (!mt)		// command-line mode passes no MTuner instance - nothing to update
+		return;
+
+	// Symbol resolution runs synchronously on the GUI thread (see resolverCallBack), so it is
+	// safe to update and force-repaint the status bar directly even while it is blocked.
+	mt->statusBar()->showMessage(QString::fromUtf8(_message), 4000);
+	mt->statusBar()->repaint();
+}
+
 int handleCommandLine(int argc, char const* argv[])
 {
 	rtm::Console::print("%s",g_banner);

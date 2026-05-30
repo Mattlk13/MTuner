@@ -14,11 +14,12 @@ copy ..\..\.zidar\windows\vs2022\MTuner\x64\retail\bin\Qt6Gui.dll               
 copy ..\..\.zidar\windows\vs2022\MTuner\x64\retail\bin\Qt6Widgets.dll           Qt6Widgets.dll
 copy ..\..\.zidar\windows\vs2022\MTuner\x64\retail\bin\MTunerCmd_retail.exe     MTuner.com
 
-copy ..\..\3rd\DIA\bin\x64\dbghelp.dll                                          dbghelp.dll
-copy ..\..\3rd\DIA\bin\x64\SymbolCheck.dll                                      SymbolCheck.dll
-copy ..\..\3rd\DIA\bin\x64\symchk.exe                                           symchk.exe
-copy ..\..\3rd\DIA\bin\x64\symsrv.dll                                           symsrv.dll
-copy ..\..\3rd\DIA\bin\x64\msdia140.dll                                         msdia140.dll
+copy ..\..\.3rd\DIA\bin\x64\dbghelp.dll                                         dbghelp.dll
+copy ..\..\.3rd\DIA\bin\x64\SymbolCheck.dll                                     SymbolCheck.dll
+copy ..\..\.3rd\DIA\bin\x64\symchk.exe                                          symchk.exe
+copy ..\..\.3rd\DIA\bin\x64\symsrv.dll                                          symsrv.dll
+copy ..\..\.3rd\DIA\bin\x64\symsrv.yes                                          symsrv.yes
+copy ..\..\.3rd\DIA\bin\x64\msdia140.dll                                        msdia140.dll
 
 copy ..\..\.zidar\windows\vs2022\MTuner\x32\retail\bin\MTunerInject_retail.exe  MTunerInject32.exe
 copy ..\..\.zidar\windows\vs2022\MTuner\x64\retail\bin\MTunerInject_retail.exe  MTunerInject64.exe
