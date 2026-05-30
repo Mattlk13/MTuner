@@ -48,9 +48,6 @@ cd ..
 copy ..\..\src\libs\rmem\inc\rmem.h						SDK\inc\rmem.h
 copy ..\..\src\libs\rmem\inc\rmem_entry.h				SDK\inc\rmem_entry.h
 
-copy ..\..\src\libs\rmem\inc\rmem.h						SDK\inc\rmem.h
-copy ..\..\src\libs\rmem\inc\rmem_entry.h				SDK\inc\rmem_entry.h
-
 copy ..\..\src\libs\rmem\src\rmem_config.h				SDK\src\rmem_config.h
 copy ..\..\src\libs\rmem\src\rmem_enums.h				SDK\src\rmem_enums.h 
 copy ..\..\src\libs\rmem\src\rmem_get_module_info.cpp	SDK\src\rmem_get_module_info.cpp

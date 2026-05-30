@@ -99,27 +99,29 @@ struct pSetIndex
 	}
 };
 
-// ThreadID
+// ThreadID - resolve indices to actual thread IDs so the column sorts by value, not arena order
 struct pSortThreadID
 {
 	const rtm::MemoryOpArray* m_allOps;
-	pSortThreadID(const rtm::MemoryOpArray* _ops) : m_allOps(_ops) {}
-
-	inline uint64_t operator()(const uint32_t _val1, const uint32_t _val2) const 
-	{
-		return m_allOps->operator[](_val1)->m_threadIndex < m_allOps->operator[](_val2)->m_threadIndex;
-	}
-};
-
-// Heap
-struct pSortHeap
-{
-	const rtm::MemoryOpArray* m_allOps;
-	pSortHeap(const rtm::MemoryOpArray* _ops) : m_allOps(_ops) {}
+	rtm::Capture* m_capture;
+	pSortThreadID(const rtm::MemoryOpArray* _ops, rtm::Capture* _capture) : m_allOps(_ops), m_capture(_capture) {}
 
 	inline uint64_t operator()(const uint32_t _val1, const uint32_t _val2) const
 	{
-		return m_allOps->operator[](_val1)->m_allocatorIndex < m_allOps->operator[](_val2)->m_allocatorIndex;
+		return m_capture->getThreadId(m_allOps->operator[](_val1)->m_threadIndex) < m_capture->getThreadId(m_allOps->operator[](_val2)->m_threadIndex);
+	}
+};
+
+// Heap - resolve indices to actual allocator handles so the column sorts by value
+struct pSortHeap
+{
+	const rtm::MemoryOpArray* m_allOps;
+	rtm::Capture* m_capture;
+	pSortHeap(const rtm::MemoryOpArray* _ops, rtm::Capture* _capture) : m_allOps(_ops), m_capture(_capture) {}
+
+	inline uint64_t operator()(const uint32_t _val1, const uint32_t _val2) const
+	{
+		return m_capture->getHeapHandle(m_allOps->operator[](_val1)->m_allocatorIndex) < m_capture->getHeapHandle(m_allOps->operator[](_val2)->m_allocatorIndex);
 	}
 };
 
@@ -362,14 +364,14 @@ void OperationTableSource::sortColumn(uint32_t _columnIndex, Qt::SortOrder _sort
 	{
 		case OperationColumn::ThreadID:
 		{
-			pSortThreadID psThreadID(m_allOps);
+			pSortThreadID psThreadID(m_allOps, m_context->m_capture);
 			RTM_PARALLEL_SORT(m_mapping.m_sortedIndex.begin(), m_mapping.m_sortedIndex.end(), psThreadID);
 		}
 		break;
 			
 		case OperationColumn::Heap:
 		{
-			pSortHeap psHeap(m_allOps);
+			pSortHeap psHeap(m_allOps, m_context->m_capture);
 			RTM_PARALLEL_SORT(m_mapping.m_sortedIndex.begin(), m_mapping.m_sortedIndex.end(), psHeap);
 		}
 		break;

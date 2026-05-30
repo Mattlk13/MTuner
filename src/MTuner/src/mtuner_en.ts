@@ -886,15 +886,11 @@ Otherwise, relative scale is used.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>System default</source>
+        <source>MTuner Dark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>MTuner dark</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Beige Owl</source>
+        <source>Bright Owl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -903,6 +899,10 @@ Otherwise, relative scale is used.</source>
     </message>
     <message>
         <source>Shanghai Night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wise Green</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

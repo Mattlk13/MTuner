@@ -1080,16 +1080,12 @@ Information may be missing from the profile!</source>
         <translation>テーマ</translation>
     </message>
     <message>
-        <source>System default</source>
-        <translation>システム既定</translation>
-    </message>
-    <message>
-        <source>MTuner dark</source>
+        <source>MTuner Dark</source>
         <translation>MTuner ダーク</translation>
     </message>
     <message>
-        <source>Beige Owl</source>
-        <translation>ベージュフクロウ</translation>
+        <source>Bright Owl</source>
+        <translation>明るいフクロウ</translation>
     </message>
     <message>
         <source>Monokai</source>
@@ -1098,6 +1094,10 @@ Information may be missing from the profile!</source>
     <message>
         <source>Shanghai Night</source>
         <translation>上海の夜</translation>
+    </message>
+    <message>
+        <source>Wise Green</source>
+        <translation>セージグリーン</translation>
     </message>
     <message>
         <source>Creating symbol resolver and downloading symbols, please wait...</source>

@@ -84,9 +84,10 @@ struct pSortType
 struct pSortHeap
 {
 	std::vector<rtm::MemoryOperationGroup*>* m_allGroups;
-	pSortHeap(std::vector<rtm::MemoryOperationGroup*>& _groups) : m_allGroups(&_groups) {}
+	rtm::Capture* m_capture;
+	pSortHeap(std::vector<rtm::MemoryOperationGroup*>& _groups, rtm::Capture* _capture) : m_allGroups(&_groups), m_capture(_capture) {}
 
-	inline uint64_t operator()(const uint32_t _val) const { return (*m_allGroups)[_val]->m_groupOperations[0]->m_allocatorIndex; }
+	inline uint64_t operator()(const uint32_t _val) const { return m_capture->getHeapHandle((*m_allGroups)[_val]->m_groupOperations[0]->m_allocatorIndex); }
 };
 
 // concurrency::parallel_radixsort Size
@@ -224,9 +225,10 @@ struct pSortTypeNVC
 struct pSortHeapNVC
 {
 	std::vector<rtm::MemoryOperationGroup*>* m_allGroups;
-	pSortHeapNVC(std::vector<rtm::MemoryOperationGroup*>& _groups) : m_allGroups(&_groups) {}
+	rtm::Capture* m_capture;
+	pSortHeapNVC(std::vector<rtm::MemoryOperationGroup*>& _groups, rtm::Capture* _capture) : m_allGroups(&_groups), m_capture(_capture) {}
 
-	inline bool operator()(const uint32_t _val1, const uint32_t _val2) const { return (*m_allGroups)[_val1]->m_groupOperations[0]->m_allocatorIndex < (*m_allGroups)[_val2]->m_groupOperations[0]->m_allocatorIndex; }
+	inline bool operator()(const uint32_t _val1, const uint32_t _val2) const { return m_capture->getHeapHandle((*m_allGroups)[_val1]->m_groupOperations[0]->m_allocatorIndex) < m_capture->getHeapHandle((*m_allGroups)[_val2]->m_groupOperations[0]->m_allocatorIndex); }
 };
 
 struct pSortSizeNVC
@@ -449,7 +451,7 @@ void GroupTableSource::prepareData()
 	pSortType psType(m_allGroups);
 	concurrency::parallel_radixsort(m_groupMappings[GroupColumn::Type].m_sortedIdx.begin(), m_groupMappings[GroupColumn::Type].m_sortedIdx.end(), psType );
 	
-	pSortHeap psHeap(m_allGroups);
+	pSortHeap psHeap(m_allGroups, m_context->m_capture);
 	concurrency::parallel_radixsort(m_groupMappings[GroupColumn::Heap].m_sortedIdx.begin(), m_groupMappings[GroupColumn::Heap].m_sortedIdx.end(), psHeap );
 	
 	pSortSize psSize(m_allGroups);
@@ -489,7 +491,7 @@ void GroupTableSource::prepareData()
 #else
 	std::stable_sort(m_groupMappings[GroupColumn::Type].m_sortedIdx.begin(), m_groupMappings[GroupColumn::Type].m_sortedIdx.end(), pSortTypeNVC(m_allGroups));
 
-	std::stable_sort(m_groupMappings[GroupColumn::Heap].m_sortedIdx.begin(), m_groupMappings[GroupColumn::Heap].m_sortedIdx.end(), pSortHeapNVC(m_allGroups));
+	std::stable_sort(m_groupMappings[GroupColumn::Heap].m_sortedIdx.begin(), m_groupMappings[GroupColumn::Heap].m_sortedIdx.end(), pSortHeapNVC(m_allGroups, m_context->m_capture));
 
 	std::stable_sort(m_groupMappings[GroupColumn::Size].m_sortedIdx.begin(), m_groupMappings[GroupColumn::Size].m_sortedIdx.end(), pSortSizeNVC(m_allGroups));
 

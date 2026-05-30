@@ -36,23 +36,29 @@ public Q_SLOTS:
 	}
 };
 
+// Dock title-bar button. Its glyph (close / detach) is drawn in code in the active theme's text
+// colour on a transparent background, so it stays legible on both dark and light themes; the
+// button background comes from the stylesheet (RQT_ACTIVE / RQT_HOVER). applyThemeTint() redraws
+// the glyph when the theme changes live.
 class ToolButtonHover : public QToolButton
 {
 	Q_OBJECT
+public:
+	enum Glyph { Close, Detach };
+
+private:
+	Glyph	m_glyph;
 	QIcon	m_default;
 	QIcon	m_hover;
 
 public:
-	ToolButtonHover(QIcon _default, QIcon _hover, QWidget* _parent = 0)
-		: QToolButton(_parent)
-		, m_default(_default)
-		, m_hover(_hover)
-	{
-	}
+	ToolButtonHover(Glyph _glyph, QWidget* _parent = 0);
+
+	void applyThemeTint();
 
 	void setDefaultAction(QAction* _action) { _action->setIcon(m_default); QToolButton::setDefaultAction(_action); }
-	void leaveEvent(QEvent*) { defaultAction()->setIcon(m_default); }
-	void enterEvent(QEnterEvent*) { defaultAction()->setIcon(m_hover); }
+	void leaveEvent(QEvent*) { if (defaultAction()) defaultAction()->setIcon(m_default); }
+	void enterEvent(QEnterEvent*) { if (defaultAction()) defaultAction()->setIcon(m_hover); }
 };
 
 class MTuner : public QMainWindow

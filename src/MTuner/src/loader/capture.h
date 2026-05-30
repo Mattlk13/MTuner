@@ -72,7 +72,8 @@ class Capture
 		StackTraceHashType				m_stackTracesHash;		///< map of stack traces, key is a stack trace hash
 		std::vector<StackTrace*>		m_stackTraces;
 		MemoryGroupsHashType			m_operationGroups;
-		std::vector<GraphEntry>			m_usageGraph;			///< memory usage graph data
+		std::vector<GraphEntry>			m_usageGraph;			///< memory usage graph data (downsampled: one entry per m_usageGraphStride ops)
+		uint32_t						m_usageGraphStride = 1;	///< ops-per-usage-graph-sample; keeps the graph at ~screen resolution instead of one 16B entry per op
 		StackTraceTree					m_stackTraceTree;		///< stack trace tree
 		MemoryTagTree					m_tagTree;				///< Global tag tree
 		HeapsType						m_Heaps;

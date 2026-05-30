@@ -721,16 +721,12 @@ Otherwise, relative scale is used.</source>
         <translation>主题</translation>
     </message>
     <message>
-        <source>System default</source>
-        <translation>系统默认</translation>
-    </message>
-    <message>
-        <source>MTuner dark</source>
+        <source>MTuner Dark</source>
         <translation>MTuner 深色</translation>
     </message>
     <message>
-        <source>Beige Owl</source>
-        <translation>米色猫头鹰</translation>
+        <source>Bright Owl</source>
+        <translation>明亮猫头鹰</translation>
     </message>
     <message>
         <source>Monokai</source>
@@ -739,6 +735,10 @@ Otherwise, relative scale is used.</source>
     <message>
         <source>Shanghai Night</source>
         <translation>上海之夜</translation>
+    </message>
+    <message>
+        <source>Wise Green</source>
+        <translation>智慧绿</translation>
     </message>
     <message>
         <source>Created </source>

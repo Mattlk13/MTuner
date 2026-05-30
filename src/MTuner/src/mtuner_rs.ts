@@ -887,16 +887,12 @@ Otherwise, relative scale is used.</source>
         <translation>Тема</translation>
     </message>
     <message>
-        <source>System default</source>
-        <translation>Системски подразумевано</translation>
-    </message>
-    <message>
-        <source>MTuner dark</source>
+        <source>MTuner Dark</source>
         <translation>MTuner тамна</translation>
     </message>
     <message>
-        <source>Beige Owl</source>
-        <translation>Беж сова</translation>
+        <source>Bright Owl</source>
+        <translation>Светла сова</translation>
     </message>
     <message>
         <source>Monokai</source>
@@ -905,6 +901,10 @@ Otherwise, relative scale is used.</source>
     <message>
         <source>Shanghai Night</source>
         <translation>Shanghai Night</translation>
+    </message>
+    <message>
+        <source>Wise Green</source>
+        <translation>Мудро зелено</translation>
     </message>
     <message>
         <source>Created </source>

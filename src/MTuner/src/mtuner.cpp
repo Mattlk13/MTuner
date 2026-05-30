@@ -433,6 +433,63 @@ void MTuner::graphModified()
 	}
 }
 
+// Draws a dock-button glyph (close X / detach overlapping-squares) in _color on a transparent
+// background. The button's own background is supplied by the stylesheet, so the glyph just needs
+// to contrast with the title bar - hence drawing it in the theme text colour.
+static QIcon makeGlyphIcon(ToolButtonHover::Glyph _glyph, const QColor& _color)
+{
+	const int s = 16;
+	QPixmap pm(s, s);
+	pm.fill(Qt::transparent);
+
+	QPainter p(&pm);
+	p.setRenderHint(QPainter::Antialiasing, true);
+
+	QPen pen(_color);
+	pen.setWidthF(1.4);
+	p.setBrush(Qt::NoBrush);
+
+	if (_glyph == ToolButtonHover::Close)
+	{
+		pen.setCapStyle(Qt::RoundCap);
+		p.setPen(pen);
+		p.drawLine(QPointF(5, 5), QPointF(s - 5, s - 5));
+		p.drawLine(QPointF(s - 5, 5), QPointF(5, s - 5));
+	}
+	else // Detach: two overlapping squares (window "float")
+	{
+		pen.setJoinStyle(Qt::MiterJoin);
+		p.setPen(pen);
+		// back square (upper-right)
+		p.drawRect(QRectF(8.0, 3.5, 4.5, 4.5));
+		// punch a gap so the front square reads as on top, then draw it (lower-left)
+		p.setCompositionMode(QPainter::CompositionMode_Clear);
+		p.fillRect(QRectF(2.5, 7.0, 6.7, 6.7), Qt::transparent);
+		p.setCompositionMode(QPainter::CompositionMode_SourceOver);
+		p.setPen(pen);
+		p.drawRect(QRectF(3.5, 8.0, 4.5, 4.5));
+	}
+	p.end();
+	return QIcon(pm);
+}
+
+ToolButtonHover::ToolButtonHover(Glyph _glyph, QWidget* _parent)
+	: QToolButton(_parent)
+	, m_glyph(_glyph)
+{
+	applyThemeTint();
+}
+
+void ToolButtonHover::applyThemeTint()
+{
+	const QColor normal = rqt::appThemeColor("RQT_DEFAULT_TEXT_COLOR", QColor(190, 190, 190));
+	const QColor hover  = rqt::appThemeColor("RQT_HOVER_TEXT_COLOR",   QColor(255, 255, 255));
+	m_default = makeGlyphIcon(m_glyph, normal);
+	m_hover   = makeGlyphIcon(m_glyph, hover);
+	if (defaultAction())
+		defaultAction()->setIcon(m_default);
+}
+
 void MTuner::setDockWindowIcon(DockWidget* _widget, const QString& _icon)
 {
 	QWidget* title = new QWidget();
@@ -450,13 +507,13 @@ void MTuner::setDockWindowIcon(DockWidget* _widget, const QString& _icon)
 	l->addWidget(titleLabel);
 	l->addItem(new QSpacerItem(20, 12, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
-	ToolButtonHover* buttonToggleDock = new ToolButtonHover(QIcon(":/MTuner/resources/images/dock_detach.png"), QIcon(":/MTuner/resources/images/dock_detach_hover.png"));
+	ToolButtonHover* buttonToggleDock = new ToolButtonHover(ToolButtonHover::Detach);
 	QAction* actionToggle = new QAction(title);
 	actionToggle->setObjectName("action_toggle");
 	buttonToggleDock->setDefaultAction(actionToggle);
 	connect(actionToggle, SIGNAL(triggered(bool)), _widget, SLOT(toggleDock(bool)));
 
-	ToolButtonHover* buttonCloseDock = new ToolButtonHover(QIcon(":/MTuner/resources/images/dock_close.png"), QIcon(":/MTuner/resources/images/dock_close_hover.png"));
+	ToolButtonHover* buttonCloseDock = new ToolButtonHover(ToolButtonHover::Close);
 	QAction* actionClose = new QAction(title);
 	actionClose->setObjectName("action_close");
 	buttonCloseDock->setDefaultAction(actionClose);
@@ -482,11 +539,11 @@ void MTuner::setupThemeMenu()
 
 	const rqt::AppStyle::Enum styles[] =
 	{
-		rqt::AppStyle::Default,
 		rqt::AppStyle::RTM,
-		rqt::AppStyle::BeigeOwl,
+		rqt::AppStyle::BrightOwl,
 		rqt::AppStyle::Monokai,
-		rqt::AppStyle::Shanghai
+		rqt::AppStyle::Shanghai,
+		rqt::AppStyle::WiseGreen
 	};
 
 	for (size_t i=0; i<sizeof(styles)/sizeof(styles[0]); ++i)
@@ -494,11 +551,11 @@ void MTuner::setupThemeMenu()
 		QString name;
 		switch (styles[i])
 		{
-			case rqt::AppStyle::Default:		name = tr("System default");	break;
-			case rqt::AppStyle::RTM:			name = tr("MTuner dark");	break;
-			case rqt::AppStyle::BeigeOwl:		name = tr("Beige Owl");		break;
+			case rqt::AppStyle::RTM:			name = tr("MTuner Dark");	break;
+			case rqt::AppStyle::BrightOwl:		name = tr("Bright Owl");	break;
 			case rqt::AppStyle::Monokai:		name = tr("Monokai");		break;
 			case rqt::AppStyle::Shanghai:		name = tr("Shanghai Night");	break;
+			case rqt::AppStyle::WiseGreen:		name = tr("Wise Green");	break;
 			default:							name = QString(rqt::appGetStyleName(styles[i]));	break;
 		}
 
@@ -528,7 +585,14 @@ void MTuner::applyAppTheme(int _style)
 	for (size_t i=0; i<sizeof(docks)/sizeof(docks[0]); ++i)
 	{
 		if (docks[i] && docks[i]->titleBarWidget())
-			docks[i]->titleBarWidget()->setStyleSheet(rqt::appPreProcessStyleSheet(ss).c_str());
+		{
+			QWidget* title = docks[i]->titleBarWidget();
+			title->setStyleSheet(rqt::appPreProcessStyleSheet(ss).c_str());
+			// re-tint the detach/close glyphs for the new theme's text colours
+			const QList<ToolButtonHover*> btns = title->findChildren<ToolButtonHover*>();
+			for (ToolButtonHover* b : btns)
+				b->applyThemeTint();
+		}
 	}
 
 	// Custom-painted widgets read theme colors at paint time, so force a full repaint of every
@@ -906,7 +970,8 @@ void MTuner::readSettings()
 
 	// theme - defaults to the MTuner dark (RTM) style when nothing valid was saved
 	int savedTheme = settings.value("Theme", (int)rqt::AppStyle::RTM).toInt();
-	if ((savedTheme < (int)rqt::AppStyle::Default) || (savedTheme >= (int)rqt::AppStyle::Count))
+	// System default (AppStyle::Default) is not exposed; fall back to RTM for it or anything out of range.
+	if ((savedTheme <= (int)rqt::AppStyle::Default) || (savedTheme >= (int)rqt::AppStyle::Count))
 		savedTheme = (int)rqt::AppStyle::RTM;
 
 	applyAppTheme(savedTheme);

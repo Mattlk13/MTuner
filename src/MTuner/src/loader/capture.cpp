@@ -51,12 +51,16 @@ static inline bool stackTraceCompare(uint64_t* _e1, uint64_t _c1, uint64_t* _e2,
 
 static uint32_t getGranularityMask(uint64_t _ops)
 {
-	uint32_t granularity = 2048;
-	if (_ops > 1024*1024)
-		granularity = 4096;
-	if (_ops > 10*1024*1024)
-		granularity = 8192;
-	return granularity - 1;
+	// Aim for roughly TARGET_SAMPLES timed checkpoints regardless of op count, so m_timedStats
+	// stays bounded (each MemoryStatsTimed is ~1.2 KB). Granularity is a power of two (used as a
+	// bit mask); coarser granularity on huge captures just means snapshot reconstruction replays
+	// a few thousand more ops from the nearest checkpoint.
+	const uint64_t TARGET_SAMPLES = 16384;
+	uint64_t granularity = 2048;					// floor for small/medium captures (64-bit to avoid shift overflow)
+	const uint64_t want = _ops / TARGET_SAMPLES;
+	while (granularity < want)
+		granularity <<= 1;
+	return (uint32_t)(granularity - 1);
 }
 
 inline bool psTime(MemoryOperation* inOp1, MemoryOperation* inOp2)
@@ -411,6 +415,7 @@ void Capture::clearData()
 	m_filter.m_leakedOnly		= false;
 
 	m_usageGraph.clear();
+	m_usageGraphStride = 1;
 
 	m_memoryMarkers.clear();
 	m_memoryMarkerTimes.clear();
@@ -1377,7 +1382,11 @@ void Capture::getGraphAtTime(uint64_t _time, GraphEntry& _entry)
 {
 	uint32_t tIdx;
 	uint32_t idx = getIndexBefore(_time,tIdx);
-	_entry = m_usageGraph[idx];
+	uint32_t gi  = idx / m_usageGraphStride;	// the usage graph is downsampled by m_usageGraphStride
+	if (gi >= m_usageGraph.size())
+		gi = m_usageGraph.empty() ? 0 : (uint32_t)m_usageGraph.size() - 1;
+	if (!m_usageGraph.empty())
+		_entry = m_usageGraph[gi];
 }
 
 //--------------------------------------------------------------------------
@@ -1527,29 +1536,22 @@ void Capture::buildAnalyzeData(uintptr_t _symResolver)
 		++idx;
 	}
 
-	MemoryTagTree* prevTag = NULL;
-
 	const uint32_t numOps = (uint32_t)m_operations.size();
-	nextProgressPoint = 0;
-	numOpsOver100 = numOps/100;
+	MemoryOperation* base = m_operationBase;
 
-	uint64_t liveBlocks	= 0;
-	uint64_t liveSize	= 0;
+	// Phase 1 (serial): tag inheritance (each op may set its chain-next's tag, so this must run
+	// in time order and complete before the tag tree is built), leak collection and the heaps
+	// list. These touch shared state (op tags, m_memoryLeaks, m_Heaps), so they stay serial.
+	if (m_loadProgressCallback)
+		m_loadProgressCallback(m_loadProgressCustomData, 0.0f, "Building analysis data...");
 
 	for (uint32_t i=0; i<numOps; i++)
 	{
-		if ((i > nextProgressPoint) && m_loadProgressCallback)
-		{
-			nextProgressPoint += numOpsOver100;
-			float percent = float(i) / float(numOpsOver100);
-			m_loadProgressCallback(m_loadProgressCustomData, percent, "Building analysis data...");
-		}
-
 		MemoryOperation* op = m_operations[i];
 
 		if (op->m_chainNext != kInvalidOpIndex)
 		{
-			MemoryOperation* chainNext = opChainNext(op, m_operationBase);
+			MemoryOperation* chainNext = opChainNext(op, base);
 			if (chainNext->m_tag == 0)
 				chainNext->m_tag = op->m_tag;
 		}
@@ -1559,21 +1561,40 @@ void Capture::buildAnalyzeData(uintptr_t _symResolver)
 				m_memoryLeaks.push_back(op);
 		}
 
-		updateLiveBlocks(op, liveBlocks);
-		updateLiveSize(op, liveSize, m_operationBase);
-
-		// add to memory groups
-		addToMemoryGroups(m_operationGroups, op, liveBlocks, liveSize);
-
-		// add to call stack tree
- 		addToStackTraceTree(m_stackTraceTree, op, StackTrace::Global);
-
-		// add to tag tree
-		tagAddOp(m_tagTree, op, prevTag, m_operationBase);
-
-		// add to heaps list
 		addHeap(m_Heaps, getHeapHandle(op->m_allocatorIndex));
 	}
+
+	// Phase 2 (parallel): the three analysis structures are independent - each thread writes a
+	// distinct output (groups map / stack-trace tree + its per-stack Global scratch / tag tree)
+	// and only reads the now-immutable ops, so there is no shared mutable state between them.
+	std::thread tGroups([this, numOps, base]()
+	{
+		uint64_t liveBlocks = 0, liveSize = 0;
+		for (uint32_t i=0; i<numOps; i++)
+		{
+			MemoryOperation* op = m_operations[i];
+			updateLiveBlocks(op, liveBlocks);
+			updateLiveSize(op, liveSize, base);
+			addToMemoryGroups(m_operationGroups, op, liveBlocks, liveSize);
+		}
+	});
+
+	std::thread tStack([this, numOps]()
+	{
+		for (uint32_t i=0; i<numOps; i++)
+			addToStackTraceTree(m_stackTraceTree, m_operations[i], StackTrace::Global);
+	});
+
+	std::thread tTag([this, numOps, base]()
+	{
+		MemoryTagTree* prevTag = NULL;
+		for (uint32_t i=0; i<numOps; i++)
+			tagAddOp(m_tagTree, m_operations[i], prevTag, base);
+	});
+
+	tGroups.join();
+	tStack.join();
+	tTag.join();
 
 	if (m_loadProgressCallback)
 		m_loadProgressCallback(m_loadProgressCustomData, 100.0f, "Done!");
@@ -1835,10 +1856,18 @@ void Capture::calculateGlobalStats()
 
 	uint32_t timedGranularityMask = getGranularityMask(numOps);
 
+	// Downsample the usage graph so it stays ~screen-resolution instead of one 16-byte entry per
+	// op (gigabytes on large captures). getGraphAtTime() divides the op index by this stride.
+	const uint64_t kUsageGraphCap = 1u << 20;	// ~1M samples max (~16 MB)
+	m_usageGraphStride = (uint32_t)((numOps + kUsageGraphCap - 1) / kUsageGraphCap);
+	if (m_usageGraphStride == 0)
+		m_usageGraphStride = 1;
+	m_usageGraph.reserve(numOps / m_usageGraphStride + 2);
+
 	for (size_t i=0; i<numOps; i++)
 	{
 		MemoryOperation* op = m_operations[i];
-		
+
 		if ((i & timedGranularityMask) == 0)
 		{
 			MemoryStatsTimed st;
@@ -1894,10 +1923,13 @@ void Capture::calculateGlobalStats()
 			break;
 		};
 
-		GraphEntry entry;
-		entry.m_usage			= m_statsGlobal.m_memoryUsage;
-		entry.m_numLiveBlocks	= m_statsGlobal.m_numberOfLiveBlocks;
-		m_usageGraph.emplace_back(entry);
+		if ((i % m_usageGraphStride) == 0)
+		{
+			GraphEntry entry;
+			entry.m_usage			= m_statsGlobal.m_memoryUsage;
+			entry.m_numLiveBlocks	= m_statsGlobal.m_numberOfLiveBlocks;
+			m_usageGraph.emplace_back(entry);
+		}
 	}
 
 	MemoryStatsTimed st;
@@ -1991,38 +2023,53 @@ void Capture::calculateFilteredData()
 	nextProgressPoint = minTimeOpIndex;
 	numOpsOver100 = numOps/100;
 
-	MemoryTagTree* prevTag = NULL;
+	(void)nextProgressPoint; (void)numOpsOver100;
 
-	uint64_t liveBlocks	= 0;
-	uint64_t liveSize	= 0;
-
+	// 1) Collect the ops that pass the filter (serial; order preserved).
 	for (uint32_t i=minTimeOpIndex; i<maxTimeOpIndex; i++)
 	{
 		MemoryOperation* op = m_operations[i];
-
-		if ((i > nextProgressPoint) && m_loadProgressCallback)
-		{
-			float percent = float(i-minTimedIdx) / float(numOpsOver100);
-			m_loadProgressCallback(m_loadProgressCustomData, percent, "Building filtered data...");
-		}
-		
-		if (!isInFilter(op))
-			continue;
-
-		m_filter.m_operations.push_back(op);
-
-		updateLiveBlocks(op, liveBlocks);
-		updateLiveSize(op, liveSize, m_operationBase);
-
-		// add to memory groups
-		addToMemoryGroups(m_filter.m_operationGroups, op, liveBlocks, liveSize);
-
-		// add to call stack tree
-		addToStackTraceTree(m_filter.m_stackTraceTree, op, StackTrace::Filtered);
-
-		// add to tag tree
-		tagAddOp(m_filter.m_tagTree, op, prevTag, m_operationBase);
+		if (isInFilter(op))
+			m_filter.m_operations.push_back(op);
 	}
+
+	if (m_loadProgressCallback)
+		m_loadProgressCallback(m_loadProgressCustomData, 50.0f, "Building filtered data...");
+
+	// 2) Build the three independent structures concurrently. Each thread writes a distinct
+	// output (groups map / stack-trace tree + its per-stack Filtered scratch / tag tree) and only
+	// reads the (now immutable) ops, so there is no shared mutable state between them.
+	const MemoryOpArray& fops = m_filter.m_operations;
+	MemoryOperation* base = m_operationBase;
+
+	std::thread tGroups([this, &fops, base]()
+	{
+		uint64_t lb = 0, ls = 0;
+		for (size_t k=0; k<fops.size(); ++k)
+		{
+			MemoryOperation* op = fops[k];
+			updateLiveBlocks(op, lb);
+			updateLiveSize(op, ls, base);
+			addToMemoryGroups(m_filter.m_operationGroups, op, lb, ls);
+		}
+	});
+
+	std::thread tStack([this, &fops]()
+	{
+		for (size_t k=0; k<fops.size(); ++k)
+			addToStackTraceTree(m_filter.m_stackTraceTree, fops[k], StackTrace::Filtered);
+	});
+
+	std::thread tTag([this, &fops, base]()
+	{
+		MemoryTagTree* prevTag = NULL;
+		for (size_t k=0; k<fops.size(); ++k)
+			tagAddOp(m_filter.m_tagTree, fops[k], prevTag, base);
+	});
+
+	tGroups.join();
+	tStack.join();
+	tTag.join();
 
 	if (m_loadProgressCallback)
 		m_loadProgressCallback(m_loadProgressCustomData, 100.0f, "Done!");
@@ -2094,20 +2141,28 @@ uint32_t Capture::getIndexAfter(uint64_t _time, uint32_t& _outTimedIndex) const
 	uint32_t tsIdx = 0;
 	int32_t tsIdxMin = 0;
 	int32_t tsIdxMax = (uint32_t)m_timedStats.size()-1;
-	
-	while (tsIdxMax > tsIdxMin)
+
+	// Mirror getIndexBefore: with only two timed checkpoints the loop can leave tsIdx==0, which
+	// would then index m_timedStats[tsIdx-1] out of bounds (e.g. a snapshot at/before the first op
+	// on a small capture). Force the single segment instead.
+	if (tsIdxMax == 1)
+		tsIdx = 1;
+	else
 	{
-		uint32_t tsIdxMid = (tsIdxMin + tsIdxMax) / 2;
-
-		if (m_timedStats[tsIdxMid].m_time < _time)
-			tsIdxMin = tsIdxMid;
-		else
-			tsIdxMax = tsIdxMid;
-
-		if (tsIdxMax-tsIdxMin == 1)
+		while (tsIdxMax > tsIdxMin)
 		{
-			tsIdx = tsIdxMax;
-			break;
+			uint32_t tsIdxMid = (tsIdxMin + tsIdxMax) / 2;
+
+			if (m_timedStats[tsIdxMid].m_time < _time)
+				tsIdxMin = tsIdxMid;
+			else
+				tsIdxMax = tsIdxMid;
+
+			if (tsIdxMax-tsIdxMin == 1)
+			{
+				tsIdx = tsIdxMax;
+				break;
+			}
 		}
 	}
 
