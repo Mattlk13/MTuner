@@ -2,8 +2,6 @@
 
 ![MTuner logo](img/mtuner.png)
 
-# MTuner
-
 **A C/C++ memory profiler and leak finder with a complete, time‑based history of every allocation.**
 
 [![Build status](https://ci.appveyor.com/api/projects/status/8ops3q96bhvpoy4t?svg=true)](https://ci.appveyor.com/project/milostosic/mtuner)
