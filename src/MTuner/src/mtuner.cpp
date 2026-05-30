@@ -482,10 +482,11 @@ void MTuner::setupThemeMenu()
 
 	const rqt::AppStyle::Enum styles[] =
 	{
+		rqt::AppStyle::Default,
 		rqt::AppStyle::RTM,
-		rqt::AppStyle::PastelMint,
-		rqt::AppStyle::Molokai,
-		rqt::AppStyle::TokyoNight
+		rqt::AppStyle::BeigeOwl,
+		rqt::AppStyle::Monokai,
+		rqt::AppStyle::Shanghai
 	};
 
 	for (size_t i=0; i<sizeof(styles)/sizeof(styles[0]); ++i)
@@ -493,10 +494,11 @@ void MTuner::setupThemeMenu()
 		QString name;
 		switch (styles[i])
 		{
+			case rqt::AppStyle::Default:		name = tr("System default");	break;
 			case rqt::AppStyle::RTM:			name = tr("MTuner dark");	break;
-			case rqt::AppStyle::PastelMint:		name = tr("Pastel mint");	break;
-			case rqt::AppStyle::Molokai:		name = tr("Molokai");		break;
-			case rqt::AppStyle::TokyoNight:		name = tr("Tokyo Night");	break;
+			case rqt::AppStyle::BeigeOwl:		name = tr("Beige Owl");		break;
+			case rqt::AppStyle::Monokai:		name = tr("Monokai");		break;
+			case rqt::AppStyle::Shanghai:		name = tr("Shanghai Night");	break;
 			default:							name = QString(rqt::appGetStyleName(styles[i]));	break;
 		}
 
@@ -904,7 +906,7 @@ void MTuner::readSettings()
 
 	// theme - defaults to the MTuner dark (RTM) style when nothing valid was saved
 	int savedTheme = settings.value("Theme", (int)rqt::AppStyle::RTM).toInt();
-	if ((savedTheme <= (int)rqt::AppStyle::Default) || (savedTheme >= (int)rqt::AppStyle::Count))
+	if ((savedTheme < (int)rqt::AppStyle::Default) || (savedTheme >= (int)rqt::AppStyle::Count))
 		savedTheme = (int)rqt::AppStyle::RTM;
 
 	applyAppTheme(savedTheme);

@@ -2,34 +2,83 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ja_JP">
 <context>
+    <name></name>
+    <message>
+        <source>Start Page</source>
+        <translation>スタートページ</translation>
+    </message>
+    <message>
+        <source>byte used</source>
+        <translation>使用バイト</translation>
+    </message>
+    <message>
+        <source>bytes used</source>
+        <translation>使用バイト</translation>
+    </message>
+    <message>
+        <source>bytes of overhead</source>
+        <translation>オーバーヘッドバイト</translation>
+    </message>
+    <message>
+        <source>allocation</source>
+        <translation>割り当て</translation>
+    </message>
+    <message>
+        <source>allocations</source>
+        <translation>割り当て数</translation>
+    </message>
+    <message>
+        <source>Global</source>
+        <translation>全般</translation>
+    </message>
+    <message>
+        <source>Snapshot</source>
+        <translation>スナップショット</translation>
+    </message>
+    <message>
+        <source>Global (peak)</source>
+        <translation>グローバル (ピーク)</translation>
+    </message>
+    <message>
+        <source>Snapshot (peak)</source>
+        <translation>スナップショット (ピーク)</translation>
+    </message>
+    <message>
+        <source>Set tab width to 4</source>
+        <translation>タブ幅を4に設定</translation>
+    </message>
+    <message>
+        <source>Set tab width to 8</source>
+        <translation>タブ幅を 8 に設定</translation>
+    </message>
+    <message>
+        <source>Open in editor</source>
+        <translation>エディタで開く</translation>
+    </message>
+</context>
+<context>
     <name>About</name>
     <message>
-        <location filename="about.ui" line="20"/>
         <source>About MTuner</source>
         <translation>MTuner について</translation>
     </message>
     <message>
-        <location filename="about.ui" line="40"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/MTuner/resources/images/Icon128.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/MTuner/resources/images/Icon128.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="about.ui" line="63"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt; font-weight:600; color:#3c3c5a;&quot;&gt;M&lt;/span&gt;&lt;span style=&quot; font-size:36pt; font-weight:600; color:#5a5a78;&quot;&gt;Tuner&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt; font-weight:600; color:#3c3c5a;&quot;&gt;M&lt;/span&gt;&lt;span style=&quot; font-size:36pt; font-weight:600; color:#5a5a78;&quot;&gt;Tuner&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="about.ui" line="82"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Version&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Version&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="about.ui" line="89"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Copyright © 2025 by Milos Tosic.&lt;br/&gt;All Rights Reserved&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Copyright © 2025 by Milos Tosic.&lt;br/&gt;All Rights Reserved&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="about.ui" line="116"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -515,7 +564,6 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="about.ui" line="283"/>
         <source>Italian translation by - Marco Bellan</source>
         <translation>イタリア語翻訳 - Marco Bellan</translation>
     </message>
@@ -523,7 +571,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="about.cpp" line="16"/>
         <source>Version</source>
         <translation>バージョン</translation>
     </message>
@@ -531,7 +578,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>BigTableWidget</name>
     <message>
-        <location filename="bigtable.ui" line="17"/>
         <source>BigTable</source>
         <translation>ビッグテーブル</translation>
     </message>
@@ -539,37 +585,30 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>BinLoaderView</name>
     <message>
-        <location filename="binloaderview.ui" line="14"/>
         <source>Form</source>
         <translation>フォーム</translation>
     </message>
     <message>
-        <location filename="binloaderview.ui" line="44"/>
         <source>Operations</source>
         <translation>オペレーション</translation>
     </message>
     <message>
-        <location filename="binloaderview.ui" line="74"/>
         <source>Grouped view</source>
         <translation>グループ表示</translation>
     </message>
     <message>
-        <location filename="binloaderview.ui" line="104"/>
         <source>Call Stack Tree</source>
         <translation>コールスタックツリー</translation>
     </message>
     <message>
-        <location filename="binloaderview.ui" line="134"/>
         <source>Tree Map</source>
         <translation>ツリーマップ</translation>
     </message>
     <message>
-        <location filename="binloaderview.ui" line="164"/>
         <source>Hotspots</source>
         <translation>ホットスポット</translation>
     </message>
     <message>
-        <location filename="binloaderview.ui" line="191"/>
         <source>Invalid operations</source>
         <translation>無効なオペレーション</translation>
     </message>
@@ -577,7 +616,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CentralWidget</name>
     <message>
-        <location filename="centralwidget.ui" line="14"/>
         <source>Form</source>
         <translation>フォーム</translation>
     </message>
@@ -585,32 +623,26 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Environment</name>
     <message>
-        <location filename="environment.ui" line="14"/>
         <source>Environment variables</source>
         <translation>環境変数</translation>
     </message>
     <message>
-        <location filename="environment.ui" line="36"/>
         <source>Variable</source>
         <translation>変数</translation>
     </message>
     <message>
-        <location filename="environment.ui" line="41"/>
         <source>Value</source>
         <translation>値</translation>
     </message>
     <message>
-        <location filename="environment.ui" line="64"/>
         <source>New</source>
         <translation>新規</translation>
     </message>
     <message>
-        <location filename="environment.ui" line="71"/>
         <source>Edit</source>
         <translation>編集</translation>
     </message>
     <message>
-        <location filename="environment.ui" line="78"/>
         <source>Delete</source>
         <translation>削除</translation>
     </message>
@@ -618,27 +650,22 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ExternalEditor</name>
     <message>
-        <location filename="external_editor.ui" line="14"/>
         <source>Setup external editor</source>
         <translation>外部エディタの設定</translation>
     </message>
     <message>
-        <location filename="external_editor.ui" line="33"/>
         <source>Editor:</source>
         <translation>エディタ :</translation>
     </message>
     <message>
-        <location filename="external_editor.ui" line="40"/>
         <source>Command line:</source>
         <translation>コマンドライン :</translation>
     </message>
     <message>
-        <location filename="external_editor.ui" line="60"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="external_editor.cpp" line="49"/>
         <source>Select executable</source>
         <translation>実行ファイルを選択</translation>
     </message>
@@ -646,214 +673,173 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GCCSetup</name>
     <message>
-        <location filename="gcc.ui" line="14"/>
         <source>Setup GCC toolchains</source>
         <translation>GCCツールチェーンの設定</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="108"/>
         <source>Custom toolchain 1</source>
         <translation>カスタムツールチェーン 1</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="113"/>
         <source>Custom toolchain 2</source>
         <translation>カスタムツールチェーン 2</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="118"/>
         <source>Custom toolchain 3</source>
         <translation>カスタムツールチェーン 3</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="123"/>
         <source>Custom toolchain 4</source>
         <translation>カスタムツールチェーン 4</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="128"/>
         <source>Custom toolchain 5</source>
         <translation>カスタムツールチェーン 5</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="133"/>
         <source>Custom toolchain 6</source>
         <translation>カスタムツールチェーン 6</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="138"/>
         <source>Custom toolchain 7</source>
         <translation>カスタムツールチェーン 7</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="143"/>
         <source>Custom toolchain 8</source>
         <translation>カスタムツールチェーン 8</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="148"/>
         <source>Custom toolchain 9</source>
         <translation>カスタムツールチェーン 9</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="158"/>
         <source>Toolchain name:</source>
         <translation>ツールチェーン名 :</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="172"/>
         <source>64 bit</source>
         <translation>64 ビット</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="187"/>
-        <location filename="gcc.ui" line="289"/>
-        <location filename="gcc.ui" line="389"/>
         <source>Environment variable</source>
         <translation>環境変数</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="194"/>
-        <location filename="gcc.ui" line="296"/>
-        <location filename="gcc.ui" line="396"/>
         <source>Binutils path</source>
         <translation>Binutils パス</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="201"/>
-        <location filename="gcc.ui" line="303"/>
         <source>Toolchain prefix</source>
         <translation>ツールチェーン プレフィックス</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="220"/>
-        <location filename="gcc.ui" line="322"/>
-        <location filename="gcc.ui" line="415"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="238"/>
-        <location filename="gcc.ui" line="340"/>
-        <location filename="gcc.ui" line="430"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="274"/>
         <source>32 bit</source>
         <translation>32 ビット</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="374"/>
         <source>SN ProDG</source>
         <translation>SN ProDG</translation>
     </message>
     <message>
-        <location filename="gcc.cpp" line="415"/>
-        <location filename="gcc.cpp" line="443"/>
         <source>Select folder with binutils</source>
         <translation>binutils のあるフォルダーを選択</translation>
     </message>
     <message>
-        <location filename="gcc.cpp" line="446"/>
         <source>Select folder with orbis-bin.exe</source>
         <translation>orbis-bin.exe のあるフォルダーを選択</translation>
     </message>
     <message>
-        <location filename="gcc.cpp" line="476"/>
         <source>Select folder with ps3bin.exe</source>
         <translation>ps3bin.exe のあるフォルダーを選択</translation>
     </message>
     <message>
-        <location filename="gcc.cpp" line="501"/>
-        <location filename="gcc.cpp" line="502"/>
         <source>orbis tools found!</source>
         <translation>orbis ツールが見つかりました！</translation>
     </message>
     <message>
-        <location filename="gcc.cpp" line="501"/>
-        <location filename="gcc.cpp" line="502"/>
         <source>orbis tools not found!</source>
         <translation>orbis ツールが見つかりません！</translation>
     </message>
     <message>
-        <location filename="gcc.cpp" line="506"/>
-        <location filename="gcc.cpp" line="507"/>
         <source>toolchain found!</source>
         <translation>ツールチェーンが見つかりました！</translation>
     </message>
     <message>
-        <location filename="gcc.cpp" line="506"/>
-        <location filename="gcc.cpp" line="507"/>
         <source>toolchain not found!</source>
         <translation>ツールチェーンが見つかりません！</translation>
     </message>
     <message>
-        <location filename="gcc.cpp" line="510"/>
         <source>ps3 tools found!</source>
         <translation>ps3 ツールが見つかりました！</translation>
     </message>
     <message>
-        <location filename="gcc.cpp" line="510"/>
         <source>ps3 tools not found!</source>
         <translation>ps3 ツールが見つかりません！</translation>
+    </message>
+    <message>
+        <source>Select folder with prospero-bin.exe</source>
+        <translation>prospero-bin.exe があるフォルダーを選択してください</translation>
+    </message>
+    <message>
+        <source>prospero tools found!</source>
+        <translation>prospero ツールが見つかりました！</translation>
+    </message>
+    <message>
+        <source>prospero tools not found!</source>
+        <translation>prospero ツールが見つかりません！</translation>
     </message>
 </context>
 <context>
     <name>Graph</name>
     <message>
-        <location filename="graph.ui" line="14"/>
         <source>Form</source>
         <translation>フォーム</translation>
     </message>
     <message>
-        <location filename="graph.ui" line="47"/>
         <source>Zoom in</source>
         <translation>拡大</translation>
     </message>
     <message>
-        <location filename="graph.ui" line="50"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location filename="graph.ui" line="69"/>
         <source>Zoom out</source>
         <translation>縮小</translation>
     </message>
     <message>
-        <location filename="graph.ui" line="72"/>
         <source>-</source>
         <translation>-</translation>
     </message>
     <message>
-        <location filename="graph.ui" line="91"/>
         <source>Reset zoom</source>
         <translation>ズームをリセット</translation>
     </message>
     <message>
-        <location filename="graph.ui" line="94"/>
         <source>R</source>
         <translation>R</translation>
     </message>
     <message>
-        <location filename="graph.ui" line="113"/>
         <source>Zoom to snapshot</source>
         <translation>スナップショットにズーム</translation>
     </message>
     <message>
-        <location filename="graph.ui" line="116"/>
         <source>S</source>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="graph.ui" line="129"/>
         <source>Auto scale to range</source>
         <translation>範囲に自動スケール</translation>
     </message>
     <message>
-        <location filename="graph.ui" line="132"/>
         <source>A</source>
         <translation>A</translation>
     </message>
@@ -861,77 +847,49 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GraphWidget</name>
     <message>
-        <location filename="graphwidget.cpp" line="481"/>
-        <location filename="graphwidget.cpp" line="594"/>
         <source>Time</source>
         <translation>時間</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="482"/>
         <source>Thread</source>
         <translation>スレッド</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="503"/>
-        <source>Start time</source>
-        <translation>開始時間</translation>
-    </message>
-    <message>
-        <location filename="graphwidget.cpp" line="503"/>
-        <source>End time</source>
-        <translation>終了時間</translation>
-    </message>
-    <message>
-        <location filename="graphwidget.cpp" line="504"/>
-        <source>Duration</source>
-        <translation>期間</translation>
-    </message>
-    <message>
-        <location filename="graphwidget.cpp" line="504"/>
-        <source>Usage at end</source>
-        <translation>終了時使用量</translation>
-    </message>
-    <message>
-        <location filename="graphwidget.cpp" line="505"/>
-        <location filename="graphwidget.cpp" line="596"/>
         <source>Live blocks</source>
         <translation>ライブブロック</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="595"/>
         <source>Usage</source>
         <translation>使用量</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="687"/>
         <source>Zoom to selection</source>
         <translation>選択範囲にズーム</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="688"/>
         <source>Reset zoom</source>
         <translation>ズームをリセット</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="701"/>
         <source>Snap selection to marker</source>
         <translation>選択をマーカーにスナップ</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="702"/>
         <source>Select from marker</source>
         <translation>マーカーから選択</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="703"/>
         <source>Select to marker</source>
         <translation>マーカーまで選択</translation>
+    </message>
+    <message>
+        <source> Time</source>
+        <translation> 時間</translation>
     </message>
 </context>
 <context>
     <name>GroupList</name>
     <message>
-        <location filename="grouplistwidget.cpp" line="763"/>
         <source>Select group range</source>
         <translation>グループ範囲を選択</translation>
     </message>
@@ -939,7 +897,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GroupListWidget</name>
     <message>
-        <location filename="grouplist.ui" line="14"/>
         <source>Form</source>
         <translation>フォーム</translation>
     </message>
@@ -947,17 +904,14 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HeapsWidget</name>
     <message>
-        <location filename="heapswidget.ui" line="14"/>
         <source>Form</source>
         <translation>フォーム</translation>
     </message>
     <message>
-        <location filename="heapswidget.ui" line="42"/>
         <source>Handle</source>
         <translation>ハンドル</translation>
     </message>
     <message>
-        <location filename="heapswidget.ui" line="47"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
@@ -965,437 +919,382 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HistogramWidgetClass</name>
     <message>
-        <location filename="histogram.ui" line="20"/>
         <source>Form</source>
         <translation>フォーム</translation>
     </message>
     <message>
-        <location filename="histogram.ui" line="64"/>
         <source>Memory usage</source>
         <translation>メモリ使用量</translation>
     </message>
     <message>
-        <location filename="histogram.ui" line="69"/>
         <source>Allocation overhead</source>
         <translation>割り当てオーバーヘッド</translation>
     </message>
     <message>
-        <location filename="histogram.ui" line="74"/>
         <source>Number of allocations</source>
         <translation>割り当て数</translation>
     </message>
     <message>
-        <location filename="histogram.ui" line="88"/>
         <source>Select which time range to show histograms for</source>
         <translation>ヒストグラムを表示する時間範囲を選択</translation>
     </message>
     <message>
-        <location filename="histogram.ui" line="92"/>
         <source>Global histogram</source>
         <translation>全体ヒストグラム</translation>
     </message>
     <message>
-        <location filename="histogram.ui" line="97"/>
         <source>Snapshot histogram</source>
         <translation>スナップショットヒストグラム</translation>
     </message>
     <message>
-        <location filename="histogram.ui" line="102"/>
         <source>Global and snapshot histogram</source>
         <translation>全体とスナップショットのヒストグラム</translation>
     </message>
     <message>
-        <location filename="histogram.ui" line="110"/>
         <source>Shows peak values alongside current values</source>
         <translation>現在値とともにピーク値を表示</translation>
     </message>
     <message>
-        <location filename="histogram.ui" line="113"/>
         <source>Show peaks</source>
         <translation>ピークを表示</translation>
+    </message>
+    <message>
+        <source>If checked, all values are normalized to peak values.
+Otherwise, relative scale is used.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale to peaks</source>
+        <translation>ピークに合わせる</translation>
     </message>
 </context>
 <context>
     <name>Inject</name>
     <message>
-        <location filename="inject.ui" line="14"/>
         <source>Inject and run</source>
         <translation>インジェクトして実行</translation>
     </message>
     <message>
-        <location filename="inject.ui" line="25"/>
         <source>Allocator:</source>
         <translation>アロケータ :</translation>
     </message>
     <message>
-        <location filename="inject.ui" line="33"/>
         <source>No change / system</source>
         <translation>変更なし / システム</translation>
     </message>
     <message>
-        <location filename="inject.ui" line="38"/>
-        <source>rpmalloc</source>
-        <translation>rpmalloc</translation>
-    </message>
-    <message>
-        <location filename="inject.ui" line="61"/>
         <source>Capture memory profile</source>
         <translation>メモリプロファイルをキャプチャ</translation>
     </message>
     <message>
-        <location filename="inject.ui" line="71"/>
         <source>Load memory profile after capture</source>
         <translation>キャプチャ後にメモリプロファイルを読み込む</translation>
     </message>
     <message>
-        <location filename="inject.ui" line="81"/>
         <source>Memory overwrite detection</source>
         <translation>メモリ上書き検出</translation>
+    </message>
+    <message>
+        <source>stomp overrun</source>
+        <translation>オーバーラン (stomp)</translation>
+    </message>
+    <message>
+        <source>stomp underrun</source>
+        <translation>アンダーラン (stomp)</translation>
     </message>
 </context>
 <context>
     <name>MTuner</name>
     <message>
-        <location filename="mtuner.cpp" line="221"/>
-        <location filename="mtuner.cpp" line="453"/>
         <source>Memory timeline</source>
         <translation>メモリタイムライン</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="222"/>
-        <location filename="mtuner.cpp" line="454"/>
         <source>Allocation histogram</source>
         <translation>割り当てヒストグラム</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="223"/>
-        <location filename="mtuner.cpp" line="455"/>
         <source>Statistics</source>
         <translation>統計情報</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="224"/>
-        <location filename="mtuner.cpp" line="456"/>
         <source>Memory tag tree</source>
         <translation>メモリタグツリー</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="225"/>
-        <location filename="mtuner.cpp" line="457"/>
         <source>Stack trace</source>
         <translation>スタックトレース</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="226"/>
-        <location filename="mtuner.cpp" line="458"/>
         <source>Heaps / Allocators</source>
         <translation>ヒープ / アロケータ</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="227"/>
-        <location filename="mtuner.cpp" line="459"/>
         <source>Modules</source>
         <translation>モジュール</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="254"/>
         <source>select a capture file</source>
         <translation>キャプチャファイルを選択</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="630"/>
         <source>Created </source>
         <translation>作成日時 </translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="669"/>
-        <location filename="mtuner.cpp" line="991"/>
         <source>Capture in progress</source>
         <translation>キャプチャ中</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="901"/>
         <source>Loading, please wait...</source>
         <translation>読み込み中、お待ちください...</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="909"/>
-        <source>Capture loaded partially!</source>
-        <translation>キャプチャは部分的に読み込まれました！</translation>
-    </message>
-    <message>
-        <location filename="mtuner.cpp" line="909"/>
         <source>Capture file was only partially loaded!
 Information may be missing from the profile!</source>
         <translation>キャプチャファイルは部分的にしか読み込まれませんでした！
 プロファイルから情報が欠落している可能性があります！</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="919"/>
         <source>Loaded </source>
         <translation>読み込み完了 </translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="927"/>
         <source>Error loading!</source>
         <translation>読み込みエラー！</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="928"/>
         <source>Failed to load file!</source>
         <translation>ファイルの読み込みに失敗しました！</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="928"/>
         <source>File may be corrupted, try to repeat the capture</source>
         <translation>ファイルが破損している可能性があります。キャプチャをやり直してください</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="991"/>
         <source>Cannot start a new capture while capture is in progress</source>
         <translation>キャプチャ中は新しいキャプチャを開始できません</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation>テーマ</translation>
+    </message>
+    <message>
+        <source>System default</source>
+        <translation>システム既定</translation>
+    </message>
+    <message>
+        <source>MTuner dark</source>
+        <translation>MTuner ダーク</translation>
+    </message>
+    <message>
+        <source>Beige Owl</source>
+        <translation>ベージュフクロウ</translation>
+    </message>
+    <message>
+        <source>Monokai</source>
+        <translation>Monokai</translation>
+    </message>
+    <message>
+        <source>Shanghai Night</source>
+        <translation>上海の夜</translation>
+    </message>
+    <message>
+        <source>Creating symbol resolver and downloading symbols, please wait...</source>
+        <translation>シンボルリゾルバを作成し、シンボルをダウンロードしています。しばらくお待ちください...</translation>
     </message>
 </context>
 <context>
     <name>MTunerClass</name>
     <message>
-        <location filename="mtuner.ui" line="17"/>
         <source>MTuner</source>
         <translation>MTuner</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="53"/>
         <source>&amp;File</source>
         <translation>ファイル(&amp;F)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="66"/>
         <source>&amp;Help</source>
         <translation>ヘルプ(&amp;H)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="74"/>
         <source>&amp;Settings</source>
         <translation>設定(&amp;S)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="84"/>
         <source>&amp;View</source>
         <translation>表示(&amp;V)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="96"/>
         <source>&amp;Language</source>
         <translation>言語(&amp;L)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="108"/>
         <source>Main tool bar</source>
         <translation>メインツールバー</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="138"/>
         <source>&amp;Open</source>
         <translation>開く(&amp;O)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="141"/>
         <source>Open capture (.MTuner file)</source>
         <translation>キャプチャを開く(.MTunerファイル)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="144"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="149"/>
         <source>&amp;Exit</source>
         <translation>終了(&amp;E)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="152"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="157"/>
         <source>&amp;About</source>
         <translation>MTuner について(&amp;A)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="160"/>
         <source>About MTuner</source>
         <translation>MTuner について</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="169"/>
         <source>&amp;Manage projects</source>
         <translation>プロジェクト管理(&amp;M)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="172"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="177"/>
         <source>&amp;Close</source>
         <translation>閉じる(&amp;C)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="186"/>
         <source>&amp;Debug symbols</source>
         <translation>デバッグシンボル(&amp;D)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="189"/>
         <source>Debug symbol sources setting</source>
         <translation>デバッグシンボルソース設定</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="194"/>
         <source>&amp;Contents</source>
         <translation>目次(&amp;C)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="197"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="209"/>
         <source>Toggle &amp;filtering mode</source>
         <translation>フィルタリングモード切替(&amp;F)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="212"/>
-        <location filename="mtuner.ui" line="215"/>
         <source>Toggle filtering mode</source>
         <translation>フィルタリングモード切替</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="234"/>
         <source>Ti&amp;meline</source>
         <translation>タイムライン(&amp;m)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="311"/>
         <source>StackTrace</source>
         <translation>スタックトレース</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="314"/>
         <source>Toggle stack trace and source visibility</source>
         <translation>スタックトレースとソースの表示切替</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="328"/>
         <source>Import license file</source>
         <translation>ライセンスファイルをインポート</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="333"/>
         <source>Activate MTuner</source>
         <translation>MTuner をアクティベート</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="336"/>
         <source>Deactivate MTuner</source>
         <translation>MTuner を無効化</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="345"/>
         <source>&amp;Toolchains Setup</source>
         <translation>ツールチェーン設定(&amp;T)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="363"/>
         <source>Heaps / Allocators</source>
         <translation>ヒープ / アロケータ</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="366"/>
         <source>Toggle visibility of heaps / allocators dock</source>
         <translation>ヒープ/アロケータドックの表示切替</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="371"/>
         <source>Open capture location</source>
         <translation>キャプチャ保存先を開く</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="374"/>
         <source>Opens, in Windows Explorer, a folder where capture files (*.MTuner) are recorder</source>
         <translation>エクスプローラでキャプチャファイル(*.MTuner)の保存先フォルダーを開く</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="379"/>
         <source>&amp;Save capture window settings</source>
         <translation>キャプチャウィンドウ設定を保存(&amp;S)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="394"/>
         <source>&amp;Modules</source>
         <translation>モジュール(&amp;M)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="397"/>
         <source>Toggle visibility of Module list dock</source>
         <translation>モジュールリストドックの表示切替</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="348"/>
         <source>Ctrl+G</source>
         <translation>Ctrl+G</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="323"/>
         <source>&amp;External editor</source>
         <translation>外部エディタ(&amp;E)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="218"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="237"/>
         <source>Toggle timeline graph visibility</source>
         <translation>タイムライングラフの表示切替</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="252"/>
         <source>&amp;Statistics</source>
         <translation>統計情報(&amp;S)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="255"/>
         <source>Toggle statistics visibility</source>
         <translation>統計情報の表示切替</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="260"/>
         <source>&amp;English</source>
         <translation>英語(&amp;E)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="275"/>
         <source>&amp;Histograms</source>
         <translation>ヒストグラム(&amp;H)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="278"/>
         <source>Toggle histogram window visibility</source>
         <translation>ヒストグラムウィンドウの表示切替</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="293"/>
         <source>&amp;Tag Tree</source>
         <translation>タグツリー(&amp;T)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="296"/>
         <source>Toggle tag tree visibility</source>
         <translation>タグツリーの表示切替</translation>
     </message>
@@ -1403,37 +1302,30 @@ Information may be missing from the profile!</source>
 <context>
     <name>ModulesWidget</name>
     <message>
-        <location filename="moduleswidget.ui" line="14"/>
         <source>Form</source>
         <translation>フォーム</translation>
     </message>
     <message>
-        <location filename="moduleswidget.ui" line="22"/>
         <source>Filter:</source>
         <translation>フィルター :</translation>
     </message>
     <message>
-        <location filename="moduleswidget.ui" line="54"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
     <message>
-        <location filename="moduleswidget.ui" line="59"/>
         <source>Base Address</source>
         <translation>ベースアドレス</translation>
     </message>
     <message>
-        <location filename="moduleswidget.ui" line="64"/>
         <source>End Address</source>
         <translation>終了アドレス</translation>
     </message>
     <message>
-        <location filename="moduleswidget.ui" line="69"/>
         <source>Size</source>
         <translation>サイズ</translation>
     </message>
     <message>
-        <location filename="moduleswidget.ui" line="74"/>
         <source>Path</source>
         <translation>パス</translation>
     </message>
@@ -1441,65 +1333,57 @@ Information may be missing from the profile!</source>
 <context>
     <name>OperationSearchWidget</name>
     <message>
-        <location filename="operationsearch.ui" line="26"/>
         <source>Form</source>
         <translation>フォーム</translation>
     </message>
     <message>
-        <location filename="operationsearch.ui" line="44"/>
         <source>Address:</source>
         <translation>アドレス :</translation>
     </message>
     <message>
-        <location filename="operationsearch.ui" line="82"/>
         <source>Find previous operation on the same memory block</source>
         <translation>同じメモリブロックの前のオペレーションを検索</translation>
     </message>
     <message>
-        <location filename="operationsearch.ui" line="85"/>
         <source>Prev</source>
         <translation>前へ</translation>
     </message>
     <message>
-        <location filename="operationsearch.ui" line="95"/>
         <source>Find next operation on the same memory block</source>
         <translation>同じメモリブロックの次のオペレーションを検索</translation>
     </message>
     <message>
-        <location filename="operationsearch.ui" line="98"/>
         <source>Next</source>
         <translation>次へ</translation>
     </message>
     <message>
-        <location filename="operationsearch.ui" line="118"/>
         <source>Find next by</source>
         <translation>次を検索(条件)</translation>
     </message>
     <message>
-        <location filename="operationsearch.ui" line="126"/>
         <source>address</source>
         <translation>アドレス</translation>
     </message>
     <message>
-        <location filename="operationsearch.ui" line="131"/>
         <source>size</source>
         <translation>サイズ</translation>
     </message>
     <message>
-        <location filename="operationsearch.ui" line="158"/>
         <source>Finds next memory operaton with given address or size</source>
         <translation>指定されたアドレスまたはサイズの次のメモリ操作を検索</translation>
     </message>
     <message>
-        <location filename="operationsearch.ui" line="161"/>
         <source>Find memory operation on a memory block with given address</source>
         <translation>指定されたアドレスのメモリブロック上のメモリ操作を検索</translation>
+    </message>
+    <message>
+        <source>Leaks only</source>
+        <translation>リークのみ</translation>
     </message>
 </context>
 <context>
     <name>OperationsListWidget</name>
     <message>
-        <location filename="operationslist.ui" line="14"/>
         <source>Operations</source>
         <translation>オペレーション</translation>
     </message>
@@ -1507,7 +1391,6 @@ Information may be missing from the profile!</source>
 <context>
     <name>ProgressBar</name>
     <message>
-        <location filename="progressbar.ui" line="14"/>
         <source>Form</source>
         <translation>フォーム</translation>
     </message>
@@ -1515,120 +1398,96 @@ Information may be missing from the profile!</source>
 <context>
     <name>ProjectsDialog</name>
     <message>
-        <location filename="projectsmanager.ui" line="20"/>
         <source>Projects manager</source>
         <translation>プロジェクトマネージャ</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="27"/>
         <source>Hint: drag and drop an executable to the dialog</source>
         <translation>ヒント : 実行可能ファイルをダイアログにドラッグ＆ドロップしてください</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="52"/>
         <source>Executable</source>
         <translation>実行ファイル</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="62"/>
         <source>Command line args</source>
         <translation>コマンドライン引数</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="72"/>
         <source>Working directory</source>
         <translation>作業ディレクトリ</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="82"/>
         <source>Environment:</source>
         <translation>環境 :</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="100"/>
         <source>Path of executable to run in instrumented mode</source>
         <translation>インストゥルメントモードで実行する実行ファイルのパス</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="107"/>
-        <location filename="projectsmanager.ui" line="132"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="116"/>
         <source>Command line arguments for the executable</source>
         <translation>実行ファイルのコマンドライン引数</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="125"/>
         <source>Directory to start the executable at. Leaving it empty will start the executable at it&apos;s location.</source>
         <translation>実行ファイルを起動するディレクトリ。空のままにすると、実行ファイルの場所から起動します。</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="143"/>
         <source>Edit a list of environment variables</source>
         <translation>環境変数のリストを編集</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="146"/>
         <source>Edit variables</source>
         <translation>変数を編集</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="153"/>
         <source>If checked, child process will inherit
 environment variables MTuner was started with</source>
         <translation>チェックすると、子プロセスは MTuner が起動されたときの
 環境変数を継承します</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="157"/>
         <source>Inherit environment from MTuner</source>
         <translation>MTuner から環境を継承</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="177"/>
         <source>Adds executable with run parameters to the list of projects</source>
         <translation>実行パラメータ付きの実行ファイルをプロジェクトリストに追加</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="180"/>
         <source>Add</source>
         <translation>追加</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="187"/>
         <source>Deletes a project from the list</source>
         <translation>リストからプロジェクトを削除</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="190"/>
         <source>Delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="197"/>
         <source>Run the MTuner instrumented executable</source>
         <translation>MTuner インストゥルメント実行ファイルを実行</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="200"/>
         <source>Run</source>
         <translation>実行</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="220"/>
         <source>Close dialog</source>
         <translation>ダイアログを閉じる</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="223"/>
         <source>Cancel</source>
         <translation>キャンセル</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="230"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -1636,321 +1495,189 @@ environment variables MTuner was started with</source>
 <context>
     <name>ProjectsManager</name>
     <message>
-        <location filename="projectsmanager.cpp" line="113"/>
         <source>Are you sure?</source>
         <translation>よろしいですか？</translation>
     </message>
     <message>
-        <location filename="projectsmanager.cpp" line="114"/>
         <source>Project list was modified, if you close project manager it will not be saved.</source>
         <translation>プロジェクトリストが変更されました。プロジェクトマネージャを閉じると保存されません。</translation>
     </message>
     <message>
-        <location filename="projectsmanager.cpp" line="289"/>
+        <source>Process inject has failed,
+missing MTuner inject binaries
+(MTunerInject*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>select executable</source>
         <translation>実行ファイルを選択</translation>
     </message>
     <message>
-        <location filename="projectsmanager.cpp" line="297"/>
         <source>select working directory</source>
         <translation>作業ディレクトリを選択</translation>
+    </message>
+    <message>
+        <source>Process inject failed!</source>
+        <translation>プロセスへのインジェクションに失敗しました！</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="tagtreewidget.cpp" line="73"/>
         <source>Tag</source>
         <translation>タグ</translation>
     </message>
     <message>
-        <location filename="tagtreewidget.cpp" line="76"/>
         <source>Overhead</source>
         <translation>オーバーヘッド</translation>
     </message>
     <message>
-        <location filename="tagtreewidget.cpp" line="77"/>
         <source>Peak Overhead</source>
         <translation>ピークオーバーヘッド</translation>
     </message>
     <message>
-        <location filename="tagtreewidget.cpp" line="86"/>
         <source>Root</source>
         <translation>ルート</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="482"/>
-        <location filename="operationslist.cpp" line="225"/>
         <source>Type</source>
         <translation>タイプ</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="484"/>
         <source>Block size</source>
         <translation>ブロックサイズ</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="485"/>
         <source>Total count</source>
         <translation>総数</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="486"/>
         <source>Live peak count</source>
         <translation>ライブピーク数</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="487"/>
         <source>Peak count</source>
         <translation>ピーク数</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="488"/>
-        <location filename="operationslist.cpp" line="225"/>
         <source>Alignment</source>
         <translation>アラインメント</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="489"/>
-        <location filename="operationslist.cpp" line="225"/>
         <source>Size</source>
         <translation>サイズ</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="490"/>
-        <location filename="grouplistwidget.cpp" line="491"/>
         <source>Peak size</source>
         <translation>ピークサイズ</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="492"/>
         <source>Leaked</source>
         <translation>リーク</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="483"/>
-        <location filename="operationslist.cpp" line="225"/>
         <source>Heap</source>
         <translation>ヒープ</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="531"/>
-        <location filename="operationslist.cpp" line="303"/>
         <source>Alloc</source>
         <translation>割り当て</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="532"/>
-        <location filename="operationslist.cpp" line="304"/>
         <source>Alloc aligned</source>
         <translation>アライン割り当て</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="533"/>
-        <location filename="operationslist.cpp" line="305"/>
         <source>Calloc</source>
         <translation>Calloc</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="534"/>
-        <location filename="operationslist.cpp" line="306"/>
         <source>Free</source>
         <translation>解放</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="535"/>
-        <location filename="operationslist.cpp" line="307"/>
         <source>Realloc</source>
         <translation>再割り当て</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="536"/>
-        <location filename="operationslist.cpp" line="308"/>
         <source>Realloc aligned</source>
         <translation>アライン再割り当て</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="570"/>
-        <location filename="operationslist.cpp" line="323"/>
         <source>Default</source>
         <translation>デフォルト</translation>
     </message>
     <message>
-        <location filename="operationslist.cpp" line="225"/>
         <source>Thread ID</source>
         <translation>スレッド ID</translation>
     </message>
     <message>
-        <location filename="operationslist.cpp" line="225"/>
         <source>Address</source>
         <translation>アドレス</translation>
     </message>
     <message>
-        <location filename="operationslist.cpp" line="225"/>
         <source>Time</source>
         <translation>時間</translation>
     </message>
     <message>
-        <location filename="stacktreewidget.cpp" line="360"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
     <message>
-        <location filename="stacktreewidget.cpp" line="361"/>
         <source>Module</source>
         <translation>モジュール</translation>
     </message>
     <message>
-        <location filename="stacktreewidget.cpp" line="362"/>
-        <location filename="tagtreewidget.cpp" line="74"/>
         <source>Usage</source>
         <translation>使用量</translation>
     </message>
     <message>
-        <location filename="stacktreewidget.cpp" line="363"/>
-        <location filename="tagtreewidget.cpp" line="75"/>
         <source>Peak Usage</source>
         <translation>ピーク使用量</translation>
     </message>
     <message>
-        <location filename="stacktreewidget.cpp" line="364"/>
         <source>Allocations</source>
         <translation>割り当て数</translation>
     </message>
     <message>
-        <location filename="stacktreewidget.cpp" line="365"/>
         <source>Frees</source>
         <translation>解放数</translation>
     </message>
     <message>
-        <location filename="stacktreewidget.cpp" line="366"/>
         <source>Reallocations</source>
         <translation>再割り当て数</translation>
     </message>
     <message>
-        <location filename="stacktreewidget.cpp" line="367"/>
         <source>File</source>
         <translation>ファイル</translation>
     </message>
     <message>
-        <location filename="stacktreewidget.cpp" line="368"/>
         <source>Line</source>
         <translation>行</translation>
     </message>
     <message>
-        <location filename="treemapview.cpp" line="263"/>
-        <source>Total size: </source>
-        <translation>合計サイズ : </translation>
-    </message>
-    <message>
-        <location filename="treemapview.cpp" line="264"/>
-        <source>Operations: </source>
-        <translation>オペレーション : </translation>
-    </message>
-    <message>
-        <location filename="treemapview.cpp" line="265"/>
-        <source>    Allocs: </source>
-        <translation>    割り当て : </translation>
-    </message>
-    <message>
-        <location filename="treemapview.cpp" line="266"/>
-        <source>  Reallocs: </source>
-        <translation>  再割り当て : </translation>
-    </message>
-    <message>
-        <location filename="treemapview.cpp" line="267"/>
-        <source>     Frees: </source>
-        <translation>     解放 : </translation>
-    </message>
-    <message>
-        <location filename="treemapview.cpp" line="268"/>
-        <source>Click to see call stack</source>
-        <translation>クリックでコールスタックを表示</translation>
-    </message>
-    <message>
-        <location filename="sourceview.cpp" line="53"/>
-        <location filename="sourceview.cpp" line="83"/>
-        <source>Set tab width to 4</source>
-        <translation>タブ幅を4に設定</translation>
-    </message>
-    <message>
-        <location filename="sourceview.cpp" line="54"/>
-        <location filename="sourceview.cpp" line="87"/>
-        <source>Set tab width to 8</source>
-        <translation>タブ幅を 8 に設定</translation>
-    </message>
-    <message>
-        <location filename="sourceview.cpp" line="55"/>
-        <location filename="sourceview.cpp" line="91"/>
-        <source>Open in editor</source>
-        <translation>エディタで開く</translation>
-    </message>
-    <message>
-        <location filename="centralwidget.cpp" line="18"/>
-        <location filename="centralwidget.cpp" line="36"/>
-        <source>Start Page</source>
-        <translation>スタートページ</translation>
-    </message>
-    <message>
-        <location filename="mtuner.cpp" line="92"/>
         <source>select symbol source</source>
         <translation>シンボルソースを選択</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="110"/>
-        <location filename="mtuner.cpp" line="117"/>
         <source>Toolchain is not configured</source>
         <translation>ツールチェーンが設定されていません</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="110"/>
         <source>Toolchain needs to be configured in order to resolve symbols.
 Would you like to configure the toolchain now?</source>
         <translation>シンボルを解決するにはツールチェーンの設定が必要です。
 今すぐツールチェーンを設定しますか？</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="117"/>
         <source>No debug symbols can be resolved!</source>
         <translation>デバッグシンボルを解決できません！</translation>
     </message>
     <message>
-        <location filename="histogram.cpp" line="128"/>
-        <source>byte used</source>
-        <translation>使用バイト</translation>
-    </message>
-    <message>
-        <location filename="histogram.cpp" line="130"/>
-        <source>bytes used</source>
-        <translation>使用バイト</translation>
-    </message>
-    <message>
-        <location filename="histogram.cpp" line="134"/>
-        <source>bytes of overhead</source>
-        <translation>オーバーヘッドバイト</translation>
-    </message>
-    <message>
-        <location filename="histogram.cpp" line="139"/>
-        <source>allocation</source>
-        <translation>割り当て</translation>
-    </message>
-    <message>
-        <location filename="histogram.cpp" line="141"/>
-        <source>allocations</source>
-        <translation>割り当て数</translation>
-    </message>
-    <message>
-        <location filename="histogram.cpp" line="146"/>
-        <source>at peak</source>
-        <translation>ピーク時</translation>
-    </message>
-    <message>
-        <location filename="mtunermain.cpp" line="462"/>
         <source>Failed to register DIA dll!</source>
         <translation>DIA dllの登録に失敗しました！</translation>
     </message>
     <message>
-        <location filename="mtunermain.cpp" line="462"/>
         <source>Debug symbols may not be loaded correctly</source>
         <translation>デバッグシンボルが正しく読み込まれない可能性があります</translation>
     </message>
@@ -1958,12 +1685,10 @@ Would you like to configure the toolchain now?</source>
 <context>
     <name>SourceView</name>
     <message>
-        <location filename="sourceview.cpp" line="263"/>
         <source>Failed to start editor!</source>
         <translation>エディタの起動に失敗しました！</translation>
     </message>
     <message>
-        <location filename="sourceview.cpp" line="263"/>
         <source>Setup external editor now?</source>
         <translation>今すぐ外部エディタを設定しますか？</translation>
     </message>
@@ -1971,7 +1696,6 @@ Would you like to configure the toolchain now?</source>
 <context>
     <name>StackAndSource</name>
     <message>
-        <location filename="stackandsource.ui" line="14"/>
         <source>Form</source>
         <translation>フォーム</translation>
     </message>
@@ -1979,67 +1703,54 @@ Would you like to configure the toolchain now?</source>
 <context>
     <name>StackTrace</name>
     <message>
-        <location filename="stacktrace.ui" line="14"/>
         <source>Form</source>
         <translation>フォーム</translation>
     </message>
     <message>
-        <location filename="stacktrace.ui" line="66"/>
         <source>Module</source>
         <translation>モジュール</translation>
     </message>
     <message>
-        <location filename="stacktrace.ui" line="76"/>
         <source>File</source>
         <translation>ファイル</translation>
     </message>
     <message>
-        <location filename="stacktrace.ui" line="81"/>
         <source>Line</source>
         <translation>行</translation>
     </message>
     <message>
-        <location filename="stacktrace.ui" line="71"/>
         <source>Function</source>
         <translation>関数</translation>
     </message>
     <message>
-        <location filename="stacktrace.ui" line="86"/>
         <source>Path</source>
         <translation>パス</translation>
     </message>
     <message>
-        <location filename="stacktrace.ui" line="112"/>
         <source>Stack trace</source>
         <translation>スタックトレース</translation>
     </message>
     <message>
-        <location filename="stacktrace.ui" line="124"/>
         <source>&lt;</source>
         <translation>&lt;</translation>
     </message>
     <message>
-        <location filename="stacktrace.ui" line="141"/>
         <source>&gt;</source>
         <translation>&gt;</translation>
     </message>
     <message>
-        <location filename="stacktrace.ui" line="150"/>
         <source>of 100</source>
         <translation>/ 100</translation>
     </message>
     <message>
-        <location filename="stacktrace.cpp" line="77"/>
         <source>Copy</source>
         <translation>コピー</translation>
     </message>
     <message>
-        <location filename="stacktrace.cpp" line="78"/>
         <source>Copy all</source>
         <translation>すべてコピー</translation>
     </message>
     <message>
-        <location filename="stacktrace.cpp" line="158"/>
         <source>of</source>
         <translation>/</translation>
     </message>
@@ -2047,37 +1758,30 @@ Would you like to configure the toolchain now?</source>
 <context>
     <name>StartPageWidget</name>
     <message>
-        <location filename="startpage.ui" line="14"/>
         <source>StartPageWidget</source>
         <translation>スタートページ</translation>
     </message>
     <message>
-        <location filename="startpage.ui" line="48"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt; font-weight:600; color:#5a5a78;&quot;&gt;M&lt;/span&gt;&lt;span style=&quot; font-size:36pt; font-weight:600; color:#787896;&quot;&gt;Tuner&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt; font-weight:600; color:#5a5a78;&quot;&gt;M&lt;/span&gt;&lt;span style=&quot; font-size:36pt; font-weight:600; color:#787896;&quot;&gt;Tuner&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="startpage.ui" line="77"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Copyright © 2025 by Milos Tosic - All Rights Reserved&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Copyright © 2025 Milos Tosic - All Rights Reserved&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="startpage.ui" line="150"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/MTuner/resources/images/Run.png&quot;/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/MTuner/resources/images/Run.png&quot;/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="startpage.ui" line="182"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/MTuner/resources/images/Icon128.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/MTuner/resources/images/Icon128.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="startpage.ui" line="225"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Drag &amp;amp; drop an executable&lt;br/&gt;to begin memory profiling&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;実行ファイルをドラッグ＆ドロップ&lt;br/&gt;してメモリプロファイリングを開始&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="startpage.ui" line="251"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Drag &amp;amp; drop *.MTuner &lt;br/&gt;file to begin memory analysis&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;*.MTunerファイルをドラッグ＆ドロップ&lt;br/&gt;してメモリ分析を開始&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -2085,152 +1789,122 @@ Would you like to configure the toolchain now?</source>
 <context>
     <name>Stats</name>
     <message>
-        <location filename="stats.ui" line="20"/>
         <source>Form</source>
         <translation>フォーム</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="79"/>
         <source>Usage</source>
         <translation>使用量</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="84"/>
         <source>Usage peak</source>
         <translation>使用量ピーク</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="89"/>
         <source>Operations</source>
         <translation>オペレーション</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="94"/>
         <source>Allocations</source>
         <translation>割り当て数</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="99"/>
         <source>Reallocations</source>
         <translation>再割り当て数</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="104"/>
         <source>Frees</source>
         <translation>解放数</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="109"/>
         <source>Live blocks</source>
         <translation>ライブブロック</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="114"/>
         <source>Overhead</source>
         <translation>オーバーヘッド</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="119"/>
         <source>Overhead peak</source>
         <translation>オーバーヘッドピーク</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="124"/>
         <source>Global</source>
         <translation>全般</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="129"/>
         <source>Snapshot</source>
         <translation>スナップショット</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="137"/>
         <source>Total memory usage, in bytes, at process termination</source>
         <translation>プロセス終了時の総メモリ使用量 (バイト)</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="148"/>
         <source>Total memory usage, in bytes, at the end of selected time slice</source>
         <translation>選択した時間範囲の終了時の総メモリ使用量 (バイト)</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="173"/>
         <source>Peak memory usage, in bytes, inside the selected time slice</source>
         <translation>選択した時間範囲内のピークメモリ使用量 (バイト)</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="195"/>
         <source>Number of memory operations in selected time slice</source>
         <translation>選択した時間範囲内のメモリオペレーション数</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="217"/>
         <source>Number of allocations in selected time slice</source>
         <translation>選択した時間範囲内の割り当て数</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="239"/>
         <source>Number of reallocations in selected time slice</source>
         <translation>選択した時間範囲内の再割り当て数</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="261"/>
         <source>Number of free operations in selected time slice</source>
         <translation>選択した時間範囲内の解放オペレーション数</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="283"/>
         <source>Number of memory leaks in selected time slice</source>
         <translation>選択した時間範囲内のメモリリーク数</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="305"/>
         <source>Total allocation overhead, in bytes, in selected time slice</source>
         <translation>選択した時間範囲内の総割り当てオーバーヘッド (バイト)</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="327"/>
         <source>Peak overhead, in bytes, in selected time slice</source>
         <translation>選択した時間範囲内のピークオーバーヘッド (バイト)</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="159"/>
         <source>Peak memory usage, in bytes</source>
         <translation>ピークメモリ使用量 (バイト)</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="184"/>
         <source>Number of memory operations</source>
         <translation>メモリオペレーション数</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="206"/>
         <source>Number of allocations</source>
         <translation>割り当て数</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="228"/>
         <source>Number of reallocations</source>
         <translation>再割り当て数</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="250"/>
         <source>Number of free operations</source>
         <translation>解放オペレーション数</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="272"/>
         <source>Number of memory leaks</source>
         <translation>メモリリーク数</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="294"/>
         <source>Total allocation overhead, in bytes</source>
         <translation>総割り当てオーバーヘッド (バイト)</translation>
     </message>
     <message>
-        <location filename="stats.ui" line="316"/>
         <source>Peak allocation overhead, in bytes</source>
         <translation>ピーク割り当てオーバーヘッド (バイト)</translation>
     </message>
@@ -2238,7 +1912,6 @@ Would you like to configure the toolchain now?</source>
 <context>
     <name>SymbolStore</name>
     <message>
-        <location filename="symbolstore.cpp" line="127"/>
         <source>select local symbol store directory</source>
         <translation>ローカルシンボルストアディレクトリを選択</translation>
     </message>
@@ -2246,62 +1919,50 @@ Would you like to configure the toolchain now?</source>
 <context>
     <name>SymbolStoreDialog</name>
     <message>
-        <location filename="symbolstore.ui" line="104"/>
         <source>_NT_SYMBOL_PATH</source>
         <translation>_NT_SYMBOL_PATH</translation>
     </message>
     <message>
-        <location filename="symbolstore.ui" line="6"/>
         <source>Symbol store setup</source>
         <translation>シンボルストア設定</translation>
     </message>
     <message>
-        <location filename="symbolstore.ui" line="21"/>
         <source>User defined</source>
         <translation>ユーザー定義</translation>
     </message>
     <message>
-        <location filename="symbolstore.ui" line="31"/>
         <source>Public store</source>
         <translation>パブリックストア</translation>
     </message>
     <message>
-        <location filename="symbolstore.ui" line="41"/>
         <source>Local store</source>
         <translation>ローカルストア</translation>
     </message>
     <message>
-        <location filename="symbolstore.ui" line="64"/>
         <source>Default</source>
         <translation>デフォルト</translation>
     </message>
     <message>
-        <location filename="symbolstore.ui" line="82"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="symbolstore.ui" line="98"/>
         <source>Environment</source>
         <translation>環境</translation>
     </message>
     <message>
-        <location filename="symbolstore.ui" line="118"/>
         <source>Visit MSDN page explaining in depth how to set up symbol store paths</source>
         <translation>シンボルストアパスの設定方法を詳しく説明する MSDN ページを表示</translation>
     </message>
     <message>
-        <location filename="symbolstore.ui" line="121"/>
         <source>MSDN info</source>
         <translation>MSDN 情報</translation>
     </message>
     <message>
-        <location filename="symbolstore.ui" line="141"/>
         <source>Cancel</source>
         <translation>キャンセル</translation>
     </message>
     <message>
-        <location filename="symbolstore.ui" line="148"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -2309,70 +1970,80 @@ Would you like to configure the toolchain now?</source>
 <context>
     <name>TreeMap</name>
     <message>
-        <location filename="treemap.ui" line="17"/>
         <source>Form</source>
         <translation>フォーム</translation>
     </message>
     <message>
-        <location filename="treemap.ui" line="68"/>
         <source>Memory usage</source>
         <translation>メモリ使用量</translation>
     </message>
     <message>
-        <location filename="treemap.ui" line="73"/>
         <source>Memory usage peak</source>
         <translation>メモリ使用量ピーク</translation>
     </message>
     <message>
-        <location filename="treemap.ui" line="78"/>
         <source>Allocation overhead</source>
         <translation>割り当てオーバーヘッド</translation>
     </message>
     <message>
-        <location filename="treemap.ui" line="83"/>
         <source>Allocation overhead peak</source>
         <translation>割り当てオーバーヘッドピーク</translation>
     </message>
 </context>
 <context>
+    <name>TreeMapView</name>
+    <message>
+        <source>Total size</source>
+        <translation>合計サイズ</translation>
+    </message>
+    <message>
+        <source>Operations</source>
+        <translation>オペレーション</translation>
+    </message>
+    <message>
+        <source>  Allocs</source>
+        <translation>  確保</translation>
+    </message>
+    <message>
+        <source>Reallocs</source>
+        <translation>再確保</translation>
+    </message>
+    <message>
+        <source>   Frees</source>
+        <translation>   解放</translation>
+    </message>
+</context>
+<context>
     <name>Welcome</name>
     <message>
-        <location filename="welcome.ui" line="20"/>
         <source>Welcome to MTuner!</source>
         <translation>MTuner へようこそ！</translation>
     </message>
     <message>
-        <location filename="welcome.ui" line="37"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/MTuner/resources/images/Icon64.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/MTuner/resources/images/Icon64.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="welcome.ui" line="54"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt; color:#5a5a78;&quot;&gt;Welcome to M&lt;/span&gt;&lt;span style=&quot; font-size:24pt; color:#787896;&quot;&gt;Tuner&lt;/span&gt;&lt;span style=&quot; font-size:24pt; color:#5a5a78;&quot;&gt;!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt; color:#5a5a78;&quot;&gt;Welcome to M&lt;/span&gt;&lt;span style=&quot; font-size:24pt; color:#787896;&quot;&gt;Tuner&lt;/span&gt;&lt;span style=&quot; font-size:24pt; color:#5a5a78;&quot;&gt;!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="welcome.ui" line="78"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Thank you for choosing MTuner!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Before starting to profile MSVC based applications it is important to setup PDB symbol servers.&lt;br/&gt;For more information please visit MTuner website, just click the Documentation button below.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;MTunerをお選びいただきありがとうございます！&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;MSVCベースのアプリケーションのプロファイリングを開始する前に、PDBシンボルサーバーを設定することが重要です。&lt;br/&gt;詳細については、下のドキュメンテーションボタンをクリックして MTuner のウェブサイトをご覧ください。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="welcome.ui" line="205"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Setup PDB&lt;br/&gt;symbol servers&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;PDBシンボル&lt;br/&gt;サーバーを設定&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="welcome.ui" line="225"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Read MTuner&lt;br/&gt;documentation&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;MTunerの&lt;br/&gt;ドキュメントを読む&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="welcome.ui" line="266"/>
         <source>Always show on startup</source>
         <translation>起動時に常に表示</translation>
     </message>
     <message>
-        <location filename="welcome.ui" line="291"/>
         <source>Close</source>
         <translation>閉じる</translation>
     </message>
@@ -2380,83 +2051,58 @@ Would you like to configure the toolchain now?</source>
 <context>
     <name>hotspotWidget</name>
     <message>
-        <location filename="hotspot.ui" line="14"/>
         <source>Form</source>
         <translation>フォーム</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="28"/>
         <source>Peak memory usage</source>
         <translation>ピークメモリ使用量</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="54"/>
-        <location filename="hotspot.ui" line="118"/>
-        <location filename="hotspot.ui" line="182"/>
-        <location filename="hotspot.ui" line="246"/>
         <source>Type</source>
         <translation>タイプ</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="59"/>
-        <location filename="hotspot.ui" line="123"/>
-        <location filename="hotspot.ui" line="187"/>
-        <location filename="hotspot.ui" line="251"/>
         <source>Block size</source>
         <translation>ブロックサイズ</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="64"/>
-        <location filename="hotspot.ui" line="128"/>
-        <location filename="hotspot.ui" line="192"/>
-        <location filename="hotspot.ui" line="256"/>
         <source>Alignment</source>
         <translation>アラインメント</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="69"/>
-        <location filename="hotspot.ui" line="133"/>
         <source>Peak count</source>
         <translation>ピーク数</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="74"/>
-        <location filename="hotspot.ui" line="138"/>
         <source>Peak size</source>
         <translation>ピークサイズ</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="92"/>
         <source>Peak live memory blocks</source>
         <translation>ピークライブメモリブロック</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="156"/>
         <source>Leaked memory by size</source>
         <translation>サイズ別リークメモリ</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="197"/>
         <source>Count</source>
         <translation>数</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="202"/>
         <source>Size</source>
         <translation>サイズ</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="220"/>
         <source>Leaked memory by count</source>
         <translation>数別リークメモリ</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="261"/>
         <source>Leaked count</source>
         <translation>リーク数</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="266"/>
         <source>Leaked size</source>
         <translation>リークサイズ</translation>
     </message>
@@ -2464,7 +2110,6 @@ Would you like to configure the toolchain now?</source>
 <context>
     <name>stackTree</name>
     <message>
-        <location filename="stacktree.ui" line="14"/>
         <source>Form</source>
         <translation>フォーム</translation>
     </message>
@@ -2472,7 +2117,6 @@ Would you like to configure the toolchain now?</source>
 <context>
     <name>tagTree</name>
     <message>
-        <location filename="tagtree.ui" line="14"/>
         <source>Form</source>
         <translation>フォーム</translation>
     </message>

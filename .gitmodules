@@ -28,3 +28,6 @@
 [submodule "src/libs/rqt"]
 	path = src/libs/rqt
 	url = https://github.com/RudjiGames/rqt.git
+[submodule "src/libs/rg_memory"]
+	path = src/libs/rg_memory
+	url = https://github.com/RudjiGames/rg_memory

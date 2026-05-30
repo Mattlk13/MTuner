@@ -74,9 +74,9 @@ static inline uint32_t fillStats_Alloc(MemoryOperation* _op, MemoryStats& _stats
 //--------------------------------------------------------------------------
 /// Fills memory statistics structure for realloc family of functions
 //--------------------------------------------------------------------------
-static inline uint32_t fillStats_ReAlloc(MemoryOperation* _op, MemoryStats& _stats)
+static inline uint32_t fillStats_ReAlloc(MemoryOperation* _op, MemoryStats& _stats, MemoryOperation* _base)
 {
-	MemoryOperation* prevOp = _op->m_chainPrev;
+	MemoryOperation* prevOp = opChainPrev(_op, _base);
 
 	_stats.m_memoryUsage		+= _op->m_allocSize;
 	if (prevOp)

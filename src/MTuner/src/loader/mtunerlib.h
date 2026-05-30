@@ -40,24 +40,96 @@ enum eGroupSort
 //--------------------------------------------------------------------------
 /// Structure adding information on top of memory operation
 //--------------------------------------------------------------------------
+// Fields are ordered by descending alignment so the struct packs to 48 bytes with no internal
+// padding (down from the original 80). The two 64-bit fields force 8-byte alignment, so 48 is the
+// natural floor; sizeof being a multiple of 16 also keeps ops contiguous in the 16-byte-aligned
+// arena (chain indices rely on that). See the static_assert below.
 struct MemoryOperation
 {
-	uint64_t			m_allocatorHandle;		//< Allocator handle
-	uint64_t			m_threadID;				//< Thread ID
 	uint64_t			m_pointer;				//< Allocated/freed pointer
-	uint64_t			m_previousPointer;		//< Valid for realloc operations
-	MemoryOperation*	m_chainPrev;
-	MemoryOperation*	m_chainNext;
-	StackTrace*			m_stackTrace;
 	uint64_t			m_operationTime;
-	uint32_t			m_indexMapping;
+	uint32_t			m_chainPrev;			//< Index of the previous op on this block (kInvalidOpIndex = none)
+	uint32_t			m_chainNext;			//< Index of the next op on this block (kInvalidOpIndex = none)
+	uint32_t			m_stackTraceIndex;		//< Index into Capture::m_stackTraces
+	uint32_t			m_threadIndex;			//< Index into Capture::m_threadIds (thread ID table)
 	uint32_t			m_allocSize;
 	uint32_t			m_overhead;
+	uint16_t			m_allocatorIndex;		//< Index into Capture::m_heapHandles (allocator handle table)
 	uint16_t			m_tag;
-	uint8_t				m_operationType : 6;
-	uint8_t				m_isValid		: 1;
-	uint8_t				m_isLeaked		: 1;
+	uint8_t				m_operationType			: 5;	//< rmem::LogMarkers Op* value (max 5, fits 5 bits)
+	uint8_t				m_isValid				: 1;
+	uint8_t				m_isLeaked				: 1;
+	uint8_t				m_hasPreviousPointer	: 1;	//< realloc carried a previous pointer (value lives in Capture's transient load map)
 	uint8_t				m_alignment;
+};
+
+static_assert(sizeof(MemoryOperation) == 48, "MemoryOperation must stay 48 bytes (and a multiple of 16 for arena contiguity)");
+
+//--------------------------------------------------------------------------
+/// MemoryOperation chain links and the stack-trace/thread/allocator fields are
+/// stored as indices into contiguous tables instead of pointers, keeping the
+/// struct small. Chain indices reference the operations arena (stable arrival
+/// order); kInvalidOpIndex marks "no link".
+//--------------------------------------------------------------------------
+static const uint32_t kInvalidOpIndex = 0xffffffffu;
+
+inline MemoryOperation* opChainPrev(const MemoryOperation* _op, MemoryOperation* _base)
+{
+	return (_op->m_chainPrev == kInvalidOpIndex) ? (MemoryOperation*)0 : (_base + _op->m_chainPrev);
+}
+
+inline MemoryOperation* opChainNext(const MemoryOperation* _op, MemoryOperation* _base)
+{
+	return (_op->m_chainNext == kInvalidOpIndex) ? (MemoryOperation*)0 : (_base + _op->m_chainNext);
+}
+
+inline uint32_t opToIndex(const MemoryOperation* _op, const MemoryOperation* _base)
+{
+	return _op ? (uint32_t)(_op - _base) : kInvalidOpIndex;
+}
+
+//--------------------------------------------------------------------------
+/// Array of memory operations stored as 32-bit arena indices (4 bytes each)
+/// instead of 64-bit pointers, halving these (often huge) lists. Reads still
+/// hand back MemoryOperation* via operator[] / iteration, so consumers are
+/// unchanged; setBase() must be called once (with Capture::m_operationBase)
+/// before the first push_back. Sorting / remove_if operate on indices()
+/// directly with a base-aware projection (the iterator's value type is
+/// MemoryOperation*, which std algorithms cannot swap against uint32 storage).
+//--------------------------------------------------------------------------
+class MemoryOpArray
+{
+	std::vector<uint32_t>	m_idx;
+	MemoryOperation*		m_base = nullptr;
+
+public:
+	struct const_iterator
+	{
+		const uint32_t*		m_p;
+		MemoryOperation*	m_base;
+		MemoryOperation*	operator*()  const { return m_base + *m_p; }
+		const_iterator&		operator++()       { ++m_p; return *this; }
+		bool				operator==(const const_iterator& _o) const { return m_p == _o.m_p; }
+		bool				operator!=(const const_iterator& _o) const { return m_p != _o.m_p; }
+	};
+
+	void				setBase(MemoryOperation* _base)	{ m_base = _base; }
+	MemoryOperation*	getBase() const					{ return m_base; }
+
+	size_t				size() const					{ return m_idx.size(); }
+	bool				empty() const					{ return m_idx.empty(); }
+	void				clear()							{ m_idx.clear(); }
+	void				reserve(size_t _n)				{ m_idx.reserve(_n); }
+	void				resize(size_t _n)				{ m_idx.resize(_n); }
+	void				push_back(MemoryOperation* _op)	{ m_idx.push_back((uint32_t)(_op - m_base)); }
+
+	MemoryOperation*	operator[](size_t _i) const		{ return m_base + m_idx[_i]; }
+
+	const_iterator		begin() const					{ return { m_idx.data(),               m_base }; }
+	const_iterator		end()   const					{ return { m_idx.data() + m_idx.size(), m_base }; }
+
+	std::vector<uint32_t>&			indices()			{ return m_idx; }	///< raw index storage for base-aware sort / remove_if
+	const std::vector<uint32_t>&	indices() const		{ return m_idx; }
 };
 
 //--------------------------------------------------------------------------
@@ -111,8 +183,6 @@ struct MemoryStats
 struct MemoryOperationGroup
 {
 	enum { INDEX_MAPPINGS = 11 };
-
-	typedef std::vector<MemoryOperation*> MemoryOpArray;
 
 	uint32_t			m_minSize;				///< single allocation size
 	uint32_t			m_maxSize;				///< single allocation size
@@ -276,7 +346,7 @@ struct MemoryTagTree
 
 bool tagFind(MemoryTagTree& _rootTag, uint32_t _hash, MemoryTagTree*& ioResult, MemoryTagTree*& _prevTag);
 bool tagInsert(MemoryTagTree* _rootTag, MemoryTagTree* _tag, uint32_t _parentTagHash);
-void tagAddOp(MemoryTagTree& _rootTag, MemoryOperation* _op, MemoryTagTree*& _prevTag);
+void tagAddOp(MemoryTagTree& _rootTag, MemoryOperation* _op, MemoryTagTree*& _prevTag, MemoryOperation* _base);
 void tagTreeDestroy(MemoryTagTree& _rootTag);
 
 struct MemoryMarkerEvent

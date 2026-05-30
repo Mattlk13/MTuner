@@ -86,7 +86,7 @@ struct pSortHeap
 	std::vector<rtm::MemoryOperationGroup*>* m_allGroups;
 	pSortHeap(std::vector<rtm::MemoryOperationGroup*>& _groups) : m_allGroups(&_groups) {}
 
-	inline uint64_t operator()(const uint32_t _val) const { return (*m_allGroups)[_val]->m_groupOperations[0]->m_allocatorHandle; }
+	inline uint64_t operator()(const uint32_t _val) const { return (*m_allGroups)[_val]->m_groupOperations[0]->m_allocatorIndex; }
 };
 
 // concurrency::parallel_radixsort Size
@@ -226,7 +226,7 @@ struct pSortHeapNVC
 	std::vector<rtm::MemoryOperationGroup*>* m_allGroups;
 	pSortHeapNVC(std::vector<rtm::MemoryOperationGroup*>& _groups) : m_allGroups(&_groups) {}
 
-	inline bool operator()(const uint32_t _val1, const uint32_t _val2) const { return (*m_allGroups)[_val1]->m_groupOperations[0]->m_allocatorHandle < (*m_allGroups)[_val2]->m_groupOperations[0]->m_allocatorHandle; }
+	inline bool operator()(const uint32_t _val1, const uint32_t _val2) const { return (*m_allGroups)[_val1]->m_groupOperations[0]->m_allocatorIndex < (*m_allGroups)[_val2]->m_groupOperations[0]->m_allocatorIndex; }
 };
 
 struct pSortSizeNVC
@@ -586,12 +586,13 @@ QString GroupTableSource::getItem(uint32_t _index, int32_t _column, QColor*, boo
 	
 		case GroupColumn::Heap:
 			{
+				const uint64_t allocatorHandle = m_context->m_capture->getHeapHandle(group->m_groupOperations[0]->m_allocatorIndex);
 				rtm::HeapsType& heaps = m_context->m_capture->getHeaps();
-				rtm::HeapsType::iterator it = heaps.find(group->m_groupOperations[0]->m_allocatorHandle);
+				rtm::HeapsType::iterator it = heaps.find(allocatorHandle);
 				if (it != heaps.end())
 					return it->second.c_str();
 				else
-					return QString("0x") + QString::number(group->m_groupOperations[0]->m_allocatorHandle, 16);
+					return QString("0x") + QString::number(allocatorHandle, 16);
 			}
 		
 		case GroupColumn::Size:
@@ -795,7 +796,8 @@ void GroupList::selectionChanged(void* _item)
 		emit highlightRange(mn, mx);
 	}
 
-	emit setStackTrace(&(group->m_groupOperations[0]->m_stackTrace), 1);
+	m_selectedStackTrace = m_context->m_capture->getStackTraceByIndex(group->m_groupOperations[0]->m_stackTraceIndex);
+	emit setStackTrace(&m_selectedStackTrace, 1);
 }
 
 void GroupList::groupRightClick(void* _item, const QPoint& _pos)

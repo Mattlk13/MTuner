@@ -35,6 +35,7 @@ copy ..\..\src\MTuner\src\mtuner_rs.qm translation\MTuner_rs.qm
 copy ..\..\src\MTuner\src\mtuner_de.qm translation\MTuner_de.qm
 copy ..\..\src\MTuner\src\mtuner_it.qm translation\MTuner_it.qm
 copy ..\..\src\MTuner\src\mtuner_zh.qm translation\MTuner_zh.qm
+copy ..\..\src\MTuner\src\mtuner_ja.qm translation\MTuner_ja.qm
 
 cd SDK
 mkdir inc

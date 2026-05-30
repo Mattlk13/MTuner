@@ -51,11 +51,14 @@ class HotspotsWidget : public QWidget
 	QTableWidget*		m_leaksTable;
 	GroupMapping*		m_leaksMapping;
 	TableKeyWatcher*	m_tableKeyWatch;
+	CaptureContext*		m_context = nullptr;					///< needed to resolve op stack-trace indices to pointers
+	rtm::StackTrace*	m_selectedStackTrace = nullptr;			///< Stable holder for the setStackTrace(StackTrace**) signal (see GroupList)
 
 public:
 	HotspotsWidget(QWidget* _parent = 0, Qt::WindowFlags _flags = (Qt::WindowFlags)0);
-	
+
 	void changeEvent(QEvent* _event);
+	void setContext(CaptureContext* _context) { m_context = _context; }
 
 Q_SIGNALS:
 	void setStackTrace(rtm::StackTrace**, int);

@@ -24,13 +24,12 @@ static bool __uncaught_exception() { return true; }
 
 struct pSortOpsTime
 {
-	std::vector<rtm::MemoryOperation*>* m_allOps;
-	pSortOpsTime(std::vector<rtm::MemoryOperation*>& _ops) : m_allOps(&_ops) {}
+	const rtm::MemoryOperation* m_base;
+	pSortOpsTime(const rtm::MemoryOperation* _base) : m_base(_base) {}
 
-	inline uint64_t operator()(const rtm::MemoryOperation* _val) const
-	{
-		return _val->m_operationTime;
-	}
+	// projection (parallel_radixsort key) and comparator (parallelStableSort) over op indices
+	inline uint64_t operator()(uint32_t _idx) const { return m_base[_idx].m_operationTime; }
+	inline bool operator()(uint32_t _a, uint32_t _b) const { return m_base[_a].m_operationTime < m_base[_b].m_operationTime; }
 };
 
 #pragma warning (pop)
@@ -123,16 +122,16 @@ static void parallelStableSort(Iter _begin, Iter _end, Less _less)
 	}
 }
 
-static bool isLeakedBlock(const rtm::MemoryOperation* _op)
+static bool isLeakedBlock(const rtm::MemoryOperation* _op, rtm::MemoryOperation* _base)
 {
 	do {
 		if (_op->m_operationType == rmem::LogMarkers::OpFree)
 			return false;
 
-		if (!_op->m_chainNext)
+		if (_op->m_chainNext == kInvalidOpIndex)
 			return true;
 
-		_op = _op->m_chainNext;
+		_op = opChainNext(_op, _base);
 
 	} while (_op);
 
@@ -187,7 +186,8 @@ inline uint32_t	ReadString(char16_t _string[Len], BinLoader& _loader, bool _swap
 
 static inline uintptr_t calcGroupHash(MemoryOperation* _op)
 {
-	return (uintptr_t)_op->m_stackTrace;
+	// The stack-trace index is a 1:1 stand-in for the old pointer when grouping ops by call stack.
+	return (uintptr_t)_op->m_stackTraceIndex;
 }
 
 static inline void addHeap(HeapsType& _heaps, uint64_t _heap)
@@ -215,7 +215,7 @@ static inline void updateLiveBlocks(MemoryOperation* _op, uint64_t& _liveBlocks)
 		break;
 	case rmem::LogMarkers::OpRealloc:
 	case rmem::LogMarkers::OpReallocAligned:
-		if (_op->m_previousPointer == 0)
+		if (!_op->m_hasPreviousPointer)
 			++_liveBlocks;
 		else if (_op->m_allocSize == 0)
 			--_liveBlocks;
@@ -226,7 +226,7 @@ static inline void updateLiveBlocks(MemoryOperation* _op, uint64_t& _liveBlocks)
 	};
 }
 
-static inline void updateLiveSize(MemoryOperation* _op, uint64_t& _liveSize)
+static inline void updateLiveSize(MemoryOperation* _op, uint64_t& _liveSize, MemoryOperation* _base)
 {
 	switch (_op->m_operationType)
 	{
@@ -238,14 +238,114 @@ static inline void updateLiveSize(MemoryOperation* _op, uint64_t& _liveSize)
 	case rmem::LogMarkers::OpRealloc:
 	case rmem::LogMarkers::OpReallocAligned:
 		_liveSize += _op->m_allocSize;
-		if (_op->m_previousPointer && _op->m_chainPrev)
-			_liveSize -= _op->m_chainPrev->m_allocSize;
+		if (_op->m_hasPreviousPointer && _op->m_chainPrev != kInvalidOpIndex)
+			_liveSize -= opChainPrev(_op, _base)->m_allocSize;
 		break;
 	case rmem::LogMarkers::OpFree:
-		if (_op->m_chainPrev)
-			_liveSize -= _op->m_chainPrev->m_allocSize;
+		if (_op->m_chainPrev != kInvalidOpIndex)
+			_liveSize -= opChainPrev(_op, _base)->m_allocSize;
 		break;
 	};
+}
+
+//--------------------------------------------------------------------------
+/// Address space reserved for the operations arena. Only touched pages are
+/// committed (lazily, as the bump pointer advances), so this large reservation
+/// costs virtual address space - not RAM - until ops actually stream in.
+/// 64 GiB / sizeof(MemoryOperation) is far above any realistic capture; the
+/// loader is 64-bit so the reservation always fits the address space.
+//--------------------------------------------------------------------------
+static const uint64_t s_operationArenaReserve = 64ull << 30;
+
+//--------------------------------------------------------------------------
+/// Address space for the stack-trace arena. Records are variable-size and far
+/// fewer than ops (one per unique call stack), so a smaller lazy reservation
+/// is plenty; only touched pages are committed.
+//--------------------------------------------------------------------------
+static const uint64_t s_stackTraceArenaReserve = 16ull << 30;
+
+//--------------------------------------------------------------------------
+/// Bump-allocates one MemoryOperation from the contiguous ops arena, creating
+/// the arena on first use. Freshly committed VM pages are zero-filled, so the
+/// returned op is zero-initialized (matching the old ChunkAllocator). Returns
+/// NULL only if the reservation is exhausted.
+//--------------------------------------------------------------------------
+MemoryOperation* Capture::allocOperation()
+{
+	if (!rgArenaIsValid(&m_operationArena))
+	{
+		// NOTE: deliberately NOT using RGM_ARENA_FLAG_HUGE_PAGES here. On Windows huge pages are
+		// eager-committed across the *entire* reservation, which on this large over-reservation
+		// would physically back tens of GiB of RAM whenever the caller holds SeLockMemoryPrivilege.
+		// Lazy normal pages keep commit proportional to the actual op count.
+		if (rgArenaCreate(&m_operationArena, s_operationArenaReserve) != 0)
+			return NULL;
+	}
+	MemoryOperation* op = (MemoryOperation*)rgArenaAlloc(&m_operationArena, sizeof(MemoryOperation));
+	if (op && !m_operationBase)
+	{
+		// First op anchors the index space; sizeof is a multiple of the 16-byte alloc alignment,
+		// so ops stay contiguous. Point every Capture-owned op list at this base now, before any
+		// of them is populated, so their push_back can encode op->index.
+		m_operationBase = op;
+		m_operations.setBase(op);
+		m_operationsInvalid.setBase(op);
+		m_memoryLeaks.setBase(op);
+		m_filter.m_operations.setBase(op);
+	}
+	if (op)
+		++m_operationCount;
+	return op;
+}
+
+//--------------------------------------------------------------------------
+/// Bump-allocates a variable-size StackTrace from the stack-trace arena (8-byte
+/// aligned for its uint64 frame array), creating the arena on first use. Fresh
+/// committed pages are zero-filled, which StackTrace::init relies on (it does
+/// not clear m_addedToTree). Returns NULL only if the reservation is exhausted.
+//--------------------------------------------------------------------------
+void* Capture::allocStackTrace(uint32_t _size)
+{
+	if (!rgArenaIsValid(&m_stackTraceArena))
+	{
+		if (rgArenaCreate(&m_stackTraceArena, s_stackTraceArenaReserve) != 0)
+			return NULL;
+	}
+	return rgArenaAllocAligned(&m_stackTraceArena, _size, 8);
+}
+
+//--------------------------------------------------------------------------
+/// Maps an allocator handle to a small index, assigning a new one the first
+/// time a handle is seen. Allocators are few, so the index fits in 16 bits
+/// and lets MemoryOperation store m_allocatorIndex instead of a 64-bit handle.
+//--------------------------------------------------------------------------
+uint16_t Capture::internHeap(uint64_t _handle)
+{
+	ankerl::unordered_dense::map<uint64_t, uint16_t>::iterator it = m_heapHandleToIndex.find(_handle);
+	if (it != m_heapHandleToIndex.end())
+		return it->second;
+
+	const uint16_t index = (uint16_t)m_heapHandles.size();
+	m_heapHandles.push_back(_handle);
+	m_heapHandleToIndex[_handle] = index;
+	return index;
+}
+
+//--------------------------------------------------------------------------
+/// Maps a thread ID to a small index, assigning a new one the first time a
+/// thread is seen. Threads are few, so the index fits in 32 bits and lets
+/// MemoryOperation store m_threadIndex instead of a 64-bit thread ID.
+//--------------------------------------------------------------------------
+uint32_t Capture::internThread(uint64_t _threadID)
+{
+	ankerl::unordered_dense::map<uint64_t, uint32_t>::iterator it = m_threadIdToIndex.find(_threadID);
+	if (it != m_threadIdToIndex.end())
+		return it->second;
+
+	const uint32_t index = (uint32_t)m_threadIds.size();
+	m_threadIds.push_back(_threadID);
+	m_threadIdToIndex[_threadID] = index;
+	return index;
 }
 
 //--------------------------------------------------------------------------
@@ -277,8 +377,14 @@ void Capture::clearData()
 	m_64bit				= false;
 
 	m_loadedFile.clear();
-	m_operationPool.reset(true);
-	m_stackPool.reset(true);
+	// Release the ops arena's VM reservation; allocOperation() lazily recreates it on the next
+	// load. Recreating (rather than rgArenaClear) guarantees freshly-committed, zero-filled pages
+	// per capture - matching the old ChunkAllocator, whose value-initialized chunks zeroed each op.
+	rgArenaDestroy(&m_operationArena);
+	m_operationBase = nullptr;
+	m_operationCount = 0;
+	m_operationRowMapping = {};
+	rgArenaDestroy(&m_stackTraceArena);	// recreate fresh per load -> zero-filled pages for StackTrace::init
 	m_operations.clear();
 	m_operationsInvalid.clear();
 	m_statsGlobal.reset();
@@ -310,6 +416,11 @@ void Capture::clearData()
 	m_memoryMarkerTimes.clear();
 
 	m_Heaps.clear();
+	m_heapHandles.clear();
+	m_heapHandleToIndex.clear();
+	m_threadIds.clear();
+	m_threadIdToIndex.clear();
+	m_loadPrevPointers.clear();
 	m_currentHeap = (uint64_t)-1;
 	m_currentModule  = 0;
 
@@ -511,9 +622,20 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 			case rmem::LogMarkers::OpReallocAligned:
 				{
 					// read memory op
-					MemoryOperation* op = m_operationPool.alloc();
+					MemoryOperation* op = allocOperation();
+					if (!op)
+					{
+						loadSuccess = false;
+						break;
+					}
 
-					if (loader.readVar(op->m_allocatorHandle) != 1)
+					// The wire format stores a full 64-bit allocator handle and thread ID; the op
+					// only keeps small indices into m_heapHandles / m_threadIds, assigned once the
+					// raw values are read & endian-swapped below.
+					uint64_t allocatorHandle = 0;
+					uint64_t threadID = 0;
+					uint64_t previousPointer = 0;	// realloc-only; the op keeps just a flag, the value goes to the transient load map
+					if (loader.readVar(allocatorHandle) != 1)
 					{
 						loadSuccess = false;
 						break;
@@ -529,7 +651,7 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 					{
 						case rmem::LogMarkers::OpAlloc:
 						case rmem::LogMarkers::OpCalloc:
-							itemsRead += loader.readVar(op->m_threadID);
+							itemsRead += loader.readVar(threadID);
 							if (m_64bit)
 								itemsRead += loader.readVar(op->m_pointer);
 							else
@@ -546,11 +668,11 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 							break;
 
 						case rmem::LogMarkers::OpRealloc:
-							itemsRead += loader.readVar(op->m_threadID);
+							itemsRead += loader.readVar(threadID);
 							if (m_64bit)
 							{
 								itemsRead += loader.readVar(op->m_pointer);
-								itemsRead += loader.readVar(op->m_previousPointer);
+								itemsRead += loader.readVar(previousPointer);
 							}
 							else
 							{
@@ -558,7 +680,7 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 								itemsRead += loader.readVar(ptr);
 								op->m_pointer = ptr;
 								itemsRead += loader.readVar(ptr);
-								op->m_previousPointer = ptr;
+								previousPointer = ptr;
 							}
 							itemsRead += loader.readVar(op->m_operationTime);
 							itemsRead += loader.readVar(op->m_allocSize);
@@ -568,7 +690,7 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 							break;
 
 						case rmem::LogMarkers::OpAllocAligned:
-							itemsRead += loader.readVar(op->m_threadID);
+							itemsRead += loader.readVar(threadID);
 							if (m_64bit)
 								itemsRead += loader.readVar(op->m_pointer);
 							else
@@ -587,7 +709,7 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 							break;
 
 						case rmem::LogMarkers::OpFree:
-							itemsRead += loader.readVar(op->m_threadID);
+							itemsRead += loader.readVar(threadID);
 							if (m_64bit)
 								itemsRead += loader.readVar(op->m_pointer);
 							else
@@ -602,11 +724,11 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 							break;
 
 						case rmem::LogMarkers::OpReallocAligned:
-							itemsRead += loader.readVar(op->m_threadID);
+							itemsRead += loader.readVar(threadID);
 							if (m_64bit)
 							{
 								itemsRead += loader.readVar(op->m_pointer);
-								itemsRead += loader.readVar(op->m_previousPointer);
+								itemsRead += loader.readVar(previousPointer);
 							}
 							else
 							{
@@ -614,7 +736,7 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 								itemsRead += loader.readVar(ptr);
 								op->m_pointer = ptr;
 								itemsRead += loader.readVar(ptr);
-								op->m_previousPointer = ptr;
+								previousPointer = ptr;
 							}
 							itemsRead += loader.readVar(op->m_operationTime);
 							itemsRead += loader.readVar(bitIndex);
@@ -631,8 +753,8 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 
 					if (m_swapEndian)
 					{
-						op->m_allocatorHandle		= endianSwap(op->m_allocatorHandle);
-						op->m_threadID				= endianSwap(op->m_threadID);
+						allocatorHandle				= endianSwap(allocatorHandle);
+						threadID					= endianSwap(threadID);
 						op->m_operationTime			= endianSwap(op->m_operationTime);
 						op->m_allocSize				= endianSwap(op->m_allocSize);
 						op->m_overhead				= endianSwap(op->m_overhead);
@@ -640,7 +762,7 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 						if (m_64bit)
 						{
 							op->m_pointer			= endianSwap(op->m_pointer);
-							op->m_previousPointer	= endianSwap(op->m_previousPointer);
+							previousPointer			= endianSwap(previousPointer);
 						}
 						else
 						{
@@ -648,9 +770,9 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 							actualPtr				= endianSwap(actualPtr);
 							op->m_pointer			= (uint64_t)actualPtr;
 
-							actualPtr				= (uint32_t)op->m_previousPointer;
+							actualPtr				= (uint32_t)previousPointer;
 							actualPtr				= endianSwap(actualPtr);
-							op->m_previousPointer	= (uint64_t)actualPtr;
+							previousPointer			= (uint64_t)actualPtr;
 						}
 					}
 
@@ -698,7 +820,7 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 					if (m_swapEndian && stackTraceHash)
 						stackTraceHash = endianSwap(stackTraceHash);
 
-					StackTrace* st = NULL;
+					uint32_t stIndex = 0xffffffff;	// resolved index into m_stackTraces (0xffffffff = none)
 
 					if (stackTraceTag == rmem::EntryTags::Add)
 					{
@@ -745,30 +867,38 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 						StackTraceHashType::iterator it = m_stackTracesHash.find(stackTraceHash);
 						if (it != m_stackTracesHash.end())
 						{
-							StackTrace* s = it->second;
+							StackTrace* s = m_stackTraces[it->second];
 							if (stackTraceCompare(s->m_frames, s->m_numFrames, backTrace64, numFrames32))
 							{
 								allocateAndAdd = false;
-								st = s;
+								stIndex = it->second;
 							}
 						}
 
 						if (allocateAndAdd)
 						{
-							st = (StackTrace*)m_stackPool.alloc(StackTrace::calculateSize(numFrames32));
-							StackTrace::init(st, numFrames32);
-							memcpy(&st->m_frames[0], backTrace64, numFrames32 * sizeof(uint64_t));
-							m_stackTracesHash[stackTraceHash] = st;
-							m_stackTraces.push_back(st);
+							StackTrace* s = (StackTrace*)allocStackTrace(StackTrace::calculateSize(numFrames32));
+							if (!s)
+							{
+								loadSuccess = false;
+								break;
+							}
+							StackTrace::init(s, numFrames32);
+							memcpy(&s->m_frames[0], backTrace64, numFrames32 * sizeof(uint64_t));
+							stIndex = (uint32_t)m_stackTraces.size();
+							m_stackTracesHash[stackTraceHash] = stIndex;
+							m_stackTraces.push_back(s);
 						}
 					}
 					else
 					{
-						// Stack trace exists
-						st = m_stackTracesHash[stackTraceHash];
+						// Stack trace exists - resolve its index
+						StackTraceHashType::iterator it = m_stackTracesHash.find(stackTraceHash);
+						if (it != m_stackTracesHash.end())
+							stIndex = it->second;
 					}
 
-					if (!st)
+					if (stIndex == 0xffffffff)
 					{
 						loadSuccess = false;
 						break;
@@ -778,32 +908,37 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 					uint32_t tag = 0;
 					if (isAlloc(op->m_operationType))
 					{
-						std::vector<uint32_t>& tagStack = perThreadTagStack[op->m_threadID];
+						std::vector<uint32_t>& tagStack = perThreadTagStack[threadID];
 						const size_t ss = tagStack.size();
 						if (ss)
 							tag = tagStack[ss-1];
 					}
 
 					// fill the rest of mem op struct
-					op->m_stackTrace = st;
-					op->m_chainPrev  = NULL;
-					op->m_chainNext  = NULL;
+					op->m_stackTraceIndex = stIndex;
+					op->m_chainPrev  = kInvalidOpIndex;
+					op->m_chainNext  = kInvalidOpIndex;
 					op->m_tag        = tag;
 					op->m_isValid    = 1;
 					op->m_isLeaked	 = 0;
+					op->m_allocatorIndex = internHeap(allocatorHandle);
+					op->m_threadIndex	 = internThread(threadID);
+					op->m_hasPreviousPointer = previousPointer ? 1 : 0;
+					if (previousPointer)
+						m_loadPrevPointers[op] = previousPointer;	// needed only during linking; freed afterwards
 
 					m_operations.push_back(op);
 
-					HeapsType::iterator it = m_Heaps.find(op->m_allocatorHandle);
+					HeapsType::iterator it = m_Heaps.find(allocatorHandle);
 					if (it == m_Heaps.end())
 					{
 						char buff[512];
 #if RTM_COMPILER_MSVC
-						sprintf(buff, "0x%llx", op->m_allocatorHandle);
+						sprintf(buff, "0x%llx", allocatorHandle);
 #else
-						snprintf(buff, 512, "0x%llux", op->m_allocatorHandle);
+						snprintf(buff, 512, "0x%llux", allocatorHandle);
 #endif
-						m_Heaps[op->m_allocatorHandle] = buff;
+						m_Heaps[allocatorHandle] = buff;
 					}
 				}
 				break;
@@ -1039,11 +1174,11 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 	if (m_loadProgressCallback)
 		m_loadProgressCallback(m_loadProgressCustomData, 100.0f, "Sorting...");
 
+	pSortOpsTime psTime(m_operationBase);
 #if RTM_PLATFORM_WINDOWS && RTM_COMPILER_MSVC
-	pSortOpsTime psTime(m_operations);
-	concurrency::parallel_radixsort(m_operations.begin(), m_operations.end(), psTime);
+	concurrency::parallel_radixsort(m_operations.indices().begin(), m_operations.indices().end(), psTime);
 #else
-	parallelStableSort(m_operations.begin(), m_operations.end(), psTime);
+	parallelStableSort(m_operations.indices().begin(), m_operations.indices().end(), psTime);
 #endif
 
 	if (!setLinksAndRemoveInvalid(minMarkerTime))
@@ -1093,7 +1228,7 @@ bool Capture::isInFilter(MemoryOperation* _op)
 	if (!m_filteringEnabled)
 		return true;
 
-	if ((m_currentHeap != (uint64_t)-1) && (_op->m_allocatorHandle != m_currentHeap))
+	if ((m_currentHeap != (uint64_t)-1) && (getHeapHandle(_op->m_allocatorIndex) != m_currentHeap))
 		return false;
 
 	if ((m_filter.m_histogramIndex != (uint32_t)-1) && (m_filter.m_histogramIndex != getHistogramBinIndex(_op->m_allocSize)))
@@ -1102,7 +1237,7 @@ bool Capture::isInFilter(MemoryOperation* _op)
 	if ((m_filter.m_tagHash != 0) && (m_filter.m_tagHash != _op->m_tag))
 		return false;
 
-	if ((m_filter.m_threadID != 0) && (m_filter.m_threadID != _op->m_threadID))
+	if ((m_filter.m_threadID != 0) && (m_filter.m_threadID != getThreadId(_op->m_threadIndex)))
 		return false;
 
 	if ((_op->m_operationTime < m_filter.m_minTimeSnapshot) ||
@@ -1112,11 +1247,12 @@ bool Capture::isInFilter(MemoryOperation* _op)
 	if (m_currentModule)
 	{
 		bool moduleInStack = false;
-		const uint32_t numEntries = (uint32_t)_op->m_stackTrace->m_numFrames;
+		StackTrace* opStackTrace = getStackTraceByIndex(_op->m_stackTraceIndex);
+		const uint32_t numEntries = (uint32_t)opStackTrace->m_numFrames;
 		for (uint32_t i=0; i<numEntries; ++i)
 		{
 			rdebug::ModuleInfo info;
-			if (m_currentModule->checkAddress(_op->m_stackTrace->m_frames[i]))
+			if (m_currentModule->checkAddress(opStackTrace->m_frames[i]))
 			{
 				moduleInStack = true;
 				break;
@@ -1411,10 +1547,11 @@ void Capture::buildAnalyzeData(uintptr_t _symResolver)
 
 		MemoryOperation* op = m_operations[i];
 
-		if (op->m_chainNext)
+		if (op->m_chainNext != kInvalidOpIndex)
 		{
-			if (op->m_chainNext->m_tag == 0)
-				op->m_chainNext->m_tag = op->m_tag;
+			MemoryOperation* chainNext = opChainNext(op, m_operationBase);
+			if (chainNext->m_tag == 0)
+				chainNext->m_tag = op->m_tag;
 		}
 		else
 		{
@@ -1423,7 +1560,7 @@ void Capture::buildAnalyzeData(uintptr_t _symResolver)
 		}
 
 		updateLiveBlocks(op, liveBlocks);
-		updateLiveSize(op, liveSize);
+		updateLiveSize(op, liveSize, m_operationBase);
 
 		// add to memory groups
 		addToMemoryGroups(m_operationGroups, op, liveBlocks, liveSize);
@@ -1432,10 +1569,10 @@ void Capture::buildAnalyzeData(uintptr_t _symResolver)
  		addToStackTraceTree(m_stackTraceTree, op, StackTrace::Global);
 
 		// add to tag tree
-		tagAddOp(m_tagTree, op, prevTag);
+		tagAddOp(m_tagTree, op, prevTag, m_operationBase);
 
 		// add to heaps list
-		addHeap(m_Heaps, op->m_allocatorHandle);
+		addHeap(m_Heaps, getHeapHandle(op->m_allocatorIndex));
 	}
 
 	if (m_loadProgressCallback)
@@ -1464,8 +1601,8 @@ bool Capture::setLinksAndRemoveInvalid(uint64_t inMinMarkerTime)
 			m_loadProgressCallback(m_loadProgressCustomData, percent, "Processing...");
 		}
 
-		RTM_ASSERT(op->m_chainPrev == NULL, "");
-		RTM_ASSERT(op->m_chainNext == NULL, "");
+		RTM_ASSERT(op->m_chainPrev == kInvalidOpIndex, "");
+		RTM_ASSERT(op->m_chainNext == kInvalidOpIndex, "");
 
 		switch (op->m_operationType)
 		{
@@ -1487,9 +1624,10 @@ bool Capture::setLinksAndRemoveInvalid(uint64_t inMinMarkerTime)
 				MemoryOperation* oldOp = 0;
 
 				// ako postoji prethodni pointer onda mora da postoji op u mapi sa tim rezultatom - rezultat moze da bude isti
-				if (op->m_previousPointer)
+				if (op->m_hasPreviousPointer)
 				{
-					ankerl::unordered_dense::map<uint64_t, MemoryOperation*>::iterator itP = opMap.find(op->m_previousPointer);
+					const uint64_t opPreviousPointer = m_loadPrevPointers[op];	// transient value stashed during parse
+					ankerl::unordered_dense::map<uint64_t, MemoryOperation*>::iterator itP = opMap.find(opPreviousPointer);
 					if (itP == opMap.end())
 					{
 						m_operationsInvalid.push_back(op);
@@ -1514,8 +1652,8 @@ bool Capture::setLinksAndRemoveInvalid(uint64_t inMinMarkerTime)
 
 				if (oldOp)
 				{
-					op->m_chainPrev = oldOp;
-					oldOp->m_chainNext = op;
+					op->m_chainPrev = opToIndex(oldOp, m_operationBase);
+					oldOp->m_chainNext = opToIndex(op, m_operationBase);
 				}
 
 				// Only a valid op may become the live block at this address. Inserting an
@@ -1540,8 +1678,8 @@ bool Capture::setLinksAndRemoveInvalid(uint64_t inMinMarkerTime)
 					MemoryOperation* oldOp = it->second;
 					RTM_ASSERT(oldOp->m_operationType != rmem::LogMarkers::OpFree, "");
 
-					oldOp->m_chainNext = op;
-					op->m_chainPrev = oldOp;
+					oldOp->m_chainNext = opToIndex(op, m_operationBase);
+					op->m_chainPrev = opToIndex(oldOp, m_operationBase);
 					op->m_allocSize	= oldOp->m_allocSize;
 					op->m_overhead	= oldOp->m_overhead;
 
@@ -1555,15 +1693,23 @@ bool Capture::setLinksAndRemoveInvalid(uint64_t inMinMarkerTime)
 	if (m_loadProgressCallback)
 		m_loadProgressCallback(m_loadProgressCustomData, 100.0f, "Removing invalid operations..");
 
-	/// Remove invalid operations
-	std::vector<MemoryOperation*>::iterator newEnd = std::remove_if( m_operations.begin(), m_operations.end(), isInvalid );
-	size_t newSize = newEnd -  m_operations.begin();
-	m_operations.resize(newSize);
+	/// Remove invalid operations (operate on the raw index storage with a base-aware predicate)
+	{
+		MemoryOperation* base = m_operationBase;
+		std::vector<uint32_t>& idx = m_operations.indices();
+		std::vector<uint32_t>::iterator newEnd = std::remove_if(idx.begin(), idx.end(),
+			[base](uint32_t _i) { return base[_i].m_isValid == 0; });
+		idx.resize((size_t)(newEnd - idx.begin()));
+	}
+
+	// Linking is done; the transient previous-pointer values are no longer needed. Release them
+	// so they don't add to steady-state memory (the whole point of dropping the field from the op).
+	m_loadPrevPointers = {};
 
 	// calcluate leak info
 	for (auto* op : m_operations)
 	{
-		op->m_isLeaked = isLeakedBlock(op);
+		op->m_isLeaked = isLeakedBlock(op, m_operationBase);
 	}
 	// get time range
 	numOps = (uint32_t)m_operations.size();
@@ -1729,7 +1875,7 @@ void Capture::calculateGlobalStats()
 		case rmem::LogMarkers::OpRealloc:
 		case rmem::LogMarkers::OpReallocAligned:
 			{
-				const uint32_t binIdx = fillStats_ReAlloc(op, m_statsGlobal);
+				const uint32_t binIdx = fillStats_ReAlloc(op, m_statsGlobal, m_operationBase);
 
 				// update local peak struct
 				localPeak.m_memoryUsagePeak							= qMax(localPeak.m_memoryUsagePeak, m_statsGlobal.m_memoryUsage);
@@ -1866,7 +2012,7 @@ void Capture::calculateFilteredData()
 		m_filter.m_operations.push_back(op);
 
 		updateLiveBlocks(op, liveBlocks);
-		updateLiveSize(op, liveSize);
+		updateLiveSize(op, liveSize, m_operationBase);
 
 		// add to memory groups
 		addToMemoryGroups(m_filter.m_operationGroups, op, liveBlocks, liveSize);
@@ -1875,7 +2021,7 @@ void Capture::calculateFilteredData()
 		addToStackTraceTree(m_filter.m_stackTraceTree, op, StackTrace::Filtered);
 
 		// add to tag tree
-		tagAddOp(m_filter.m_tagTree, op, prevTag);
+		tagAddOp(m_filter.m_tagTree, op, prevTag, m_operationBase);
 	}
 
 	if (m_loadProgressCallback)
@@ -2103,7 +2249,7 @@ void Capture::GetRangedStats(MemoryStats& _stats, uint32_t _minIdx, uint32_t _ma
 
 		case rmem::LogMarkers::OpRealloc:
 		case rmem::LogMarkers::OpReallocAligned:
-			fillStats_ReAlloc(op, _stats);
+			fillStats_ReAlloc(op, _stats, m_operationBase);
 			break;
 
 		case rmem::LogMarkers::OpFree:
@@ -2140,6 +2286,7 @@ void Capture::addToMemoryGroups(MemoryGroupsHashType& _groups, MemoryOperation* 
 			{
 				groupHash = calcGroupHash(_op);
 				MemoryOperationGroup& group = _groups[groupHash];
+				group.m_groupOperations.setBase(m_operationBase);
 				group.m_groupOperations.push_back(_op);
 				group.m_count++;
 				group.m_liveCount++;
@@ -2171,7 +2318,7 @@ void Capture::addToMemoryGroups(MemoryGroupsHashType& _groups, MemoryOperation* 
 
 		case rmem::LogMarkers::OpFree:
 			{
-				MemoryOperation* prevOp = _op->m_chainPrev;
+				MemoryOperation* prevOp = getChainPrev(_op);
 				if (isInFilter(prevOp))
 				{
 					groupHash = calcGroupHash(prevOp);
@@ -2187,6 +2334,7 @@ void Capture::addToMemoryGroups(MemoryGroupsHashType& _groups, MemoryOperation* 
 
 				groupHash = calcGroupHash(_op);
 				MemoryOperationGroup& group = _groups[groupHash];
+				group.m_groupOperations.setBase(m_operationBase);
 				group.m_groupOperations.push_back(_op);
 				group.m_count++;
 
@@ -2202,7 +2350,7 @@ void Capture::addToMemoryGroups(MemoryGroupsHashType& _groups, MemoryOperation* 
 		case rmem::LogMarkers::OpReallocAligned:
 		case rmem::LogMarkers::OpRealloc:
 			{
-				MemoryOperation* prevOp = _op->m_chainPrev;
+				MemoryOperation* prevOp = getChainPrev(_op);
 				if (prevOp)
 				{
 					if (isInFilter(prevOp))
@@ -2221,6 +2369,7 @@ void Capture::addToMemoryGroups(MemoryGroupsHashType& _groups, MemoryOperation* 
 
 				groupHash = calcGroupHash(_op);
 				MemoryOperationGroup& group = _groups[groupHash];
+				group.m_groupOperations.setBase(m_operationBase);
 				group.m_groupOperations.push_back(_op);
 				group.m_count++;
 
@@ -2345,33 +2494,33 @@ void Capture::addToStackTraceTree(StackTraceTree& _tree, MemoryOperation* _op, S
 		case rmem::LogMarkers::OpCalloc:
 		case rmem::LogMarkers::OpAllocAligned:
 			{
-				addToTree(&_tree, _op->m_stackTrace, _op->m_allocSize, _op->m_overhead, _offset, StackTraceTree::Alloc, _op->m_operationTime);
+				addToTree(&_tree, getStackTraceByIndex(_op->m_stackTraceIndex), _op->m_allocSize, _op->m_overhead, _offset, StackTraceTree::Alloc, _op->m_operationTime);
 			}
 			break;
 
 		case rmem::LogMarkers::OpFree:
 			{
-				MemoryOperation* prevOp = _op->m_chainPrev;
+				MemoryOperation* prevOp = getChainPrev(_op);
 				RTM_ASSERT(prevOp != NULL, "");
 
 				if (isInFilter(prevOp))
-					addToTree(&_tree, prevOp->m_stackTrace, -(int64_t)prevOp->m_allocSize, -(int32_t)prevOp->m_overhead, _offset, StackTraceTree::Free, _op->m_operationTime);
+					addToTree(&_tree, getStackTraceByIndex(prevOp->m_stackTraceIndex), -(int64_t)prevOp->m_allocSize, -(int32_t)prevOp->m_overhead, _offset, StackTraceTree::Free, _op->m_operationTime);
 				else
 					// prev op not in filter, do not reduce used memory to avoid going (possibly) negative
-					addToTree(&_tree, prevOp->m_stackTrace, 0, 0, _offset, StackTraceTree::Free, _op->m_operationTime);
+					addToTree(&_tree, getStackTraceByIndex(prevOp->m_stackTraceIndex), 0, 0, _offset, StackTraceTree::Free, _op->m_operationTime);
 			}
 			break;
 
 		case rmem::LogMarkers::OpReallocAligned:
 		case rmem::LogMarkers::OpRealloc:
 			{
-				MemoryOperation* prevOp = _op->m_chainPrev;
+				MemoryOperation* prevOp = getChainPrev(_op);
 				if (prevOp)
 				{
 					if (isInFilter(prevOp))
-						addToTree(&_tree, prevOp->m_stackTrace, -(int64_t)prevOp->m_allocSize, -(int32_t)prevOp->m_overhead, _offset, StackTraceTree::Count, _op->m_operationTime);
+						addToTree(&_tree, getStackTraceByIndex(prevOp->m_stackTraceIndex), -(int64_t)prevOp->m_allocSize, -(int32_t)prevOp->m_overhead, _offset, StackTraceTree::Count, _op->m_operationTime);
 				}
-				addToTree(&_tree, _op->m_stackTrace, _op->m_allocSize, _op->m_overhead, _offset, StackTraceTree::Realloc, _op->m_operationTime);
+				addToTree(&_tree, getStackTraceByIndex(_op->m_stackTraceIndex), _op->m_allocSize, _op->m_overhead, _offset, StackTraceTree::Realloc, _op->m_operationTime);
 			}
 			break;
 	};

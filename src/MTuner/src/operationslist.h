@@ -21,6 +21,7 @@ private:
 	OperationSearch*		m_operationSearch;
 	OperationTableSource*	m_tableSource;
 	rtm::MemoryOperation*	m_currentItem;
+	rtm::StackTrace*		m_selectedStackTrace = nullptr;	///< Stable holder for the setStackTrace(StackTrace**) signal (see GroupList)
 	bool					m_enableFiltering;
 
 	int						m_savedColumn;

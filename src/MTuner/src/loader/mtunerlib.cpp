@@ -151,7 +151,7 @@ static inline void addOpToTag(MemoryTagTree* _tag, int64_t _size, int64_t _overh
 		addOpToTag(_tag->m_parent, _size, _overhead, _op);
 }
 
-void tagAddOp(MemoryTagTree& _rootTag, MemoryOperation* _op, MemoryTagTree*& _prevTag)
+void tagAddOp(MemoryTagTree& _rootTag, MemoryOperation* _op, MemoryTagTree*& _prevTag, MemoryOperation* _base)
 {
 	MemoryTagTree* tag = &_rootTag;
 	if (!tagFind(_rootTag, _op->m_tag, tag, _prevTag))
@@ -178,20 +178,21 @@ void tagAddOp(MemoryTagTree& _rootTag, MemoryOperation* _op, MemoryTagTree*& _pr
 		case rmem::LogMarkers::OpRealloc:
 			{
 				MemoryTagTree* tagPrev = &_rootTag;
-				if (_op->m_chainPrev)
+				MemoryOperation* prevOp = opChainPrev(_op, _base);
+				if (prevOp)
 				{
 					// use a throwaway cache var so the chainPrev lookup doesn't poison _prevTag
 					MemoryTagTree* prevCache = nullptr;
-					if (!tagFind(_rootTag, _op->m_chainPrev->m_tag, tagPrev, prevCache))
+					if (!tagFind(_rootTag, prevOp->m_tag, tagPrev, prevCache))
 						tagPrev = &_rootTag;
 
-					int64_t sizePrev = _op->m_chainPrev->m_allocSize;
-					int64_t overheadPrev = _op->m_chainPrev->m_overhead;
+					int64_t sizePrev = prevOp->m_allocSize;
+					int64_t overheadPrev = prevOp->m_overhead;
 
 					sizePrev = -sizePrev;
 					overheadPrev = -overheadPrev;
 
-					addOpToTag(tagPrev, sizePrev, overheadPrev, _op->m_chainPrev);
+					addOpToTag(tagPrev, sizePrev, overheadPrev, prevOp);
 				}
 			}
 			break;

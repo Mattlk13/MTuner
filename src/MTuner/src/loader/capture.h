@@ -8,6 +8,7 @@
 
 #include <rdebug/inc/rdebug.h>
 #include <rbase/inc/cpu.h>
+#include <rg_memory/include/rg_memory/rg_memory.h>
 
 namespace rtm {
 
@@ -17,11 +18,11 @@ class BinLoader;
 
 typedef void (*LoadProgress)(void* inCustomData, float inProgress, const char* inMessage);
 
-typedef ankerl::unordered_dense::map<uint32_t,  StackTrace*>			StackTraceHashType;
+typedef ankerl::unordered_dense::map<uint32_t,  uint32_t>				StackTraceHashType;	///< stack-trace hash -> index into Capture::m_stackTraces
 typedef ankerl::unordered_dense::map<uintptr_t, MemoryOperationGroup>	MemoryGroupsHashType;
 typedef ankerl::unordered_dense::map<uint32_t,  MemoryMarkerEvent>		MemoryMarkersHashType;
 typedef ankerl::unordered_dense::map<uint64_t,  std::string>			HeapsType;
-typedef std::vector<MemoryOperation*>									MemoryOpArray;
+// MemoryOpArray is defined in mtunerlib.h (32-bit-index-backed op list)
 
 //--------------------------------------------------------------------------
 struct GraphEntry
@@ -57,8 +58,11 @@ class Capture
 		bool							m_swapEndian;
 		bool							m_64bit;
 		rmem::ToolChain::Enum			m_toolchain;
-		ChunkAllocator<MemoryOperation> m_operationPool;
-		StackAllocator					m_stackPool;
+		::Arena							m_operationArena{};		///< Contiguous, VM-backed storage for all MemoryOperation records
+		MemoryOperation*				m_operationBase = nullptr;	///< First op in the arena; chain indices resolve as m_operationBase + index
+		uint32_t						m_operationCount = 0;		///< Number of ops allocated from the arena (valid + invalid)
+		std::vector<uint32_t>			m_operationRowMapping;		///< Cold UI state: op arena-index -> its row in the current operations-list sort (lazily sized)
+		::Arena							m_stackTraceArena{};		///< VM-backed storage for variable-size StackTrace records (replaces the old StackAllocator)
 		MemoryOpArray					m_operations;
 		MemoryOpArray					m_operationsInvalid;
 		MemoryStats						m_statsGlobal;			///< Memory statistics for global range
@@ -72,6 +76,11 @@ class Capture
 		StackTraceTree					m_stackTraceTree;		///< stack trace tree
 		MemoryTagTree					m_tagTree;				///< Global tag tree
 		HeapsType						m_Heaps;
+		std::vector<uint64_t>			m_heapHandles;			///< Index -> allocator handle (MemoryOperation::m_allocatorIndex resolves through this)
+		ankerl::unordered_dense::map<uint64_t, uint16_t>	m_heapHandleToIndex;	///< Load-time reverse map: handle -> index
+		std::vector<uint64_t>			m_threadIds;			///< Index -> thread ID (MemoryOperation::m_threadIndex resolves through this)
+		ankerl::unordered_dense::map<uint64_t, uint32_t>	m_threadIdToIndex;		///< Load-time reverse map: thread ID -> index
+		ankerl::unordered_dense::map<const MemoryOperation*, uint64_t>	m_loadPrevPointers;	///< Transient: realloc op -> previous pointer; only needed during linking, cleared afterwards
 		uint64_t						m_currentHeap;
 		rdebug::ModuleInfo*				m_currentModule;
 		std::vector<MemoryMarkerTime>	m_memoryMarkerTimes;
@@ -146,10 +155,24 @@ class Capture
 		const MemoryGroupsHashType&	getMemoryGroupsFiltered() const { return m_filter.m_operationGroups; }
 		rmem::ToolChain::Enum	getToolchain() { return m_toolchain; }
 		HeapsType&				getHeaps() { return m_Heaps; }
+		uint64_t				getHeapHandle(uint16_t _index) const { return m_heapHandles[_index]; }	///< Resolves MemoryOperation::m_allocatorIndex to its allocator handle
+		uint64_t				getThreadId(uint32_t _index) const { return m_threadIds[_index]; }	///< Resolves MemoryOperation::m_threadIndex to its thread ID
+		StackTrace*				getStackTraceByIndex(uint32_t _index) const { return m_stackTraces[_index]; }	///< Resolves MemoryOperation::m_stackTraceIndex to its stack trace
+		MemoryOperation*		getOperationBase() const { return m_operationBase; }
+		MemoryOperation*		getChainPrev(const MemoryOperation* _op) const { return opChainPrev(_op, m_operationBase); }	///< Resolves m_chainPrev to a pointer (NULL if none)
+		MemoryOperation*		getChainNext(const MemoryOperation* _op) const { return opChainNext(_op, m_operationBase); }	///< Resolves m_chainNext to a pointer (NULL if none)
+		uint32_t				getOperationCount() const { return m_operationCount; }
+		void					ensureOperationRowMapping() { if (m_operationRowMapping.size() != m_operationCount) m_operationRowMapping.resize(m_operationCount); }	///< Pre-size before a parallel sort fills it
+		void					setOperationRow(const MemoryOperation* _op, uint32_t _row) { m_operationRowMapping[opToIndex(_op, m_operationBase)] = _row; }	///< Records the op's row in the current operations-list sort
+		uint32_t				getOperationRow(const MemoryOperation* _op) const { const uint32_t i = opToIndex(_op, m_operationBase); return (i < m_operationRowMapping.size()) ? m_operationRowMapping[i] : 0; }	///< Reads the op's row from the current operations-list sort (0 before any sort, matching the old zero-initialized field)
 		void					setCurrentHeap(uint64_t _handle) { m_currentHeap = _handle; }
 		void					setCurrentModule(rdebug::ModuleInfo* _module) { m_currentModule = _module; }
 
 	private:
+		MemoryOperation* allocOperation();	///< Bump-allocates one zeroed op from m_operationArena (creates it on first use)
+		void*		allocStackTrace(uint32_t _size);	///< 8-byte-aligned bump alloc for a StackTrace from m_stackTraceArena (creates it on first use)
+		uint16_t	internHeap(uint64_t _handle);	///< Returns the index for an allocator handle, assigning a new one on first sight
+		uint32_t	internThread(uint64_t _threadID);	///< Returns the index for a thread ID, assigning a new one on first sight
 		bool		loadModuleInfo(BinLoader& _loader, uint64_t inFileSize);
 		bool		setLinksAndRemoveInvalid(uint64_t inMinMarkerTime);
 		void		addModule(const char* inName, uint64_t inModBase, uint64_t inModSize, uint64_t inTimeStamp);

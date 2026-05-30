@@ -4,7 +4,7 @@
 --
 
 function projectDependencies_MTuner()
-	return { "rmem", "rdebug", "rqt" }
+	return { "rmem", "rdebug", "rqt", "rg_memory" }
 end
 
 function projectExtraConfig_MTuner()

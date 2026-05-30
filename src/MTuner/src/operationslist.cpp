@@ -34,7 +34,7 @@ static bool __uncaught_exception() { return true; }
 struct Mapping
 {
 	std::vector<uint32_t>						m_sortedIndex;
-	const std::vector<rtm::MemoryOperation*>*	m_allOps;
+	const rtm::MemoryOpArray*	m_allOps;
 };
 
 struct OperationColumn
@@ -66,7 +66,7 @@ class OperationTableSource : public BigTableSource
 		bool			m_valid;
 		Qt::SortOrder	m_sortOrder;
 		QLocale			m_locale;
-		const std::vector<rtm::MemoryOperation*>*	m_allOps;
+		const rtm::MemoryOpArray*	m_allOps;
 
 	public:
 		OperationTableSource(CaptureContext* _context, bool _valid, OperationsList* _list, bool _leaksOnly);
@@ -102,32 +102,32 @@ struct pSetIndex
 // ThreadID
 struct pSortThreadID
 {
-	const std::vector<rtm::MemoryOperation*>* m_allOps;
-	pSortThreadID(const std::vector<rtm::MemoryOperation*>* _ops) : m_allOps(_ops) {}
+	const rtm::MemoryOpArray* m_allOps;
+	pSortThreadID(const rtm::MemoryOpArray* _ops) : m_allOps(_ops) {}
 
 	inline uint64_t operator()(const uint32_t _val1, const uint32_t _val2) const 
 	{
-		return m_allOps->operator[](_val1)->m_threadID < m_allOps->operator[](_val2)->m_threadID; 
+		return m_allOps->operator[](_val1)->m_threadIndex < m_allOps->operator[](_val2)->m_threadIndex;
 	}
 };
 
 // Heap
 struct pSortHeap
 {
-	const std::vector<rtm::MemoryOperation*>* m_allOps;
-	pSortHeap(const std::vector<rtm::MemoryOperation*>* _ops) : m_allOps(_ops) {}
+	const rtm::MemoryOpArray* m_allOps;
+	pSortHeap(const rtm::MemoryOpArray* _ops) : m_allOps(_ops) {}
 
 	inline uint64_t operator()(const uint32_t _val1, const uint32_t _val2) const
 	{
-		return m_allOps->operator[](_val1)->m_allocatorHandle < m_allOps->operator[](_val2)->m_allocatorHandle; 
+		return m_allOps->operator[](_val1)->m_allocatorIndex < m_allOps->operator[](_val2)->m_allocatorIndex;
 	}
 };
 
 // Address
 struct pSortAddress
 {
-	const std::vector<rtm::MemoryOperation*>* m_allOps;
-	pSortAddress(const std::vector<rtm::MemoryOperation*>* _ops) : m_allOps(_ops) {}
+	const rtm::MemoryOpArray* m_allOps;
+	pSortAddress(const rtm::MemoryOpArray* _ops) : m_allOps(_ops) {}
 
 	inline uint64_t operator()(const uint32_t _val1, const uint32_t _val2) const
 	{
@@ -138,8 +138,8 @@ struct pSortAddress
 // Type
 struct pSortOpType
 {
-	const std::vector<rtm::MemoryOperation*>* m_allOps;
-	pSortOpType(const std::vector<rtm::MemoryOperation*>* _ops) : m_allOps(_ops) {}
+	const rtm::MemoryOpArray* m_allOps;
+	pSortOpType(const rtm::MemoryOpArray* _ops) : m_allOps(_ops) {}
 
 	inline uint8_t operator()(const uint32_t _val1, const uint32_t _val2) const
 	{
@@ -150,8 +150,8 @@ struct pSortOpType
 // Size
 struct pSortOpSize
 {
-	const std::vector<rtm::MemoryOperation*>* m_allOps;
-	pSortOpSize(const std::vector<rtm::MemoryOperation*>* _ops) : m_allOps(_ops) {}
+	const rtm::MemoryOpArray* m_allOps;
+	pSortOpSize(const rtm::MemoryOpArray* _ops) : m_allOps(_ops) {}
 
 	inline uint32_t operator()(const uint32_t _val1, const uint32_t _val2) const
 	{
@@ -162,8 +162,8 @@ struct pSortOpSize
 // Alignment
 struct pSortOpAlignment
 {
-	const std::vector<rtm::MemoryOperation*>* m_allOps;
-	pSortOpAlignment(const std::vector<rtm::MemoryOperation*>* _ops) : m_allOps(_ops) {}
+	const rtm::MemoryOpArray* m_allOps;
+	pSortOpAlignment(const rtm::MemoryOpArray* _ops) : m_allOps(_ops) {}
 
 	inline uint32_t operator()(const uint32_t _val1, const uint32_t _val2) const
 	{
@@ -173,18 +173,19 @@ struct pSortOpAlignment
 
 struct pSetOpMappings
 {
-	const std::vector<rtm::MemoryOperation*>* m_allOps;
+	const rtm::MemoryOpArray* m_allOps;
 	const Mapping* m_mapping;
+	rtm::Capture* m_capture;
 
-	pSetOpMappings(const std::vector<rtm::MemoryOperation*>* _ops, const Mapping& _mapping) :
-		m_allOps(_ops), m_mapping(&_mapping)
+	pSetOpMappings(const rtm::MemoryOpArray* _ops, const Mapping& _mapping, rtm::Capture* _capture) :
+		m_allOps(_ops), m_mapping(&_mapping), m_capture(_capture)
 	{}
 
 	inline void operator()(const uint32_t _index) const
 	{
 		uint32_t idx = m_mapping->m_sortedIndex[_index];
 		rtm::MemoryOperation* op = (*m_allOps)[idx];
-		op->m_indexMapping = _index;
+		m_capture->setOperationRow(op, _index);	// concurrent: distinct ops -> distinct slots; vector pre-sized in sortColumn
 	}
 };
 
@@ -201,7 +202,7 @@ OperationTableSource::OperationTableSource(CaptureContext* _context, bool _valid
 void OperationTableSource::prepareData(bool /*_onlyLeaks*/)
 {
 	bool filterEnabled = m_list->getFilteringState();
-	const std::vector<rtm::MemoryOperation*>& _ops = (m_valid == false)
+	const rtm::MemoryOpArray& _ops = (m_valid == false)
 													? m_context->m_capture->getMemoryOpsInvalid()
 													: filterEnabled ? m_context->m_capture->getMemoryOpsFiltered() : m_context->m_capture->getMemoryOps();
 
@@ -218,7 +219,8 @@ void OperationTableSource::prepareData(bool /*_onlyLeaks*/)
 	pSetIndex psSetIdx(m_mapping.m_sortedIndex);
 	RTM_PARALLEL_FOR_EACH(m_mapping.m_sortedIndex.begin(), m_mapping.m_sortedIndex.end(), psSetIdx);
 
-	pSetOpMappings psMap(m_allOps, m_mapping);
+	m_context->m_capture->ensureOperationRowMapping();	// pre-size before the parallel fill below
+	pSetOpMappings psMap(m_allOps, m_mapping, m_context->m_capture);
 	RTM_PARALLEL_FOR_EACH(m_mapping.m_sortedIndex.begin(), m_mapping.m_sortedIndex.end(), psMap);
 
 	m_currentColumn = OperationColumn::Time;
@@ -267,16 +269,17 @@ QString OperationTableSource::getItem(uint32_t _index, int32_t _column, QColor* 
 	switch (_column)
 	{
 		case OperationColumn::ThreadID: 
-			return "0x" + QString::number(op->m_threadID,16);
+			return "0x" + QString::number(m_context->m_capture->getThreadId(op->m_threadIndex),16);
 			
 		case OperationColumn::Heap:
 			{
+				const uint64_t allocatorHandle = m_context->m_capture->getHeapHandle(op->m_allocatorIndex);
 				rtm::HeapsType& heaps = m_context->m_capture->getHeaps();
-				rtm::HeapsType::iterator it = heaps.find(op->m_allocatorHandle);
+				rtm::HeapsType::iterator it = heaps.find(allocatorHandle);
 				if (it != heaps.end())
 					return it->second.c_str();
 				else
-					return "0x" + QString::number(op->m_allocatorHandle, 16);
+					return "0x" + QString::number(allocatorHandle, 16);
 			}
 			
 		case OperationColumn::Address: 
@@ -344,7 +347,7 @@ Qt::AlignmentFlag OperationTableSource::getAlignment(uint32_t _index)
 
 uint32_t OperationTableSource::getItemIndex(void* _item)
 {
-	uint32_t index = ((rtm::MemoryOperation*)_item)->m_indexMapping;
+	uint32_t index = m_context->m_capture->getOperationRow((rtm::MemoryOperation*)_item);
 	if (m_sortOrder == Qt::DescendingOrder)
 		index = m_numRows - index - 1;
 	return index;
@@ -405,7 +408,8 @@ void OperationTableSource::sortColumn(uint32_t _columnIndex, Qt::SortOrder _sort
 		break;
 	};
 
-	pSetOpMappings psMap(m_allOps, m_mapping);
+	m_context->m_capture->ensureOperationRowMapping();	// pre-size before the parallel fill below
+	pSetOpMappings psMap(m_allOps, m_mapping, m_context->m_capture);
 	RTM_PARALLEL_FOR_EACH(m_mapping.m_sortedIndex.begin(), m_mapping.m_sortedIndex.end(), psMap);
 
 	m_currentColumn	= _columnIndex;
@@ -541,18 +545,21 @@ void OperationsList::saveState(QSettings& _settings)
 void OperationsList::selectionChanged(void* _item)
 {
 	m_currentItem = (rtm::MemoryOperation*)_item;
-	emit setStackTrace(&m_currentItem->m_stackTrace,1);
+	m_selectedStackTrace = m_context->m_capture->getStackTraceByIndex(m_currentItem->m_stackTraceIndex);
+	emit setStackTrace(&m_selectedStackTrace,1);
 
 	m_operationSearch->setAddress(m_currentItem->m_pointer);
 
+	rtm::MemoryOperation* chainPrev = m_context->m_capture->getChainPrev(m_currentItem);
 	bool enablePrev = false;
-	if (m_currentItem->m_chainPrev)
-		enablePrev = (m_context->m_capture->getFilteringEnabled() == false) || m_context->m_capture->isInFilter(m_currentItem->m_chainPrev);
+	if (chainPrev)
+		enablePrev = (m_context->m_capture->getFilteringEnabled() == false) || m_context->m_capture->isInFilter(chainPrev);
 	m_operationSearch->setPrevEnabled(enablePrev);
 
+	rtm::MemoryOperation* chainNext = m_context->m_capture->getChainNext(m_currentItem);
 	bool enableNext = false;
-	if (m_currentItem->m_chainNext)
-		enableNext = (m_context->m_capture->getFilteringEnabled() == false) || m_context->m_capture->isInFilter(m_currentItem->m_chainNext);
+	if (chainNext)
+		enableNext = (m_context->m_capture->getFilteringEnabled() == false) || m_context->m_capture->isInFilter(chainNext);
 	m_operationSearch->setNextEnabled(enableNext);
 
 	emit highlightTime(m_currentItem->m_operationTime);
@@ -561,13 +568,13 @@ void OperationsList::selectionChanged(void* _item)
 void OperationsList::selectPrevious()
 {
 	if (m_currentItem)
-		m_operationList->select(m_currentItem->m_chainPrev);
+		m_operationList->select(m_context->m_capture->getChainPrev(m_currentItem));
 }
 
 void OperationsList::selectNext()
 {
 	if (m_currentItem)
-		m_operationList->select(m_currentItem->m_chainNext);
+		m_operationList->select(m_context->m_capture->getChainNext(m_currentItem));
 }
 
 void OperationsList::selectNextByAddress(uint64_t _address)

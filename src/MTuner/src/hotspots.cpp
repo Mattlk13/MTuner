@@ -5,6 +5,8 @@
 
 #include <MTuner_pch.h>
 #include <MTuner/src/hotspots.h>
+#include <MTuner/src/capturecontext.h>
+#include <MTuner/src/loader/capture.h>
 
 static const uint32_t s_numRows = 32;
 
@@ -270,7 +272,8 @@ void HotspotsWidget::updateStackTrace(QTableWidget* _table)
 
 	if (group)
 	{
-		emit setStackTrace(&(group->m_groupOperations[0]->m_stackTrace), 1);
+		m_selectedStackTrace = m_context->m_capture->getStackTraceByIndex(group->m_groupOperations[0]->m_stackTraceIndex);
+		emit setStackTrace(&m_selectedStackTrace, 1);
 
 		size_t len = group->m_groupOperations.size();
 		uint64_t mn = group->m_groupOperations[0]->m_operationTime;

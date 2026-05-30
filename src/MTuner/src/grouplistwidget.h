@@ -38,6 +38,11 @@ private:
 	QByteArray			m_headerState;
 	QString				m_settingsGroupName;
 
+	// Stable single-element holder for the setStackTrace(StackTrace**, int) signal: the
+	// receivers (StackTrace widget, BinLoaderView) store the array pointer and dereference it
+	// later, so it must outlive the emit. Resolved from the selected op's m_stackTraceIndex.
+	rtm::StackTrace*	m_selectedStackTrace = nullptr;
+
 public:
 	GroupList(QWidget* _parent = 0, Qt::WindowFlags _flags = (Qt::WindowFlags)0);
 	~GroupList();

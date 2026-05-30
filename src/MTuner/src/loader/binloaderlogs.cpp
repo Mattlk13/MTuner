@@ -130,7 +130,7 @@ bool Capture::saveLog(const char* _path, uintptr_t _symResolver )
 
 		fprintf(f, "\n%s  size: %u\n", opType, opEx->m_allocSize);
 
-		StackTrace* trace = opEx->m_stackTrace;
+		StackTrace* trace = getStackTraceByIndex(opEx->m_stackTraceIndex);
 	
 		if (!trace)
 		{
@@ -219,7 +219,7 @@ bool Capture::saveGroupsLog(const char* _path, eGroupSort _sorting, uintptr_t _s
 		else
 			fprintf(f, "\n%s  size: %u   group operations: %u\n", opType, group->m_minSize, group->m_count);
 
-		StackTrace* trace = opEx->m_stackTrace;
+		StackTrace* trace = getStackTraceByIndex(opEx->m_stackTraceIndex);
 	
 		if (!trace)
 		{
@@ -355,7 +355,7 @@ bool Capture::saveGroupsLogXML(const char* _path, eGroupSort _sorting, uintptr_t
 		fprintf(f, "        <Operations>%u</Operations>\n", group->m_count);
 		fprintf(f, "        <Leaked>%" PRId64 "</Leaked>\n", group->m_liveSize);
 
-		StackTrace* trace = opEx->m_stackTrace;
+		StackTrace* trace = getStackTraceByIndex(opEx->m_stackTraceIndex);
 
 		if (!trace)
 			continue;
