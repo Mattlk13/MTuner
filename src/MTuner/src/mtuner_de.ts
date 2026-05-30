@@ -364,7 +364,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="about.cpp" line="16"/>
+        <location filename="about.cpp" line="15"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
@@ -492,151 +492,168 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="108"/>
+        <location filename="gcc.ui" line="126"/>
         <source>Custom toolchain 1</source>
         <translation>Benutzerdefinierte Toolchain 1</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="113"/>
+        <location filename="gcc.ui" line="131"/>
         <source>Custom toolchain 2</source>
         <translation>Benutzerdefinierte Toolchain 2</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="118"/>
+        <location filename="gcc.ui" line="136"/>
         <source>Custom toolchain 3</source>
         <translation>Benutzerdefinierte Toolchain 3</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="123"/>
+        <location filename="gcc.ui" line="141"/>
         <source>Custom toolchain 4</source>
         <translation>Benutzerdefinierte Toolchain 4</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="128"/>
+        <location filename="gcc.ui" line="146"/>
         <source>Custom toolchain 5</source>
         <translation>Benutzerdefinierte Toolchain 5</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="133"/>
+        <location filename="gcc.ui" line="151"/>
         <source>Custom toolchain 6</source>
         <translation>Benutzerdefinierte Toolchain 6</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="138"/>
+        <location filename="gcc.ui" line="156"/>
         <source>Custom toolchain 7</source>
         <translation>Benutzerdefinierte Toolchain 7</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="143"/>
+        <location filename="gcc.ui" line="161"/>
         <source>Custom toolchain 8</source>
         <translation>Benutzerdefinierte Toolchain 8</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="148"/>
+        <location filename="gcc.ui" line="166"/>
         <source>Custom toolchain 9</source>
         <translation>Benutzerdefinierte Toolchain 9</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="158"/>
+        <location filename="gcc.ui" line="176"/>
         <source>Toolchain name:</source>
         <translation>Toolchain-name:</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="172"/>
+        <location filename="gcc.ui" line="190"/>
         <source>64 bit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="187"/>
-        <location filename="gcc.ui" line="289"/>
-        <location filename="gcc.ui" line="389"/>
+        <location filename="gcc.ui" line="205"/>
+        <location filename="gcc.ui" line="307"/>
+        <location filename="gcc.ui" line="407"/>
         <source>Environment variable</source>
         <translation>Umgebungsvariable</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="194"/>
-        <location filename="gcc.ui" line="296"/>
-        <location filename="gcc.ui" line="396"/>
+        <location filename="gcc.ui" line="212"/>
+        <location filename="gcc.ui" line="314"/>
+        <location filename="gcc.ui" line="414"/>
         <source>Binutils path</source>
         <translation>Binutils-Pfad</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="201"/>
-        <location filename="gcc.ui" line="303"/>
+        <location filename="gcc.ui" line="219"/>
+        <location filename="gcc.ui" line="321"/>
         <source>Toolchain prefix</source>
         <translation>Toolchain-Präfix</translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="220"/>
-        <location filename="gcc.ui" line="322"/>
-        <location filename="gcc.ui" line="415"/>
+        <location filename="gcc.ui" line="238"/>
+        <location filename="gcc.ui" line="340"/>
+        <location filename="gcc.ui" line="433"/>
         <source>...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="238"/>
-        <location filename="gcc.ui" line="340"/>
-        <location filename="gcc.ui" line="430"/>
+        <location filename="gcc.ui" line="256"/>
+        <location filename="gcc.ui" line="358"/>
+        <location filename="gcc.ui" line="448"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="274"/>
+        <location filename="gcc.ui" line="292"/>
         <source>32 bit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="gcc.ui" line="374"/>
+        <location filename="gcc.ui" line="392"/>
         <source>SN ProDG</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="gcc.cpp" line="415"/>
-        <location filename="gcc.cpp" line="443"/>
+        <location filename="gcc.cpp" line="454"/>
+        <location filename="gcc.cpp" line="482"/>
         <source>Select folder with binutils</source>
         <translation>Wählen Sie Ordner mit binutils</translation>
     </message>
     <message>
-        <location filename="gcc.cpp" line="446"/>
+        <location filename="gcc.cpp" line="485"/>
         <source>Select folder with orbis-bin.exe</source>
         <translation>Wählen Sie Ordner mit Orbis-bin.exe</translation>
     </message>
     <message>
-        <location filename="gcc.cpp" line="476"/>
+        <location filename="gcc.cpp" line="488"/>
+        <source>Select folder with prospero-bin.exe</source>
+        <translation>Ordner mit prospero-bin.exe wählen</translation>
+    </message>
+    <message>
+        <location filename="gcc.cpp" line="518"/>
         <source>Select folder with ps3bin.exe</source>
         <translation>Wählen Sie Ordner mit ps3bin.exe</translation>
     </message>
     <message>
-        <location filename="gcc.cpp" line="501"/>
-        <location filename="gcc.cpp" line="502"/>
+        <location filename="gcc.cpp" line="543"/>
+        <location filename="gcc.cpp" line="544"/>
         <source>orbis tools found!</source>
         <translation>Orbis-Werkzeuge gefunden!</translation>
     </message>
     <message>
-        <location filename="gcc.cpp" line="501"/>
-        <location filename="gcc.cpp" line="502"/>
+        <location filename="gcc.cpp" line="543"/>
+        <location filename="gcc.cpp" line="544"/>
         <source>orbis tools not found!</source>
         <translation>Orbis-Werkzeuge nicht gefunden!</translation>
     </message>
     <message>
-        <location filename="gcc.cpp" line="506"/>
-        <location filename="gcc.cpp" line="507"/>
+        <location filename="gcc.cpp" line="549"/>
+        <location filename="gcc.cpp" line="550"/>
+        <source>prospero tools found!</source>
+        <translation>prospero-Tools gefunden!</translation>
+    </message>
+    <message>
+        <location filename="gcc.cpp" line="549"/>
+        <location filename="gcc.cpp" line="550"/>
+        <source>prospero tools not found!</source>
+        <translation>prospero-Tools nicht gefunden!</translation>
+    </message>
+    <message>
+        <location filename="gcc.cpp" line="554"/>
+        <location filename="gcc.cpp" line="555"/>
         <source>toolchain found!</source>
         <translation>Toolchain gefunden!</translation>
     </message>
     <message>
-        <location filename="gcc.cpp" line="506"/>
-        <location filename="gcc.cpp" line="507"/>
+        <location filename="gcc.cpp" line="554"/>
+        <location filename="gcc.cpp" line="555"/>
         <source>toolchain not found!</source>
         <translation>Toolchain nicht gefunden!</translation>
     </message>
     <message>
-        <location filename="gcc.cpp" line="510"/>
+        <location filename="gcc.cpp" line="558"/>
         <source>ps3 tools found!</source>
         <translation>PS3-Tools gefunden!</translation>
     </message>
     <message>
-        <location filename="gcc.cpp" line="510"/>
+        <location filename="gcc.cpp" line="558"/>
         <source>ps3 tools not found!</source>
         <translation>PS3-Tools nicht gefunden!</translation>
     </message>
@@ -703,71 +720,70 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GraphWidget</name>
     <message>
-        <location filename="graphwidget.cpp" line="481"/>
-        <location filename="graphwidget.cpp" line="594"/>
+        <location filename="graphwidget.cpp" line="571"/>
         <source>Time</source>
         <translation>Zeit</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="482"/>
+        <location filename="graphwidget.cpp" line="572"/>
         <source>Thread</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="503"/>
         <source>Start time</source>
-        <translation>Startzeit</translation>
+        <translation type="vanished">Startzeit</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="503"/>
         <source>End time</source>
-        <translation>Endzeit</translation>
+        <translation type="vanished">Endzeit</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="504"/>
         <source>Duration</source>
-        <translation>Dauer</translation>
+        <translation type="vanished">Dauer</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="504"/>
         <source>Usage at end</source>
-        <translation>Verwendung am Ende</translation>
+        <translation type="vanished">Verwendung am Ende</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="505"/>
-        <location filename="graphwidget.cpp" line="596"/>
+        <location filename="graphwidget.cpp" line="417"/>
         <source>Live blocks</source>
         <translation>Live Blöcke</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="595"/>
+        <location filename="graphwidget.cpp" line="416"/>
         <source>Usage</source>
         <translation>Verwendung</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="687"/>
+        <location filename="graphwidget.cpp" line="415"/>
+        <source> Time</source>
+        <translation> Zeit</translation>
+    </message>
+    <message>
+        <location filename="graphwidget.cpp" line="729"/>
         <source>Zoom to selection</source>
         <translation>Zoom zur Auswahl</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="688"/>
+        <location filename="graphwidget.cpp" line="730"/>
         <source>Reset zoom</source>
         <oldsource>reset zoom</oldsource>
         <translation>Zoom zurücksetzen</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="701"/>
+        <location filename="graphwidget.cpp" line="743"/>
         <source>Snap selection to marker</source>
         <translation>Snap-Auswahl auf marker</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="702"/>
+        <location filename="graphwidget.cpp" line="744"/>
         <source>Select from marker</source>
         <oldsource>select from marker</oldsource>
         <translation>Wählen Sie aus der Markierung</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="703"/>
+        <location filename="graphwidget.cpp" line="745"/>
         <source>Select to marker</source>
         <oldsource>select to marker</oldsource>
         <translation>Wählen Sie zur Markierung</translation>
@@ -776,7 +792,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GroupList</name>
     <message>
-        <location filename="grouplistwidget.cpp" line="763"/>
+        <location filename="grouplistwidget.cpp" line="809"/>
         <source>Select group range</source>
         <translation>Ausgewählte gruppe bereich</translation>
     </message>
@@ -859,6 +875,17 @@ p, li { white-space: pre-wrap; }
         <source>Show peaks</source>
         <translation>Karte-Gipfel</translation>
     </message>
+    <message>
+        <location filename="histogram.ui" line="120"/>
+        <source>If checked, all values are normalized to peak values.
+Otherwise, relative scale is used.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="histogram.ui" line="124"/>
+        <source>Scale to peaks</source>
+        <translation>An Spitzen skalieren</translation>
+    </message>
 </context>
 <context>
     <name>Inject</name>
@@ -868,32 +895,41 @@ p, li { white-space: pre-wrap; }
         <translation>Injizieren und ausführen</translation>
     </message>
     <message>
-        <location filename="inject.ui" line="25"/>
+        <location filename="inject.ui" line="29"/>
         <source>Allocator:</source>
         <translation>Allocator:</translation>
     </message>
     <message>
-        <location filename="inject.ui" line="33"/>
+        <location filename="inject.ui" line="37"/>
         <source>No change / system</source>
         <translation>Keine Änderung / System</translation>
     </message>
     <message>
-        <location filename="inject.ui" line="38"/>
-        <source>rpmalloc</source>
-        <translation>rpmalloc</translation>
+        <location filename="inject.ui" line="42"/>
+        <source>stomp overrun</source>
+        <translation>Stomp-Überlauf</translation>
     </message>
     <message>
-        <location filename="inject.ui" line="61"/>
+        <location filename="inject.ui" line="47"/>
+        <source>stomp underrun</source>
+        <translation>Stomp-Unterlauf</translation>
+    </message>
+    <message>
+        <source>rpmalloc</source>
+        <translation type="vanished">rpmalloc</translation>
+    </message>
+    <message>
+        <location filename="inject.ui" line="70"/>
         <source>Capture memory profile</source>
         <translation>Speicherprofil erfassen</translation>
     </message>
     <message>
-        <location filename="inject.ui" line="71"/>
+        <location filename="inject.ui" line="80"/>
         <source>Load memory profile after capture</source>
         <translation>Laden Sie das Speicherprofil nach der Aufnahme</translation>
     </message>
     <message>
-        <location filename="inject.ui" line="81"/>
+        <location filename="inject.ui" line="93"/>
         <source>Memory overwrite detection</source>
         <translation>Speicherüberschreibungserkennung</translation>
     </message>
@@ -901,102 +937,131 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MTuner</name>
     <message>
-        <location filename="mtuner.cpp" line="221"/>
-        <location filename="mtuner.cpp" line="453"/>
+        <location filename="mtuner.cpp" line="246"/>
+        <location filename="mtuner.cpp" line="565"/>
         <source>Memory timeline</source>
         <translation>Speicher-Zeitstrahl</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="222"/>
-        <location filename="mtuner.cpp" line="454"/>
+        <location filename="mtuner.cpp" line="247"/>
+        <location filename="mtuner.cpp" line="566"/>
         <source>Allocation histogram</source>
         <translation>Zuweisung Histogramm</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="223"/>
-        <location filename="mtuner.cpp" line="455"/>
+        <location filename="mtuner.cpp" line="248"/>
+        <location filename="mtuner.cpp" line="567"/>
         <source>Statistics</source>
         <translation>Statistiken</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="224"/>
-        <location filename="mtuner.cpp" line="456"/>
+        <location filename="mtuner.cpp" line="249"/>
+        <location filename="mtuner.cpp" line="568"/>
         <source>Memory tag tree</source>
         <translation>Speicher-Tag-Struktur</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="225"/>
-        <location filename="mtuner.cpp" line="457"/>
+        <location filename="mtuner.cpp" line="250"/>
+        <location filename="mtuner.cpp" line="569"/>
         <source>Stack trace</source>
         <translation>Stack-trace</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="226"/>
-        <location filename="mtuner.cpp" line="458"/>
+        <location filename="mtuner.cpp" line="251"/>
+        <location filename="mtuner.cpp" line="570"/>
         <source>Heaps / Allocators</source>
         <translation>Haufen / Allocators</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="227"/>
-        <location filename="mtuner.cpp" line="459"/>
+        <location filename="mtuner.cpp" line="252"/>
+        <location filename="mtuner.cpp" line="571"/>
         <source>Modules</source>
         <translation>Module</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="254"/>
+        <location filename="mtuner.cpp" line="279"/>
         <source>select a capture file</source>
         <translation>Wählen Sie eine Capture-Datei</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="630"/>
+        <location filename="mtuner.cpp" line="478"/>
+        <source>Theme</source>
+        <translation>Design</translation>
+    </message>
+    <message>
+        <location filename="mtuner.cpp" line="496"/>
+        <source>MTuner dark</source>
+        <translation>MTuner Dunkel</translation>
+    </message>
+    <message>
+        <location filename="mtuner.cpp" line="497"/>
+        <source>Pastel mint</source>
+        <translation>Pastellminze</translation>
+    </message>
+    <message>
+        <location filename="mtuner.cpp" line="498"/>
+        <source>Molokai</source>
+        <translation>Molokai</translation>
+    </message>
+    <message>
+        <location filename="mtuner.cpp" line="499"/>
+        <source>Tokyo Night</source>
+        <translation>Tokyo Night</translation>
+    </message>
+    <message>
+        <location filename="mtuner.cpp" line="749"/>
         <source>Created </source>
         <translation>Erstellt </translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="669"/>
-        <location filename="mtuner.cpp" line="991"/>
+        <location filename="mtuner.cpp" line="793"/>
+        <location filename="mtuner.cpp" line="1134"/>
         <source>Capture in progress</source>
         <translation>Erfassen im Gange</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="901"/>
+        <location filename="mtuner.cpp" line="1030"/>
         <source>Loading, please wait...</source>
         <translation>Lädt, bitte warten...</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="909"/>
-        <source>Capture loaded partially!</source>
-        <translation>Capture geladen teilweise!</translation>
+        <location filename="mtuner.cpp" line="1049"/>
+        <source>Creating symbol resolver and downloading symbols, please wait...</source>
+        <translation>Symbolauflöser wird erstellt und Symbole werden heruntergeladen, bitte warten...</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="909"/>
+        <source>Capture loaded partially!</source>
+        <translation type="vanished">Capture geladen teilweise!</translation>
+    </message>
+    <message>
+        <location filename="mtuner.cpp" line="1054"/>
         <source>Capture file was only partially loaded!
 Information may be missing from the profile!</source>
         <translation>Capture-datei wurde nur teilweise geladen!
 Informationen kann aus dem profil fehlen!</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="919"/>
+        <location filename="mtuner.cpp" line="1061"/>
         <source>Loaded </source>
         <translation>Geladen </translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="927"/>
+        <location filename="mtuner.cpp" line="1069"/>
         <source>Error loading!</source>
         <translation>Fehler geladen!</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="928"/>
+        <location filename="mtuner.cpp" line="1070"/>
         <source>Failed to load file!</source>
         <translation>Fehler beim Laden der Datei!</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="928"/>
+        <location filename="mtuner.cpp" line="1070"/>
         <source>File may be corrupted, try to repeat the capture</source>
         <translation>Datei ist möglicherweise beschädigt, versuchen Sie, die Aufzeichnung zu wiederholen</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="991"/>
+        <location filename="mtuner.cpp" line="1134"/>
         <source>Cannot start a new capture while capture is in progress</source>
         <translation>Eine neue Aufnahme kann nicht gestartet werden, während die Aufnahme ausgeführt wird</translation>
     </message>
@@ -1024,224 +1089,224 @@ Informationen kann aus dem profil fehlen!</translation>
         <translation>&amp;Einstellungen</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="84"/>
+        <location filename="mtuner.ui" line="85"/>
         <source>&amp;View</source>
         <translation>&amp;Anzeigen</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="96"/>
+        <location filename="mtuner.ui" line="97"/>
         <source>&amp;Language</source>
         <translation>&amp;Sprache</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="108"/>
+        <location filename="mtuner.ui" line="109"/>
         <source>Main tool bar</source>
         <translation>Haupt-Symbolleiste</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="138"/>
+        <location filename="mtuner.ui" line="139"/>
         <source>&amp;Open</source>
         <translation>&amp;Öffnen</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="141"/>
+        <location filename="mtuner.ui" line="142"/>
         <source>Open capture (.MTuner file)</source>
         <translation>Erfassung zu öffnen (*.MTuner datei)</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="144"/>
+        <location filename="mtuner.ui" line="145"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="149"/>
+        <location filename="mtuner.ui" line="150"/>
         <source>&amp;Exit</source>
         <translation>&amp;Ausfahrt</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="152"/>
+        <location filename="mtuner.ui" line="153"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="157"/>
+        <location filename="mtuner.ui" line="158"/>
         <source>&amp;About</source>
         <translation>&amp;Über</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="160"/>
+        <location filename="mtuner.ui" line="161"/>
         <source>About MTuner</source>
         <translation>Über MTuner</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="169"/>
+        <location filename="mtuner.ui" line="170"/>
         <source>&amp;Manage projects</source>
         <translation>&amp;Projekte verwalten</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="172"/>
+        <location filename="mtuner.ui" line="173"/>
         <source>Ctrl+P</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="177"/>
+        <location filename="mtuner.ui" line="178"/>
         <source>&amp;Close</source>
         <translation>&amp;Enger</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="186"/>
+        <location filename="mtuner.ui" line="187"/>
         <source>&amp;Debug symbols</source>
         <translation>&amp;Debug-symbole</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="189"/>
+        <location filename="mtuner.ui" line="190"/>
         <source>Debug symbol sources setting</source>
         <translation>Debug symbol quellen festlegen</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="194"/>
+        <location filename="mtuner.ui" line="195"/>
         <source>&amp;Contents</source>
         <translation>&amp;Inhalt</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="197"/>
+        <location filename="mtuner.ui" line="198"/>
         <source>F1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="209"/>
+        <location filename="mtuner.ui" line="210"/>
         <source>Toggle &amp;filtering mode</source>
         <translation>Knebel &amp;filtermodus</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="212"/>
-        <location filename="mtuner.ui" line="215"/>
+        <location filename="mtuner.ui" line="213"/>
+        <location filename="mtuner.ui" line="216"/>
         <source>Toggle filtering mode</source>
         <translation>Knebel filtermodus</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="234"/>
+        <location filename="mtuner.ui" line="235"/>
         <source>Ti&amp;meline</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="311"/>
+        <location filename="mtuner.ui" line="312"/>
         <source>StackTrace</source>
         <translation>Stack-trace</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="314"/>
+        <location filename="mtuner.ui" line="315"/>
         <source>Toggle stack trace and source visibility</source>
         <translation>Stack trace &quot;und&quot; quelle sichtbarkeit</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="328"/>
+        <location filename="mtuner.ui" line="329"/>
         <source>Import license file</source>
         <translation>Lizenz-datei importieren</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="333"/>
+        <location filename="mtuner.ui" line="334"/>
         <source>Activate MTuner</source>
         <translation>MTuner aktivieren</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="336"/>
+        <location filename="mtuner.ui" line="337"/>
         <source>Deactivate MTuner</source>
         <translation>MTuner deaktivieren</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="345"/>
+        <location filename="mtuner.ui" line="346"/>
         <source>&amp;Toolchains Setup</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="363"/>
+        <location filename="mtuner.ui" line="364"/>
         <source>Heaps / Allocators</source>
         <translation>Haufen / Allocators</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="366"/>
+        <location filename="mtuner.ui" line="367"/>
         <source>Toggle visibility of heaps / allocators dock</source>
         <translation>Umschalten der Sichtbarkeit von Haufen / Allocators dock</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="371"/>
+        <location filename="mtuner.ui" line="372"/>
         <source>Open capture location</source>
         <translation>Offene eroberungspunkt</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="374"/>
+        <location filename="mtuner.ui" line="375"/>
         <source>Opens, in Windows Explorer, a folder where capture files (*.MTuner) are recorder</source>
         <translation>In Windows Explorer einen ordner öffnet wo erfassen dateien (*.MTuner) sind recorder</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="379"/>
+        <location filename="mtuner.ui" line="380"/>
         <source>&amp;Save capture window settings</source>
         <oldsource>&amp;Save capture window layout</oldsource>
         <translation>Speichern sie fenster setup zu analysieren</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="394"/>
+        <location filename="mtuner.ui" line="395"/>
         <source>&amp;Modules</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="397"/>
+        <location filename="mtuner.ui" line="398"/>
         <source>Toggle visibility of Module list dock</source>
         <translation>Schaltet die Sichtbarkeit des Modullisten-Docks um</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="348"/>
+        <location filename="mtuner.ui" line="349"/>
         <source>Ctrl+G</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="323"/>
+        <location filename="mtuner.ui" line="324"/>
         <source>&amp;External editor</source>
         <translation>&amp;Externen editor</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="218"/>
+        <location filename="mtuner.ui" line="219"/>
         <source>Ctrl+F</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="237"/>
+        <location filename="mtuner.ui" line="238"/>
         <source>Toggle timeline graph visibility</source>
         <translation>Timeline diagramm sichtbarkeit</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="252"/>
+        <location filename="mtuner.ui" line="253"/>
         <source>&amp;Statistics</source>
         <translation>&amp;Statistik</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="255"/>
+        <location filename="mtuner.ui" line="256"/>
         <source>Toggle statistics visibility</source>
         <translation>Statistik sichtbarkeit</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="260"/>
+        <location filename="mtuner.ui" line="261"/>
         <source>&amp;English</source>
         <translation>&amp;Deutsch</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="275"/>
+        <location filename="mtuner.ui" line="276"/>
         <source>&amp;Histograms</source>
         <translation>&amp;Histogramme</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="278"/>
+        <location filename="mtuner.ui" line="279"/>
         <source>Toggle histogram window visibility</source>
         <translation>Histogramm-fenstersichtbarkeit</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="293"/>
+        <location filename="mtuner.ui" line="294"/>
         <source>&amp;Tag Tree</source>
         <translation>&amp;Tag-struktur</translation>
     </message>
     <message>
-        <location filename="mtuner.ui" line="296"/>
+        <location filename="mtuner.ui" line="297"/>
         <source>Toggle tag tree visibility</source>
         <translation>Tag baum sichtbarkeit</translation>
     </message>
@@ -1259,27 +1324,27 @@ Informationen kann aus dem profil fehlen!</translation>
         <translation>Filter:</translation>
     </message>
     <message>
-        <location filename="moduleswidget.ui" line="54"/>
+        <location filename="moduleswidget.ui" line="57"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="moduleswidget.ui" line="59"/>
+        <location filename="moduleswidget.ui" line="62"/>
         <source>Base Address</source>
         <translation>Basisadresse</translation>
     </message>
     <message>
-        <location filename="moduleswidget.ui" line="64"/>
+        <location filename="moduleswidget.ui" line="67"/>
         <source>End Address</source>
         <translation>Endadresse</translation>
     </message>
     <message>
-        <location filename="moduleswidget.ui" line="69"/>
+        <location filename="moduleswidget.ui" line="72"/>
         <source>Size</source>
         <translation>Größe</translation>
     </message>
     <message>
-        <location filename="moduleswidget.ui" line="74"/>
+        <location filename="moduleswidget.ui" line="77"/>
         <source>Path</source>
         <translation>Pfad</translation>
     </message>
@@ -1341,6 +1406,11 @@ Informationen kann aus dem profil fehlen!</translation>
         <source>Find memory operation on a memory block with given address</source>
         <translation>Speicher suchvorgang auf einen speicherblock mit adresse angegeben</translation>
     </message>
+    <message>
+        <location filename="operationsearch.ui" line="172"/>
+        <source>Leaks only</source>
+        <translation>Nur Lecks</translation>
+    </message>
 </context>
 <context>
     <name>OperationsListWidget</name>
@@ -1371,110 +1441,110 @@ Informationen kann aus dem profil fehlen!</translation>
         <translation>Tipp: Drag &amp;amp; drop eine ausführbare datei, um das dialogfeld &quot;</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="52"/>
+        <location filename="projectsmanager.ui" line="47"/>
         <source>Executable</source>
         <translation>Ausführbare datei</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="62"/>
+        <location filename="projectsmanager.ui" line="57"/>
         <source>Command line args</source>
         <translation>Befehlszeilenargumente</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="72"/>
+        <location filename="projectsmanager.ui" line="67"/>
         <source>Working directory</source>
         <translation>Arbeitsverzeichnis</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="82"/>
+        <location filename="projectsmanager.ui" line="77"/>
         <source>Environment:</source>
         <translation>Umgebung:</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="100"/>
+        <location filename="projectsmanager.ui" line="95"/>
         <source>Path of executable to run in instrumented mode</source>
         <translation>Pfad der ausführbaren datei für instrumentierte modus</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="107"/>
-        <location filename="projectsmanager.ui" line="132"/>
+        <location filename="projectsmanager.ui" line="102"/>
+        <location filename="projectsmanager.ui" line="127"/>
         <source>...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="116"/>
+        <location filename="projectsmanager.ui" line="111"/>
         <source>Command line arguments for the executable</source>
         <translation>Befehlszeilenargumente für die ausführbare datei</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="125"/>
+        <location filename="projectsmanager.ui" line="120"/>
         <source>Directory to start the executable at. Leaving it empty will start the executable at it&apos;s location.</source>
         <translation>Verzeichnis, in das programm zu starten. Leer gelassen, wird die ausführbare datei an seiner position gestartet.</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="143"/>
+        <location filename="projectsmanager.ui" line="138"/>
         <source>Edit a list of environment variables</source>
         <translation>Bearbeiten Sie eine Liste von Umgebungsvariablen</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="146"/>
+        <location filename="projectsmanager.ui" line="141"/>
         <source>Edit variables</source>
         <translation>Variablen bearbeiten</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="153"/>
+        <location filename="projectsmanager.ui" line="148"/>
         <source>If checked, child process will inherit
 environment variables MTuner was started with</source>
         <translation>Wenn diese Option aktiviert ist, wird der untergeordnete Prozess übernommen
 Umgebungsvariablen MTuner wurde mit gestartet</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="157"/>
+        <location filename="projectsmanager.ui" line="152"/>
         <source>Inherit environment from MTuner</source>
         <translation>Umgebung von MTuner erben</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="177"/>
+        <location filename="projectsmanager.ui" line="172"/>
         <source>Adds executable with run parameters to the list of projects</source>
         <translation>Die Liste der projekte hinzugefügt ausführbare datei mit laufzeit parameter</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="180"/>
+        <location filename="projectsmanager.ui" line="175"/>
         <source>Add</source>
         <translation>Hinzufügen</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="187"/>
+        <location filename="projectsmanager.ui" line="182"/>
         <source>Deletes a project from the list</source>
         <translation>Löscht ein projekt aus der liste</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="190"/>
+        <location filename="projectsmanager.ui" line="185"/>
         <source>Delete</source>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="197"/>
+        <location filename="projectsmanager.ui" line="192"/>
         <source>Run the MTuner instrumented executable</source>
         <translation>Starten sie das programm MTuner instrumentiert</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="200"/>
+        <location filename="projectsmanager.ui" line="195"/>
         <source>Run</source>
         <translation>Ausführen</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="220"/>
+        <location filename="projectsmanager.ui" line="215"/>
         <source>Close dialog</source>
         <translation>Ein enger dialog</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="223"/>
+        <location filename="projectsmanager.ui" line="218"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="projectsmanager.ui" line="230"/>
+        <location filename="projectsmanager.ui" line="225"/>
         <source>OK</source>
         <translation>Okay</translation>
     </message>
@@ -1482,22 +1552,34 @@ Umgebungsvariablen MTuner wurde mit gestartet</translation>
 <context>
     <name>ProjectsManager</name>
     <message>
-        <location filename="projectsmanager.cpp" line="113"/>
+        <location filename="projectsmanager.cpp" line="110"/>
         <source>Are you sure?</source>
         <translation>Bist du sicher?</translation>
     </message>
     <message>
-        <location filename="projectsmanager.cpp" line="114"/>
+        <location filename="projectsmanager.cpp" line="111"/>
         <source>Project list was modified, if you close project manager it will not be saved.</source>
         <translation>Die Projektliste wurde geändert. Wenn Sie den Projektmanager schließen, wird sie nicht gespeichert.</translation>
     </message>
     <message>
-        <location filename="projectsmanager.cpp" line="289"/>
+        <location filename="projectsmanager.cpp" line="163"/>
+        <source>Process inject failed!</source>
+        <translation>Prozessinjektion fehlgeschlagen!</translation>
+    </message>
+    <message>
+        <location filename="projectsmanager.cpp" line="164"/>
+        <source>Process inject has failed,
+missing MTuner inject binaries
+(MTunerInject*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="projectsmanager.cpp" line="311"/>
         <source>select executable</source>
         <translation>Wählen sie die ausführbare datei</translation>
     </message>
     <message>
-        <location filename="projectsmanager.cpp" line="297"/>
+        <location filename="projectsmanager.cpp" line="319"/>
         <source>select working directory</source>
         <translation>Wählen sie arbeitsverzeichnis</translation>
     </message>
@@ -1525,209 +1607,203 @@ Umgebungsvariablen MTuner wurde mit gestartet</translation>
         <translation>Wurzel</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="482"/>
-        <location filename="operationslist.cpp" line="225"/>
+        <location filename="grouplistwidget.cpp" line="527"/>
+        <location filename="operationslist.cpp" line="230"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="484"/>
+        <location filename="grouplistwidget.cpp" line="529"/>
         <source>Block size</source>
         <translation>Blockgröße</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="485"/>
+        <location filename="grouplistwidget.cpp" line="530"/>
         <source>Total count</source>
         <translation>Gesamtzahl</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="486"/>
+        <location filename="grouplistwidget.cpp" line="531"/>
         <source>Live peak count</source>
         <translation>Live spitze graf</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="487"/>
+        <location filename="grouplistwidget.cpp" line="532"/>
         <source>Peak count</source>
         <translation>Spitze graf</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="488"/>
-        <location filename="operationslist.cpp" line="225"/>
+        <location filename="grouplistwidget.cpp" line="533"/>
+        <location filename="operationslist.cpp" line="230"/>
         <source>Alignment</source>
         <translation>Ausrichtung</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="489"/>
-        <location filename="operationslist.cpp" line="225"/>
+        <location filename="grouplistwidget.cpp" line="534"/>
+        <location filename="operationslist.cpp" line="230"/>
         <source>Size</source>
         <translation>Größe</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="490"/>
-        <location filename="grouplistwidget.cpp" line="491"/>
+        <location filename="grouplistwidget.cpp" line="535"/>
+        <location filename="grouplistwidget.cpp" line="536"/>
         <source>Peak size</source>
         <translation>Maximale Größe</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="492"/>
+        <location filename="grouplistwidget.cpp" line="537"/>
         <source>Leaked</source>
         <translation>Undichte</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="483"/>
-        <location filename="operationslist.cpp" line="225"/>
+        <location filename="grouplistwidget.cpp" line="528"/>
+        <location filename="operationslist.cpp" line="230"/>
         <source>Heap</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="531"/>
-        <location filename="operationslist.cpp" line="303"/>
+        <location filename="grouplistwidget.cpp" line="576"/>
+        <location filename="operationslist.cpp" line="288"/>
         <source>Alloc</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="532"/>
-        <location filename="operationslist.cpp" line="304"/>
+        <location filename="grouplistwidget.cpp" line="577"/>
+        <location filename="operationslist.cpp" line="289"/>
         <source>Alloc aligned</source>
         <translation>Alloc ausgerichtet</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="533"/>
-        <location filename="operationslist.cpp" line="305"/>
+        <location filename="grouplistwidget.cpp" line="578"/>
+        <location filename="operationslist.cpp" line="290"/>
         <source>Calloc</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="534"/>
-        <location filename="operationslist.cpp" line="306"/>
+        <location filename="grouplistwidget.cpp" line="579"/>
+        <location filename="operationslist.cpp" line="291"/>
         <source>Free</source>
         <translation>Freier</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="535"/>
-        <location filename="operationslist.cpp" line="307"/>
+        <location filename="grouplistwidget.cpp" line="580"/>
+        <location filename="operationslist.cpp" line="292"/>
         <source>Realloc</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="536"/>
-        <location filename="operationslist.cpp" line="308"/>
+        <location filename="grouplistwidget.cpp" line="581"/>
+        <location filename="operationslist.cpp" line="293"/>
         <source>Realloc aligned</source>
         <translation>Realloc ausgerichtet</translation>
     </message>
     <message>
-        <location filename="grouplistwidget.cpp" line="570"/>
-        <location filename="operationslist.cpp" line="323"/>
+        <location filename="grouplistwidget.cpp" line="615"/>
+        <location filename="operationslist.cpp" line="307"/>
         <source>Default</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="operationslist.cpp" line="225"/>
+        <location filename="operationslist.cpp" line="230"/>
         <source>Thread ID</source>
         <translation>Thread-ID</translation>
     </message>
     <message>
-        <location filename="operationslist.cpp" line="225"/>
+        <location filename="operationslist.cpp" line="230"/>
         <source>Address</source>
         <translation>Adresse</translation>
     </message>
     <message>
-        <location filename="operationslist.cpp" line="225"/>
+        <location filename="operationslist.cpp" line="230"/>
         <source>Time</source>
         <translation>Zeit</translation>
     </message>
     <message>
-        <location filename="stacktreewidget.cpp" line="360"/>
+        <location filename="stacktreewidget.cpp" line="365"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="stacktreewidget.cpp" line="361"/>
+        <location filename="stacktreewidget.cpp" line="366"/>
         <source>Module</source>
         <translation>Modul</translation>
     </message>
     <message>
-        <location filename="stacktreewidget.cpp" line="362"/>
+        <location filename="stacktreewidget.cpp" line="367"/>
         <location filename="tagtreewidget.cpp" line="74"/>
         <source>Usage</source>
         <translation>Verwendung</translation>
     </message>
     <message>
-        <location filename="stacktreewidget.cpp" line="363"/>
+        <location filename="stacktreewidget.cpp" line="368"/>
         <location filename="tagtreewidget.cpp" line="75"/>
         <source>Peak Usage</source>
         <translation>Verwendung von spitze</translation>
     </message>
     <message>
-        <location filename="stacktreewidget.cpp" line="364"/>
+        <location filename="stacktreewidget.cpp" line="369"/>
         <source>Allocations</source>
         <translation>Zuweisungen</translation>
     </message>
     <message>
-        <location filename="stacktreewidget.cpp" line="365"/>
+        <location filename="stacktreewidget.cpp" line="370"/>
         <source>Frees</source>
         <translation>Befreit</translation>
     </message>
     <message>
-        <location filename="stacktreewidget.cpp" line="366"/>
+        <location filename="stacktreewidget.cpp" line="371"/>
         <source>Reallocations</source>
         <translation>Umschichtungen</translation>
     </message>
     <message>
-        <location filename="stacktreewidget.cpp" line="367"/>
+        <location filename="stacktreewidget.cpp" line="372"/>
         <source>File</source>
         <translation>Datei</translation>
     </message>
     <message>
-        <location filename="stacktreewidget.cpp" line="368"/>
+        <location filename="stacktreewidget.cpp" line="373"/>
         <source>Line</source>
         <translation>Linie</translation>
     </message>
     <message>
-        <location filename="treemapview.cpp" line="263"/>
         <source>Total size: </source>
-        <translation>Gesamtgröße: </translation>
+        <translation type="vanished">Gesamtgröße: </translation>
     </message>
     <message>
-        <location filename="treemapview.cpp" line="264"/>
         <source>Operations: </source>
-        <translation>Operationen: </translation>
+        <translation type="vanished">Operationen: </translation>
     </message>
     <message>
-        <location filename="treemapview.cpp" line="265"/>
         <source>    Allocs: </source>
-        <translation>    Zuweisungen: </translation>
+        <translation type="vanished">    Zuweisungen: </translation>
     </message>
     <message>
-        <location filename="treemapview.cpp" line="266"/>
         <source>  Reallocs: </source>
-        <translation>Neuzuordnungen:</translation>
+        <translation type="vanished">Neuzuordnungen:</translation>
     </message>
     <message>
-        <location filename="treemapview.cpp" line="267"/>
         <source>     Frees: </source>
-        <translation>     Freigaben: </translation>
+        <translation type="vanished">     Freigaben: </translation>
     </message>
     <message>
-        <location filename="treemapview.cpp" line="268"/>
         <source>Click to see call stack</source>
-        <translation>Klicken sie auf sehen call-stack</translation>
+        <translation type="vanished">Klicken sie auf sehen call-stack</translation>
     </message>
     <message>
-        <location filename="sourceview.cpp" line="53"/>
-        <location filename="sourceview.cpp" line="83"/>
+        <location filename="sourceview.cpp" line="52"/>
+        <location filename="sourceview.cpp" line="82"/>
         <source>Set tab width to 4</source>
         <translation>Set tab-schrittweite bis 4</translation>
     </message>
     <message>
-        <location filename="sourceview.cpp" line="54"/>
-        <location filename="sourceview.cpp" line="87"/>
+        <location filename="sourceview.cpp" line="53"/>
+        <location filename="sourceview.cpp" line="86"/>
         <source>Set tab width to 8</source>
         <translation>Set tab-schrittweite bis 8</translation>
     </message>
     <message>
-        <location filename="sourceview.cpp" line="55"/>
-        <location filename="sourceview.cpp" line="91"/>
+        <location filename="sourceview.cpp" line="54"/>
+        <location filename="sourceview.cpp" line="90"/>
         <source>Open in editor</source>
         <translation>Im editor geöffnet</translation>
     </message>
@@ -1738,65 +1814,84 @@ Umgebungsvariablen MTuner wurde mit gestartet</translation>
         <translation>Startseite</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="92"/>
+        <location filename="mtuner.cpp" line="107"/>
         <source>select symbol source</source>
         <translation>Symbol als quelle wählen</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="110"/>
-        <location filename="mtuner.cpp" line="117"/>
+        <location filename="mtuner.cpp" line="125"/>
+        <location filename="mtuner.cpp" line="132"/>
         <source>Toolchain is not configured</source>
         <translation>Toolchain ist nicht konfiguriert</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="110"/>
+        <location filename="mtuner.cpp" line="125"/>
         <source>Toolchain needs to be configured in order to resolve symbols.
 Would you like to configure the toolchain now?</source>
         <translation>Toolchain muss konfiguriert werden, um symbole zu lösen.
 Möchten sie die toolchain jetzt konfigurieren?</translation>
     </message>
     <message>
-        <location filename="mtuner.cpp" line="117"/>
+        <location filename="mtuner.cpp" line="132"/>
         <source>No debug symbols can be resolved!</source>
         <translation>Es können keine Debugsymbole aufgelöst werden!</translation>
     </message>
     <message>
-        <location filename="histogram.cpp" line="128"/>
+        <location filename="histogram.cpp" line="119"/>
         <source>byte used</source>
         <translation>Byte genutzt</translation>
     </message>
     <message>
-        <location filename="histogram.cpp" line="130"/>
+        <location filename="histogram.cpp" line="121"/>
         <source>bytes used</source>
         <translation>Bytes genutzt</translation>
     </message>
     <message>
-        <location filename="histogram.cpp" line="134"/>
+        <location filename="histogram.cpp" line="125"/>
         <source>bytes of overhead</source>
         <translation>Byte Mehraufwand</translation>
     </message>
     <message>
-        <location filename="histogram.cpp" line="139"/>
+        <location filename="histogram.cpp" line="130"/>
         <source>allocation</source>
         <translation>Alloziierung</translation>
     </message>
     <message>
-        <location filename="histogram.cpp" line="141"/>
+        <location filename="histogram.cpp" line="132"/>
         <source>allocations</source>
         <translation>Alloziierungen</translation>
     </message>
     <message>
-        <location filename="histogram.cpp" line="146"/>
-        <source>at peak</source>
-        <translation>Spitzenwert</translation>
+        <location filename="histogram.cpp" line="231"/>
+        <source>Global</source>
+        <translation>Globale</translation>
     </message>
     <message>
-        <location filename="mtunermain.cpp" line="462"/>
+        <location filename="histogram.cpp" line="232"/>
+        <source>Snapshot</source>
+        <translation>Schnappschuss</translation>
+    </message>
+    <message>
+        <location filename="histogram.cpp" line="233"/>
+        <source>Global (peak)</source>
+        <translation>Globale (Spitze)</translation>
+    </message>
+    <message>
+        <location filename="histogram.cpp" line="234"/>
+        <source>Snapshot (peak)</source>
+        <translation>Schnappschuss (Spitze)</translation>
+    </message>
+    <message>
+        <source>at peak</source>
+        <translation type="vanished">Spitzenwert</translation>
+    </message>
+    <message>
+        <location filename="mtunermain.cpp" line="469"/>
         <source>Failed to register DIA dll!</source>
         <translation>DIA-DLL konnte nicht registriert werden!</translation>
     </message>
     <message>
-        <location filename="mtunermain.cpp" line="462"/>
+        <location filename="mtunermain.cpp" line="469"/>
         <source>Debug symbols may not be loaded correctly</source>
         <translation>Debug-Symbole werden möglicherweise nicht korrekt geladen</translation>
     </message>
@@ -1804,12 +1899,12 @@ Möchten sie die toolchain jetzt konfigurieren?</translation>
 <context>
     <name>SourceView</name>
     <message>
-        <location filename="sourceview.cpp" line="263"/>
+        <location filename="sourceview.cpp" line="275"/>
         <source>Failed to start editor!</source>
         <translation>Fehler beim starten sie den text-editor!</translation>
     </message>
     <message>
-        <location filename="sourceview.cpp" line="263"/>
+        <location filename="sourceview.cpp" line="275"/>
         <source>Setup external editor now?</source>
         <translation>Einrichten externen text-editor jetzt?</translation>
     </message>
@@ -1875,17 +1970,17 @@ Möchten sie die toolchain jetzt konfigurieren?</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="stacktrace.cpp" line="77"/>
+        <location filename="stacktrace.cpp" line="96"/>
         <source>Copy</source>
         <translation>Kopieren</translation>
     </message>
     <message>
-        <location filename="stacktrace.cpp" line="78"/>
+        <location filename="stacktrace.cpp" line="97"/>
         <source>Copy all</source>
         <translation>Kopiere alles</translation>
     </message>
     <message>
-        <location filename="stacktrace.cpp" line="158"/>
+        <location filename="stacktrace.cpp" line="177"/>
         <source>of</source>
         <translation>von</translation>
     </message>
@@ -2086,7 +2181,7 @@ Möchten sie die toolchain jetzt konfigurieren?</translation>
 <context>
     <name>SymbolStore</name>
     <message>
-        <location filename="symbolstore.cpp" line="127"/>
+        <location filename="symbolstore.cpp" line="135"/>
         <source>select local symbol store directory</source>
         <translation>Wählen sie das lokale Verzeichnis für den Symbolspeicher</translation>
     </message>
@@ -2183,6 +2278,34 @@ Möchten sie die toolchain jetzt konfigurieren?</translation>
     </message>
 </context>
 <context>
+    <name>TreeMapView</name>
+    <message>
+        <location filename="treemapview.cpp" line="218"/>
+        <source>Total size</source>
+        <translation>Gesamtgröße</translation>
+    </message>
+    <message>
+        <location filename="treemapview.cpp" line="219"/>
+        <source>Operations</source>
+        <translation>Operationen</translation>
+    </message>
+    <message>
+        <location filename="treemapview.cpp" line="220"/>
+        <source>  Allocs</source>
+        <translation>  Allokationen</translation>
+    </message>
+    <message>
+        <location filename="treemapview.cpp" line="221"/>
+        <source>Reallocs</source>
+        <translation>Reallokationen</translation>
+    </message>
+    <message>
+        <location filename="treemapview.cpp" line="222"/>
+        <source>   Frees</source>
+        <translation>   Befreit</translation>
+    </message>
+</context>
+<context>
     <name>Welcome</name>
     <message>
         <location filename="welcome.ui" line="20"/>
@@ -2226,6 +2349,34 @@ Möchten sie die toolchain jetzt konfigurieren?</translation>
     </message>
 </context>
 <context>
+    <name>env</name>
+    <message>
+        <location filename="env_var.ui" line="20"/>
+        <source>Environment variable</source>
+        <translation>Umgebungsvariable</translation>
+    </message>
+    <message>
+        <location filename="env_var.ui" line="30"/>
+        <source>Variable:</source>
+        <translation>Variable:</translation>
+    </message>
+    <message>
+        <location filename="env_var.ui" line="40"/>
+        <source>Value:</source>
+        <translation>Wert:</translation>
+    </message>
+    <message>
+        <location filename="env_var.ui" line="87"/>
+        <source>OK</source>
+        <translation>Okay</translation>
+    </message>
+    <message>
+        <location filename="env_var.ui" line="94"/>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
+    </message>
+</context>
+<context>
     <name>hotspotWidget</name>
     <message>
         <location filename="hotspot.ui" line="14"/>
@@ -2233,78 +2384,78 @@ Möchten sie die toolchain jetzt konfigurieren?</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="28"/>
+        <location filename="hotspot.ui" line="92"/>
         <source>Peak memory usage</source>
         <translation>Speichernutzung spitze</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="54"/>
+        <location filename="hotspot.ui" line="55"/>
         <location filename="hotspot.ui" line="118"/>
-        <location filename="hotspot.ui" line="182"/>
-        <location filename="hotspot.ui" line="246"/>
+        <location filename="hotspot.ui" line="185"/>
+        <location filename="hotspot.ui" line="248"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="59"/>
+        <location filename="hotspot.ui" line="60"/>
         <location filename="hotspot.ui" line="123"/>
-        <location filename="hotspot.ui" line="187"/>
-        <location filename="hotspot.ui" line="251"/>
+        <location filename="hotspot.ui" line="190"/>
+        <location filename="hotspot.ui" line="253"/>
         <source>Block size</source>
         <translation>Blockgröße</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="64"/>
+        <location filename="hotspot.ui" line="65"/>
         <location filename="hotspot.ui" line="128"/>
-        <location filename="hotspot.ui" line="192"/>
-        <location filename="hotspot.ui" line="256"/>
+        <location filename="hotspot.ui" line="195"/>
+        <location filename="hotspot.ui" line="258"/>
         <source>Alignment</source>
         <translation>Ausrichtung</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="69"/>
+        <location filename="hotspot.ui" line="70"/>
         <location filename="hotspot.ui" line="133"/>
         <source>Peak count</source>
         <translation>Spitze graf</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="74"/>
+        <location filename="hotspot.ui" line="75"/>
         <location filename="hotspot.ui" line="138"/>
         <source>Peak size</source>
         <translation>Maximale Größe</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="92"/>
+        <location filename="hotspot.ui" line="29"/>
         <source>Peak live memory blocks</source>
         <translation>Höhepunkt live speicherblöcke</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="156"/>
+        <location filename="hotspot.ui" line="222"/>
         <source>Leaked memory by size</source>
         <translation>Speicherbelegung durch größe</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="197"/>
+        <location filename="hotspot.ui" line="263"/>
         <source>Count</source>
         <translation>Count</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="202"/>
+        <location filename="hotspot.ui" line="268"/>
         <source>Size</source>
         <translation>Größe</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="220"/>
+        <location filename="hotspot.ui" line="159"/>
         <source>Leaked memory by count</source>
         <translation>Speicherbelegung von count</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="261"/>
+        <location filename="hotspot.ui" line="200"/>
         <source>Leaked count</source>
         <translation>Undichte graf</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="266"/>
+        <location filename="hotspot.ui" line="205"/>
         <source>Leaked size</source>
         <translation>Undichte größe</translation>
     </message>

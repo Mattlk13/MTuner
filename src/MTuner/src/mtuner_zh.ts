@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="it_IT">
+<TS version="2.1" language="zh_CN">
 <context>
     <name>About</name>
     <message>
         <location filename="about.ui" line="20"/>
         <source>About MTuner</source>
-        <translation>Informazioni su MTuner</translation>
+        <translation>关于 MTuner</translation>
     </message>
     <message>
         <location filename="about.ui" line="40"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/MTuner/resources/images/Icon128.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/MTuner/resources/images/Icon128.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="about.ui" line="63"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt; font-weight:600; color:#3c3c5a;&quot;&gt;M&lt;/span&gt;&lt;span style=&quot; font-size:36pt; font-weight:600; color:#5a5a78;&quot;&gt;Tuner&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt; font-weight:600; color:#3c3c5a;&quot;&gt;M&lt;/span&gt;&lt;span style=&quot; font-size:36pt; font-weight:600; color:#5a5a78;&quot;&gt;Tuner&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="about.ui" line="82"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Version&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Versione&lt;/p&gt;&lt;/body&gt;&lt;/html</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="about.ui" line="89"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Copyright © 2025 by Milos Tosic.&lt;br/&gt;All Rights Reserved&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Copyright © 2025 di Milos Tosic.&lt;br/&gt;Tutti i diritti riservati&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="about.ui" line="116"/>
@@ -191,173 +191,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <oldsource>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,sans-serif&apos;; font-size:9pt; font-weight:600; color:#636363;&quot;&gt;Open source software used in development of MTuner&lt;/span&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2,sans-serif&apos;; font-size:5pt; color:#636363;&quot;&gt;&#xa0;&lt;/span&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;openssl_bsd&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Arial,sans-serif&apos;; font-size:8pt; font-weight:600; color:#636363;&quot;&gt;Q&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,sans-serif&apos;; font-size:8pt; font-weight:600; color:#636363;&quot;&gt;t (LGPL)&lt;/span&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,sans-serif&apos;; font-size:8pt; color:#636363;&quot;&gt;Qt - Cross-platform application and UI framework.&lt;/span&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://qt-project.org/doc/qt-5-snapshot/lgpl.html&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#78a078;&quot;&gt;&lt;br /&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt; color:#78a078;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8.25pt; color:#636363;&quot;&gt;&lt;br /&gt;Qt is available under the LGPL (version 2.1).&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8.25pt; color:#636363;&quot;&gt;The Qt Toolkit is Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies) and other contributors.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; color:#636363;&quot;&gt;MinHook - The Minimalistic API Hooking Library for x64/x86&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;Copyright (C) 2009-2016 Tsuda Kageyu.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;All rights reserved.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;Redistribution and use in source and binary forms, with or without&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;modification, are permitted provided that the following conditions&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;are met:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt; 1. Redistributions of source code must retain the above copyright&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;    notice, this list of conditions and the following disclaimer.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt; 2. Redistributions in binary form must reproduce the above copyright&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;    notice, this list of conditions and the following disclaimer in the&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;    documentation and/or other materials provided with the distribution.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;&amp;quot;AS IS&amp;quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;=====================================================================&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;Portions of this software are Copyright (c) 2008-2009, Vyacheslav Patkov.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;=====================================================================&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;Hacker Disassembler Engine 32 C&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;Copyright (c) 2008-2009, Vyacheslav Patkov.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;All rights reserved.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;Redistribution and use in source and binary forms, with or without&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;modification, are permitted provided that the following conditions&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;are met:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt; 1. Redistributions of source code must retain the above copyright&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;    notice, this list of conditions and the following disclaimer.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt; 2. Redistributions in binary form must reproduce the above copyright&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;    notice, this list of conditions and the following disclaimer in the&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;    documentation and/or other materials provided with the distribution.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;&amp;quot;AS IS&amp;quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;-------------------------------------------------------------------------------&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;Hacker Disassembler Engine 64 C&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;Copyright (c) 2008-2009, Vyacheslav Patkov.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;All rights reserved.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;Redistribution and use in source and binary forms, with or without&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;modification, are permitted provided that the following conditions&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;are met:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt; 1. Redistributions of source code must retain the above copyright&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;    notice, this list of conditions and the following disclaimer.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt; 2. Redistributions in binary form must reproduce the above copyright&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;    notice, this list of conditions and the following disclaimer in the&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;    documentation and/or other materials provided with the distribution.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;&amp;quot;AS IS&amp;quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; color:#636363;&quot;&gt;LZ4 - Fast LZ compression algorithm&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; font-weight:600; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#636363;&quot;&gt;Copyright (C) 2011-2014, Yann Collet.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;BSD 2-Clause License (http://www.opensource.org/licenses/bsd-license.php)&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;Redistribution and use in source and binary forms, with or without&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;modification, are permitted provided that the following conditions are&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;met:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;    * Redistributions of source code must retain the above copyright&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;notice, this list of conditions and the following disclaimer.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;    * Redistributions in binary form must reproduce the above&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;copyright notice, this list of conditions and the following disclaimer&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;in the documentation and/or other materials provided with the&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;distribution.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;&amp;quot;AS IS&amp;quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;You can contact the author at :&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;- LZ4 source repository : http://code.google.com/p/lz4/&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;- LZ4 public forum : https://groups.google.com/forum/#!forum/lz4c &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,sans-serif&apos;; font-size:8pt; font-weight:600; color:#636363;&quot;&gt;GENie&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;Copyright (c) 2014-2016 Branimir Karadžić, Neil Richardson, Mike Popoloski,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;Drew Solomon, Ted de Munnik, Miodrag Milanović, Brett Vickers, Bill Freist,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;Terry Hendrix II, Ryan Juckett, Andrew Johnson, Johan Sköld,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;Alastair Murray, Patrick Munns, Jan-Eric Duden, Phil Stevens, Stuart Carnie,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;Nikolay Aleksiev.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;All rights reserved.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#78a078;&quot;&gt;&lt;br /&gt;https://github.com/bkaradzic/GENie &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;span style=&quot; color:#636363;&quot;&gt;Redistribution and use in source and binary forms, with or without modification,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;are permitted provided that the following conditions are met:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;1. Redistributions of source code must retain the above copyright notice,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;    this list of conditions and the following disclaimer.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;2. Redistributions in binary form must reproduce the above copyright notice,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;    this list of conditions and the following disclaimer in the documentation&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;    and/or other materials provided with the distribution.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;3. Neither the name of the GENie nor the names of its contributors may be &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;    used to endorse or promote products derived from this software without&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;    specific prior written permission.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &amp;quot;AS IS&amp;quot; AND&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#636363;&quot;&gt;OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#636363;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="about.ui" line="283"/>
         <source>Italian translation by - Marco Bellan</source>
-        <translation>Traduzione italiana di - Marco Bellan</translation>
+        <translation>意大利语翻译 - Marco Bellan</translation>
     </message>
 </context>
 <context>
@@ -365,7 +204,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="about.cpp" line="15"/>
         <source>Version</source>
-        <translation>Versione</translation>
+        <translation>版本</translation>
     </message>
 </context>
 <context>
@@ -373,7 +212,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="bigtable.ui" line="17"/>
         <source>BigTable</source>
-        <translation>BigTable</translation>
+        <translation>数据表</translation>
     </message>
 </context>
 <context>
@@ -381,37 +220,37 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="binloaderview.ui" line="14"/>
         <source>Form</source>
-        <translation>Modulo</translation>
+        <translation>窗体</translation>
     </message>
     <message>
         <location filename="binloaderview.ui" line="44"/>
         <source>Operations</source>
-        <translation>Operazioni</translation>
+        <translation>操作</translation>
     </message>
     <message>
         <location filename="binloaderview.ui" line="74"/>
         <source>Grouped view</source>
-        <translation>Visualizzazione a gruppi</translation>
+        <translation>分组视图</translation>
     </message>
     <message>
         <location filename="binloaderview.ui" line="104"/>
         <source>Call Stack Tree</source>
-        <translation>Alberto delle chiamate</translation>
+        <translation>调用栈树</translation>
     </message>
     <message>
         <location filename="binloaderview.ui" line="134"/>
         <source>Tree Map</source>
-        <translation>Mappa ad albero</translation>
+        <translation>树状图</translation>
     </message>
     <message>
         <location filename="binloaderview.ui" line="164"/>
         <source>Hotspots</source>
-        <translation>Hotspot</translation>
+        <translation>热点</translation>
     </message>
     <message>
         <location filename="binloaderview.ui" line="191"/>
         <source>Invalid operations</source>
-        <translation>Operazioni non valide</translation>
+        <translation>无效操作</translation>
     </message>
 </context>
 <context>
@@ -419,7 +258,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="centralwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Modulo</translation>
+        <translation>窗体</translation>
     </message>
 </context>
 <context>
@@ -427,32 +266,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="environment.ui" line="14"/>
         <source>Environment variables</source>
-        <translation>Variabili d&apos;ambiente</translation>
+        <translation>环境变量</translation>
     </message>
     <message>
         <location filename="environment.ui" line="36"/>
         <source>Variable</source>
-        <translation>Variabile</translation>
+        <translation>变量</translation>
     </message>
     <message>
         <location filename="environment.ui" line="41"/>
         <source>Value</source>
-        <translation>Valore</translation>
+        <translation>值</translation>
     </message>
     <message>
         <location filename="environment.ui" line="64"/>
         <source>New</source>
-        <translation>Nuova</translation>
+        <translation>新建</translation>
     </message>
     <message>
         <location filename="environment.ui" line="71"/>
         <source>Edit</source>
-        <translation>Modificare</translation>
+        <translation>编辑</translation>
     </message>
     <message>
         <location filename="environment.ui" line="78"/>
         <source>Delete</source>
-        <translation>Elimina</translation>
+        <translation>删除</translation>
     </message>
 </context>
 <context>
@@ -460,27 +299,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="external_editor.ui" line="14"/>
         <source>Setup external editor</source>
-        <translation>Configura editor esterno</translation>
+        <translation>设置外部编辑器</translation>
     </message>
     <message>
         <location filename="external_editor.ui" line="33"/>
         <source>Editor:</source>
-        <translation>Editor:</translation>
+        <translation>编辑器：</translation>
     </message>
     <message>
         <location filename="external_editor.ui" line="40"/>
         <source>Command line:</source>
-        <translation>Riga di comando:</translation>
+        <translation>命令行：</translation>
     </message>
     <message>
         <location filename="external_editor.ui" line="60"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="external_editor.cpp" line="49"/>
         <source>Select executable</source>
-        <translation>Seleziona eseguibile</translation>
+        <translation>选择可执行文件</translation>
     </message>
 </context>
 <context>
@@ -488,173 +327,173 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="gcc.ui" line="14"/>
         <source>Setup GCC toolchains</source>
-        <translation>Configura le toolchain di GCC</translation>
+        <translation>设置 GCC 工具链</translation>
     </message>
     <message>
         <location filename="gcc.ui" line="126"/>
         <source>Custom toolchain 1</source>
-        <translation>Toolchain custom 1</translation>
+        <translation>自定义工具链 1</translation>
     </message>
     <message>
         <location filename="gcc.ui" line="131"/>
         <source>Custom toolchain 2</source>
-        <translation>Toolchain custom 2</translation>
+        <translation>自定义工具链 2</translation>
     </message>
     <message>
         <location filename="gcc.ui" line="136"/>
         <source>Custom toolchain 3</source>
-        <translation>Toolchain custom 3</translation>
+        <translation>自定义工具链 3</translation>
     </message>
     <message>
         <location filename="gcc.ui" line="141"/>
         <source>Custom toolchain 4</source>
-        <translation>Toolchain custom 4</translation>
+        <translation>自定义工具链 4</translation>
     </message>
     <message>
         <location filename="gcc.ui" line="146"/>
         <source>Custom toolchain 5</source>
-        <translation>Toolchain custom 5</translation>
+        <translation>自定义工具链 5</translation>
     </message>
     <message>
         <location filename="gcc.ui" line="151"/>
         <source>Custom toolchain 6</source>
-        <translation>Toolchain custom 6</translation>
+        <translation>自定义工具链 6</translation>
     </message>
     <message>
         <location filename="gcc.ui" line="156"/>
         <source>Custom toolchain 7</source>
-        <translation>Toolchain custom 7</translation>
+        <translation>自定义工具链 7</translation>
     </message>
     <message>
         <location filename="gcc.ui" line="161"/>
         <source>Custom toolchain 8</source>
-        <translation>Toolchain custom 8</translation>
+        <translation>自定义工具链 8</translation>
     </message>
     <message>
         <location filename="gcc.ui" line="166"/>
         <source>Custom toolchain 9</source>
-        <translation>Toolchain custom 9</translation>
+        <translation>自定义工具链 9</translation>
     </message>
     <message>
         <location filename="gcc.ui" line="176"/>
         <source>Toolchain name:</source>
-        <translation>Nome della toolchain:</translation>
+        <translation>工具链名称：</translation>
     </message>
     <message>
         <location filename="gcc.ui" line="190"/>
         <source>64 bit</source>
-        <translation>64 bit</translation>
+        <translation>64 位</translation>
     </message>
     <message>
         <location filename="gcc.ui" line="205"/>
         <location filename="gcc.ui" line="307"/>
         <location filename="gcc.ui" line="407"/>
         <source>Environment variable</source>
-        <translation>Variabile d&apos;ambiente</translation>
+        <translation>环境变量</translation>
     </message>
     <message>
         <location filename="gcc.ui" line="212"/>
         <location filename="gcc.ui" line="314"/>
         <location filename="gcc.ui" line="414"/>
         <source>Binutils path</source>
-        <translation>Percorso Binutils</translation>
+        <translation>Binutils 路径</translation>
     </message>
     <message>
         <location filename="gcc.ui" line="219"/>
         <location filename="gcc.ui" line="321"/>
         <source>Toolchain prefix</source>
-        <translation>Prefisso della toolchain</translation>
+        <translation>工具链前缀</translation>
     </message>
     <message>
         <location filename="gcc.ui" line="238"/>
         <location filename="gcc.ui" line="340"/>
         <location filename="gcc.ui" line="433"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="gcc.ui" line="256"/>
         <location filename="gcc.ui" line="358"/>
         <location filename="gcc.ui" line="448"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="gcc.ui" line="292"/>
         <source>32 bit</source>
-        <translation>32 bit</translation>
+        <translation>32 位</translation>
     </message>
     <message>
         <location filename="gcc.ui" line="392"/>
         <source>SN ProDG</source>
-        <translation>SN ProDG</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="gcc.cpp" line="454"/>
         <location filename="gcc.cpp" line="482"/>
         <source>Select folder with binutils</source>
-        <translation>Seleziona la cartella con binutils</translation>
+        <translation>选择包含 binutils 的文件夹</translation>
     </message>
     <message>
         <location filename="gcc.cpp" line="485"/>
         <source>Select folder with orbis-bin.exe</source>
-        <translation>Seleziona la cartella con orbis-bin.exe</translation>
+        <translation>选择包含 orbis-bin.exe 的文件夹</translation>
     </message>
     <message>
         <location filename="gcc.cpp" line="488"/>
         <source>Select folder with prospero-bin.exe</source>
-        <translation>Seleziona la cartella con prospero-bin.exe</translation>
+        <translation>选择包含 prospero-bin.exe 的文件夹</translation>
     </message>
     <message>
         <location filename="gcc.cpp" line="518"/>
         <source>Select folder with ps3bin.exe</source>
-        <translation>Seleziona la cartella con ps3bin.exe</translation>
+        <translation>选择包含 ps3bin.exe 的文件夹</translation>
     </message>
     <message>
         <location filename="gcc.cpp" line="543"/>
         <location filename="gcc.cpp" line="544"/>
         <source>orbis tools found!</source>
-        <translation>Tools per orbis trovati!</translation>
+        <translation>已找到 orbis 工具！</translation>
     </message>
     <message>
         <location filename="gcc.cpp" line="543"/>
         <location filename="gcc.cpp" line="544"/>
         <source>orbis tools not found!</source>
-        <translation>Impossibile trovare i tools per orbis! </translation>
+        <translation>未找到 orbis 工具！</translation>
     </message>
     <message>
         <location filename="gcc.cpp" line="549"/>
         <location filename="gcc.cpp" line="550"/>
         <source>prospero tools found!</source>
-        <translation>Strumenti prospero trovati!</translation>
+        <translation>已找到 prospero 工具！</translation>
     </message>
     <message>
         <location filename="gcc.cpp" line="549"/>
         <location filename="gcc.cpp" line="550"/>
         <source>prospero tools not found!</source>
-        <translation>Strumenti prospero non trovati!</translation>
+        <translation>未找到 prospero 工具！</translation>
     </message>
     <message>
         <location filename="gcc.cpp" line="554"/>
         <location filename="gcc.cpp" line="555"/>
         <source>toolchain found!</source>
-        <translation>toolchain trovata!</translation>
+        <translation>已找到工具链！</translation>
     </message>
     <message>
         <location filename="gcc.cpp" line="554"/>
         <location filename="gcc.cpp" line="555"/>
         <source>toolchain not found!</source>
-        <translation>Impossibile trovare la toolchain!</translation>
+        <translation>未找到工具链！</translation>
     </message>
     <message>
         <location filename="gcc.cpp" line="558"/>
         <source>ps3 tools found!</source>
-        <translation>Tools per ps3 trovati!</translation>
+        <translation>已找到 ps3 工具！</translation>
     </message>
     <message>
         <location filename="gcc.cpp" line="558"/>
         <source>ps3 tools not found!</source>
-        <translation>Impossibile trovare i tools per ps3! </translation>
+        <translation>未找到 ps3 工具！</translation>
     </message>
 </context>
 <context>
@@ -662,127 +501,110 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="graph.ui" line="14"/>
         <source>Form</source>
-        <translation>Modulo</translation>
+        <translation>窗体</translation>
     </message>
     <message>
         <location filename="graph.ui" line="47"/>
         <source>Zoom in</source>
-        <translation>Ingrandisci</translation>
+        <translation>放大</translation>
     </message>
     <message>
         <location filename="graph.ui" line="50"/>
         <source>+</source>
-        <translation>+</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="graph.ui" line="69"/>
         <source>Zoom out</source>
-        <translation>Rimpicciolisci</translation>
+        <translation>缩小</translation>
     </message>
     <message>
         <location filename="graph.ui" line="72"/>
         <source>-</source>
-        <translation>-</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="graph.ui" line="91"/>
         <source>Reset zoom</source>
-        <translation>Azzera ingrandimento</translation>
+        <translation>重置缩放</translation>
     </message>
     <message>
         <location filename="graph.ui" line="94"/>
         <source>R</source>
-        <translation>R</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="graph.ui" line="113"/>
         <source>Zoom to snapshot</source>
-        <translation>Ingrandisci sullo snapshot</translation>
+        <translation>缩放到快照</translation>
     </message>
     <message>
         <location filename="graph.ui" line="116"/>
         <source>S</source>
-        <translation>S</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="graph.ui" line="129"/>
         <source>Auto scale to range</source>
-        <translatorcomment>Not sure about this</translatorcomment>
-        <translation>Ingrandisci automaticamente</translation>
+        <translation>自动缩放到范围</translation>
     </message>
     <message>
         <location filename="graph.ui" line="132"/>
         <source>A</source>
-        <translation>A</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>GraphWidget</name>
     <message>
-        <location filename="graphwidget.cpp" line="571"/>
-        <source>Time</source>
-        <translation>Tempo</translation>
-    </message>
-    <message>
-        <location filename="graphwidget.cpp" line="572"/>
-        <source>Thread</source>
-        <translation>Thread</translation>
-    </message>
-    <message>
-        <source>Start time</source>
-        <translation type="vanished">Tempo d&apos;inizio</translation>
-    </message>
-    <message>
-        <source>End time</source>
-        <translation type="vanished">Tempo di fine</translation>
-    </message>
-    <message>
-        <source>Duration</source>
-        <translation type="vanished">Durata</translation>
-    </message>
-    <message>
-        <source>Usage at end</source>
-        <translation type="vanished">Utilizzo finale</translation>
-    </message>
-    <message>
-        <location filename="graphwidget.cpp" line="417"/>
-        <source>Live blocks</source>
-        <translation>Blocchi attivi</translation>
+        <location filename="graphwidget.cpp" line="415"/>
+        <source> Time</source>
+        <translation> 时间</translation>
     </message>
     <message>
         <location filename="graphwidget.cpp" line="416"/>
         <source>Usage</source>
-        <translation>Utilizzo</translation>
+        <translation>用量</translation>
     </message>
     <message>
-        <location filename="graphwidget.cpp" line="415"/>
-        <source> Time</source>
-        <translation> Tempo</translation>
+        <location filename="graphwidget.cpp" line="417"/>
+        <source>Live blocks</source>
+        <translation>活动块</translation>
+    </message>
+    <message>
+        <location filename="graphwidget.cpp" line="571"/>
+        <source>Time</source>
+        <translation>时间</translation>
+    </message>
+    <message>
+        <location filename="graphwidget.cpp" line="572"/>
+        <source>Thread</source>
+        <translation>线程</translation>
     </message>
     <message>
         <location filename="graphwidget.cpp" line="729"/>
         <source>Zoom to selection</source>
-        <translation>Ingrandisci la selezione</translation>
+        <translation>缩放到选区</translation>
     </message>
     <message>
         <location filename="graphwidget.cpp" line="730"/>
         <source>Reset zoom</source>
-        <translation>Annulla ingrandimento</translation>
+        <translation>重置缩放</translation>
     </message>
     <message>
         <location filename="graphwidget.cpp" line="743"/>
         <source>Snap selection to marker</source>
-        <translation>Aggancia la selezione al marcatore</translation>
+        <translation>对齐选区到标记</translation>
     </message>
     <message>
         <location filename="graphwidget.cpp" line="744"/>
         <source>Select from marker</source>
-        <translation>Seleziona dal marcatore</translation>
+        <translation>从标记选择</translation>
     </message>
     <message>
         <location filename="graphwidget.cpp" line="745"/>
         <source>Select to marker</source>
-        <translation>Seleziona fino al marcatore</translation>
+        <translation>选择到标记</translation>
     </message>
 </context>
 <context>
@@ -790,7 +612,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="grouplistwidget.cpp" line="809"/>
         <source>Select group range</source>
-        <translation>Seleziona range di gruppi</translation>
+        <translation>选择分组范围</translation>
     </message>
 </context>
 <context>
@@ -798,7 +620,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="grouplist.ui" line="14"/>
         <source>Form</source>
-        <translation>Modulo</translation>
+        <translation>窗体</translation>
     </message>
 </context>
 <context>
@@ -806,17 +628,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="heapswidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Modulo</translation>
+        <translation>窗体</translation>
     </message>
     <message>
         <location filename="heapswidget.ui" line="42"/>
         <source>Handle</source>
-        <translation>Handle</translation>
+        <translation>句柄</translation>
     </message>
     <message>
         <location filename="heapswidget.ui" line="47"/>
         <source>Name</source>
-        <translation>Nome</translation>
+        <translation>名称</translation>
     </message>
 </context>
 <context>
@@ -824,52 +646,52 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="histogram.ui" line="20"/>
         <source>Form</source>
-        <translation>Modulo</translation>
+        <translation>窗体</translation>
     </message>
     <message>
         <location filename="histogram.ui" line="64"/>
         <source>Memory usage</source>
-        <translation>Utilizzo memoria</translation>
+        <translation>内存用量</translation>
     </message>
     <message>
         <location filename="histogram.ui" line="69"/>
         <source>Allocation overhead</source>
-        <translation>Overhead allocazione</translation>
+        <translation>分配开销</translation>
     </message>
     <message>
         <location filename="histogram.ui" line="74"/>
         <source>Number of allocations</source>
-        <translation>Numero allocazioni</translation>
+        <translation>分配数量</translation>
     </message>
     <message>
         <location filename="histogram.ui" line="88"/>
         <source>Select which time range to show histograms for</source>
-        <translation>Seleziona il periodo per cui mostrare gli istogrammi</translation>
+        <translation>选择要显示直方图的时间范围</translation>
     </message>
     <message>
         <location filename="histogram.ui" line="92"/>
         <source>Global histogram</source>
-        <translation>Istogramma globale</translation>
+        <translation>全局直方图</translation>
     </message>
     <message>
         <location filename="histogram.ui" line="97"/>
         <source>Snapshot histogram</source>
-        <translation>Istogramma snapshot</translation>
+        <translation>快照直方图</translation>
     </message>
     <message>
         <location filename="histogram.ui" line="102"/>
         <source>Global and snapshot histogram</source>
-        <translation>Istrogramma globale e dello snapshot</translation>
+        <translation>全局和快照直方图</translation>
     </message>
     <message>
         <location filename="histogram.ui" line="110"/>
         <source>Shows peak values alongside current values</source>
-        <translation>Mostra i picchi accanto ai valori correnti</translation>
+        <translation>在当前值旁显示峰值</translation>
     </message>
     <message>
         <location filename="histogram.ui" line="113"/>
         <source>Show peaks</source>
-        <translation>Mostra picchi</translation>
+        <translation>显示峰值</translation>
     </message>
     <message>
         <location filename="histogram.ui" line="120"/>
@@ -880,7 +702,7 @@ Otherwise, relative scale is used.</source>
     <message>
         <location filename="histogram.ui" line="124"/>
         <source>Scale to peaks</source>
-        <translation>Scala ai picchi</translation>
+        <translation>缩放到峰值</translation>
     </message>
 </context>
 <context>
@@ -888,42 +710,42 @@ Otherwise, relative scale is used.</source>
     <message>
         <location filename="inject.ui" line="14"/>
         <source>Inject and run</source>
-        <translation>Inietta e corri</translation>
+        <translation>注入并运行</translation>
     </message>
     <message>
         <location filename="inject.ui" line="29"/>
         <source>Allocator:</source>
-        <translation>Allocator:</translation>
+        <translation>分配器：</translation>
     </message>
     <message>
         <location filename="inject.ui" line="37"/>
         <source>No change / system</source>
-        <translation>Nessun cambiamento / sistema</translation>
+        <translation>无更改 / 系统</translation>
     </message>
     <message>
         <location filename="inject.ui" line="42"/>
         <source>stomp overrun</source>
-        <translation>Sovraccarico stomp</translation>
+        <translation>缓冲区上溢</translation>
     </message>
     <message>
         <location filename="inject.ui" line="47"/>
         <source>stomp underrun</source>
-        <translation>Sottoccarico stomp</translation>
+        <translation>缓冲区下溢</translation>
     </message>
     <message>
         <location filename="inject.ui" line="70"/>
         <source>Capture memory profile</source>
-        <translation>Cattura il profilo di memoria</translation>
+        <translation>捕获内存分析</translation>
     </message>
     <message>
         <location filename="inject.ui" line="80"/>
         <source>Load memory profile after capture</source>
-        <translation>Carica il profilo di memoria dopo l&apos;acquisizione</translation>
+        <translation>捕获后加载内存分析</translation>
     </message>
     <message>
         <location filename="inject.ui" line="93"/>
         <source>Memory overwrite detection</source>
-        <translation>Rilevamento della sovrascrittura della memoria</translation>
+        <translation>内存覆写检测</translation>
     </message>
 </context>
 <context>
@@ -932,63 +754,63 @@ Otherwise, relative scale is used.</source>
         <location filename="mtuner.cpp" line="246"/>
         <location filename="mtuner.cpp" line="565"/>
         <source>Memory timeline</source>
-        <translation>Timeline memoria</translation>
+        <translation>内存时间线</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="247"/>
         <location filename="mtuner.cpp" line="566"/>
         <source>Allocation histogram</source>
-        <translation>Istogramma allocazioni</translation>
+        <translation>分配直方图</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="248"/>
         <location filename="mtuner.cpp" line="567"/>
         <source>Statistics</source>
-        <translation>Statistiche</translation>
+        <translation>统计</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="249"/>
         <location filename="mtuner.cpp" line="568"/>
         <source>Memory tag tree</source>
-        <translation>Tag tree memoria</translation>
+        <translation>内存标签树</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="250"/>
         <location filename="mtuner.cpp" line="569"/>
         <source>Stack trace</source>
-        <translation>Traccia stack</translation>
+        <translation>调用栈</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="251"/>
         <location filename="mtuner.cpp" line="570"/>
         <source>Heaps / Allocators</source>
-        <translation>Heaps / Allocators</translation>
+        <translation>堆 / 分配器</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="252"/>
         <location filename="mtuner.cpp" line="571"/>
         <source>Modules</source>
-        <translation>Moduli</translation>
+        <translation>模块</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="279"/>
         <source>select a capture file</source>
-        <translation>Scegli un file di misurazione</translation>
+        <translation>选择捕获文件</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="478"/>
         <source>Theme</source>
-        <translation>Tema</translation>
+        <translation>主题</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="496"/>
         <source>MTuner dark</source>
-        <translation>MTuner scuro</translation>
+        <translation>MTuner 深色</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="497"/>
         <source>Pastel mint</source>
-        <translation>Menta pastello</translation>
+        <translation>柔和薄荷</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="498"/>
@@ -1003,59 +825,54 @@ Otherwise, relative scale is used.</source>
     <message>
         <location filename="mtuner.cpp" line="749"/>
         <source>Created </source>
-        <translation>Creato</translation>
+        <translation>已创建 </translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="793"/>
         <location filename="mtuner.cpp" line="1134"/>
         <source>Capture in progress</source>
-        <translation>Cattura in corso</translation>
+        <translation>捕获进行中</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="1030"/>
         <source>Loading, please wait...</source>
-        <translation>Caricamente. perfavore attendi...</translation>
+        <translation>正在加载，请稍候...</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="1049"/>
         <source>Creating symbol resolver and downloading symbols, please wait...</source>
-        <translation>Creazione del risolutore di simboli e download dei simboli, attendere...</translation>
-    </message>
-    <message>
-        <source>Capture loaded partially!</source>
-        <translation type="vanished">Misurazione  parzialmente caricata!</translation>
+        <translation>正在创建符号解析器并下载符号，请稍候...</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="1054"/>
         <source>Capture file was only partially loaded!
 Information may be missing from the profile!</source>
-        <translation>Il file di misurazione è stato caricato solo parzialmente! Potrebbero mancare delle informazioni dalla sessione di profiling!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="1061"/>
         <source>Loaded </source>
-        <translation>Caricato</translation>
+        <translation>已加载 </translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="1069"/>
         <source>Error loading!</source>
-        <translation>Errore durante il caricamento!</translation>
+        <translation>加载错误！</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="1070"/>
         <source>Failed to load file!</source>
-        <translation>Errore durante l&apos;apertura del file!</translation>
+        <translation>加载文件失败！</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="1070"/>
         <source>File may be corrupted, try to repeat the capture</source>
-        <translation>Il file potrebbe essere corrotto, provare a ripete la misurazione</translation>
+        <translation>文件可能已损坏，请尝试重新捕获</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="1134"/>
         <source>Cannot start a new capture while capture is in progress</source>
-        <translation>Impossibile avviare una nuova cattura mentre è in corso l&apos;acquisizione
-</translation>
+        <translation>捕获进行中，无法开始新的捕获</translation>
     </message>
 </context>
 <context>
@@ -1063,243 +880,243 @@ Information may be missing from the profile!</source>
     <message>
         <location filename="mtuner.ui" line="17"/>
         <source>MTuner</source>
-        <translation>MTuner</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="53"/>
         <source>&amp;File</source>
-        <translation>&amp;File</translation>
+        <translation>文件(&amp;F)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="66"/>
         <source>&amp;Help</source>
-        <translation>&amp;Aiuto</translation>
+        <translation>帮助(&amp;H)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="74"/>
         <source>&amp;Settings</source>
-        <translation>&amp;Impostazioni</translation>
+        <translation>设置(&amp;S)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="85"/>
         <source>&amp;View</source>
-        <translation>&amp;Visualizza</translation>
+        <translation>视图(&amp;V)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="97"/>
         <source>&amp;Language</source>
-        <translation>&amp;Lingua</translation>
+        <translation>语言(&amp;L)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="109"/>
         <source>Main tool bar</source>
-        <translation>Tool bar principale</translation>
+        <translation>主工具栏</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="139"/>
         <source>&amp;Open</source>
-        <translation>&amp;Apri</translation>
+        <translation>打开(&amp;O)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="142"/>
         <source>Open capture (.MTuner file)</source>
-        <translation>Apri misurazione (file .MTuner)</translation>
+        <translation>打开捕获（.MTuner 文件）</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="145"/>
         <source>Ctrl+O</source>
-        <translation>Ctrl+O</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="150"/>
         <source>&amp;Exit</source>
-        <translation>&amp;Esci</translation>
+        <translation>退出(&amp;X)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="153"/>
         <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="158"/>
         <source>&amp;About</source>
-        <translation>&amp;Informazioni</translation>
+        <translation>关于(&amp;A)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="161"/>
         <source>About MTuner</source>
-        <translation>Informazioni su MTuner</translation>
+        <translation>关于 MTuner</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="170"/>
         <source>&amp;Manage projects</source>
-        <translation>&amp;Gestisci progetti</translation>
+        <translation>管理项目(&amp;M)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="173"/>
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="178"/>
         <source>&amp;Close</source>
-        <translation>&amp;Chiudi</translation>
+        <translation>关闭(&amp;C)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="187"/>
         <source>&amp;Debug symbols</source>
-        <translation>&amp;Simboli di debug</translation>
+        <translation>调试符号(&amp;D)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="190"/>
         <source>Debug symbol sources setting</source>
-        <translation>Impostazioni simboli di debug</translation>
+        <translation>调试符号源设置</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="195"/>
         <source>&amp;Contents</source>
-        <translation>&amp;Contenuti</translation>
+        <translation>内容(&amp;C)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="198"/>
         <source>F1</source>
-        <translation>F1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="210"/>
         <source>Toggle &amp;filtering mode</source>
-        <translation>Cambia modalità di &amp;filtro</translation>
+        <translation>切换筛选模式(&amp;F)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="213"/>
         <location filename="mtuner.ui" line="216"/>
         <source>Toggle filtering mode</source>
-        <translation>Cambia modalità di filtro</translation>
+        <translation>切换筛选模式</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="219"/>
         <source>Ctrl+F</source>
-        <translation>Ctrl+F</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="235"/>
         <source>Ti&amp;meline</source>
-        <translation>Ti&amp;meline</translation>
+        <translation>时间线(&amp;M)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="238"/>
         <source>Toggle timeline graph visibility</source>
-        <translation>Mostra timeline</translation>
+        <translation>切换时间线图的可见性</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="253"/>
         <source>&amp;Statistics</source>
-        <translation>&amp;Statistiche</translation>
+        <translation>统计(&amp;S)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="256"/>
         <source>Toggle statistics visibility</source>
-        <translation>Mostra statistiche</translation>
+        <translation>切换统计的可见性</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="261"/>
         <source>&amp;English</source>
-        <translation>&amp;Italian</translation>
+        <translation>英语(&amp;E)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="276"/>
         <source>&amp;Histograms</source>
-        <translation>&amp;Istogrammi</translation>
+        <translation>直方图(&amp;H)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="279"/>
         <source>Toggle histogram window visibility</source>
-        <translation>Mostra finestra dell&apos; istogramma</translation>
+        <translation>切换直方图窗口的可见性</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="294"/>
         <source>&amp;Tag Tree</source>
-        <translation>&amp;Albero dei  tag</translation>
+        <translation>标签树(&amp;T)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="297"/>
         <source>Toggle tag tree visibility</source>
-        <translation>Mostrai albero dei tag</translation>
+        <translation>切换标签树的可见性</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="312"/>
         <source>StackTrace</source>
-        <translation>Traccia stack</translation>
+        <translation>调用栈</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="315"/>
         <source>Toggle stack trace and source visibility</source>
-        <translation>Mostra traccia stack e codice sorgente</translation>
+        <translation>切换调用栈和源代码的可见性</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="324"/>
         <source>&amp;External editor</source>
-        <translation>&amp;Editor esterno</translation>
+        <translation>外部编辑器(&amp;E)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="329"/>
         <source>Import license file</source>
-        <translation>Importa un file di licenza</translation>
+        <translation>导入许可证文件</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="334"/>
         <source>Activate MTuner</source>
-        <translation>Attiva MTuner</translation>
+        <translation>激活 MTuner</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="337"/>
         <source>Deactivate MTuner</source>
-        <translation>Disattiva MTuner</translation>
+        <translation>停用 MTuner</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="346"/>
         <source>&amp;Toolchains Setup</source>
-        <translation>&amp;Configurazione Toolchain</translation>
+        <translation>工具链设置(&amp;T)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="349"/>
         <source>Ctrl+G</source>
-        <translation>Ctrl+G</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="364"/>
         <source>Heaps / Allocators</source>
-        <translation>Heaps / Allocators</translation>
+        <translation>堆 / 分配器</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="367"/>
         <source>Toggle visibility of heaps / allocators dock</source>
-        <translation>Mostra finestra heaps e allocators</translation>
+        <translation>切换堆 / 分配器面板的可见性</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="372"/>
         <source>Open capture location</source>
-        <translation>Apri cartella delle misurazioni</translation>
+        <translation>打开捕获位置</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="375"/>
         <source>Opens, in Windows Explorer, a folder where capture files (*.MTuner) are recorder</source>
-        <translation>Apre in Esplora file una cartella dove i file di misurazione (*.MTuner) vengono salvati</translation>
+        <translation>在 Windows 资源管理器中打开存放捕获文件 (*.MTuner) 的文件夹</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="380"/>
         <source>&amp;Save capture window settings</source>
-        <translation>&amp;Salva impostazioni schermata di misurazione</translation>
+        <translation>保存捕获窗口设置(&amp;S)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="395"/>
         <source>&amp;Modules</source>
-        <translation>&amp;Moduli</translation>
+        <translation>模块(&amp;M)</translation>
     </message>
     <message>
         <location filename="mtuner.ui" line="398"/>
         <source>Toggle visibility of Module list dock</source>
-        <translation>Attiva / disattiva la visibilità del dock dell&apos;elenco dei moduli</translation>
+        <translation>切换模块列表面板的可见性</translation>
     </message>
 </context>
 <context>
@@ -1307,37 +1124,37 @@ Information may be missing from the profile!</source>
     <message>
         <location filename="moduleswidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Modulo</translation>
+        <translation>窗体</translation>
     </message>
     <message>
         <location filename="moduleswidget.ui" line="22"/>
         <source>Filter:</source>
-        <translation>Filtro:</translation>
+        <translation>筛选：</translation>
     </message>
     <message>
         <location filename="moduleswidget.ui" line="57"/>
         <source>Name</source>
-        <translation>Nome</translation>
+        <translation>名称</translation>
     </message>
     <message>
         <location filename="moduleswidget.ui" line="62"/>
         <source>Base Address</source>
-        <translation>Indirizzo di base</translation>
+        <translation>基地址</translation>
     </message>
     <message>
         <location filename="moduleswidget.ui" line="67"/>
         <source>End Address</source>
-        <translation>Indirizzo finale</translation>
+        <translation>结束地址</translation>
     </message>
     <message>
         <location filename="moduleswidget.ui" line="72"/>
         <source>Size</source>
-        <translation>Dimensione</translation>
+        <translation>大小</translation>
     </message>
     <message>
         <location filename="moduleswidget.ui" line="77"/>
         <source>Path</source>
-        <translation>Sentiero</translation>
+        <translation>路径</translation>
     </message>
 </context>
 <context>
@@ -1345,62 +1162,62 @@ Information may be missing from the profile!</source>
     <message>
         <location filename="operationsearch.ui" line="26"/>
         <source>Form</source>
-        <translation>Modulo</translation>
+        <translation>窗体</translation>
     </message>
     <message>
         <location filename="operationsearch.ui" line="44"/>
         <source>Address:</source>
-        <translation>Indirizzo:</translation>
+        <translation>地址：</translation>
     </message>
     <message>
         <location filename="operationsearch.ui" line="82"/>
         <source>Find previous operation on the same memory block</source>
-        <translation>Trova l&apos;operazione precedente sul blocco di memoria</translation>
+        <translation>查找同一内存块上的上一个操作</translation>
     </message>
     <message>
         <location filename="operationsearch.ui" line="85"/>
         <source>Prev</source>
-        <translation>Precedente</translation>
+        <translation>上一个</translation>
     </message>
     <message>
         <location filename="operationsearch.ui" line="95"/>
         <source>Find next operation on the same memory block</source>
-        <translation>Trova la prossima operazione sul blocco di memoria</translation>
+        <translation>查找同一内存块上的下一个操作</translation>
     </message>
     <message>
         <location filename="operationsearch.ui" line="98"/>
         <source>Next</source>
-        <translation>Successivo</translation>
+        <translation>下一个</translation>
     </message>
     <message>
         <location filename="operationsearch.ui" line="118"/>
         <source>Find next by</source>
-        <translation>Trova il prossimo</translation>
+        <translation>查找下一个依据</translation>
     </message>
     <message>
         <location filename="operationsearch.ui" line="126"/>
         <source>address</source>
-        <translation>indirizzo</translation>
+        <translation>地址</translation>
     </message>
     <message>
         <location filename="operationsearch.ui" line="131"/>
         <source>size</source>
-        <translation>dimensione</translation>
+        <translation>大小</translation>
     </message>
     <message>
         <location filename="operationsearch.ui" line="158"/>
         <source>Finds next memory operaton with given address or size</source>
-        <translation>Trova la prossima operazione con indirizzo o dimensione specificata</translation>
+        <translation>查找具有给定地址或大小的下一个内存操作</translation>
     </message>
     <message>
         <location filename="operationsearch.ui" line="161"/>
         <source>Find memory operation on a memory block with given address</source>
-        <translation>Trova operazioni sulla memoria sul blocco all&apos;indirizzo specificato</translation>
+        <translation>查找给定地址内存块上的内存操作</translation>
     </message>
     <message>
         <location filename="operationsearch.ui" line="172"/>
         <source>Leaks only</source>
-        <translation>Solo perdite</translation>
+        <translation>仅泄漏</translation>
     </message>
 </context>
 <context>
@@ -1408,7 +1225,7 @@ Information may be missing from the profile!</source>
     <message>
         <location filename="operationslist.ui" line="14"/>
         <source>Operations</source>
-        <translation>Operazioni</translation>
+        <translation>操作</translation>
     </message>
 </context>
 <context>
@@ -1416,7 +1233,7 @@ Information may be missing from the profile!</source>
     <message>
         <location filename="progressbar.ui" line="14"/>
         <source>Form</source>
-        <translation>Modulo</translation>
+        <translation>窗体</translation>
     </message>
 </context>
 <context>
@@ -1424,122 +1241,119 @@ Information may be missing from the profile!</source>
     <message>
         <location filename="projectsmanager.ui" line="20"/>
         <source>Projects manager</source>
-        <translation>Gestione progetti</translation>
+        <translation>项目管理器</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="27"/>
         <source>Hint: drag and drop an executable to the dialog</source>
-        <translation>Suggerimento: trascina e rilascia un eseguibile sulla finestra</translation>
+        <translation>提示：将可执行文件拖放到对话框</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="47"/>
         <source>Executable</source>
-        <translation>Eseguibile</translation>
+        <translation>可执行文件</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="57"/>
         <source>Command line args</source>
-        <translation>Argometri da riga di comando</translation>
+        <translation>命令行参数</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="67"/>
         <source>Working directory</source>
-        <translation>Directory di lavoro</translation>
+        <translation>工作目录</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="77"/>
         <source>Environment:</source>
-        <translation>Ambiente:</translation>
+        <translation>环境：</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="95"/>
         <source>Path of executable to run in instrumented mode</source>
-        <translatorcomment>?</translatorcomment>
-        <translation>Percorso dell&apos;eseguibile da eseguire in modalità strumentale</translation>
+        <translation>以插桩模式运行的可执行文件路径</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="102"/>
         <location filename="projectsmanager.ui" line="127"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="111"/>
         <source>Command line arguments for the executable</source>
-        <translation>Argomenti da riga di comando per l&apos;eseguibile</translation>
+        <translation>可执行文件的命令行参数</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="120"/>
         <source>Directory to start the executable at. Leaving it empty will start the executable at it&apos;s location.</source>
-        <translation>Cartella da cui avviare l&apos;eseguibile. Lasciando questo campo vuoto, partirà dalla sua posizione corrente.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="138"/>
         <source>Edit a list of environment variables</source>
-        <translation>Modifica un elenco di variabili di ambiente</translation>
+        <translation>编辑环境变量列表</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="141"/>
         <source>Edit variables</source>
-        <translation>Modifica variabili</translation>
+        <translation>编辑变量</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="148"/>
         <source>If checked, child process will inherit
 environment variables MTuner was started with</source>
-        <translation>Se selezionato, erediterà il processo figlio
-variabili ambientali MTuner è stato avviato con</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="152"/>
         <source>Inherit environment from MTuner</source>
-        <translation>Eredita l&apos;ambiente da MTuner</translation>
+        <translation>从 MTuner 继承环境</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="172"/>
         <source>Adds executable with run parameters to the list of projects</source>
-        <translation>Aggiunge un eseguibile con parametri d&apos;esecuzione alla lista dei progetti</translation>
+        <translation>将带运行参数的可执行文件添加到项目列表</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="175"/>
         <source>Add</source>
-        <translation>Aggiungi</translation>
+        <translation>添加</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="182"/>
         <source>Deletes a project from the list</source>
-        <translation>Elimina un progetto dalla lista</translation>
+        <translation>从列表中删除项目</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="185"/>
         <source>Delete</source>
-        <translation>Elimina</translation>
+        <translation>删除</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="192"/>
         <source>Run the MTuner instrumented executable</source>
-        <translatorcomment>?</translatorcomment>
-        <translation>Esegui il programma con MTuner</translation>
+        <translation>运行 MTuner 插桩的可执行文件</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="195"/>
         <source>Run</source>
-        <translation>Esegui</translation>
+        <translation>运行</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="215"/>
         <source>Close dialog</source>
-        <translation>Chiudi finestra</translation>
+        <translation>关闭对话框</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="218"/>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="projectsmanager.ui" line="225"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>确定</translation>
     </message>
 </context>
 <context>
@@ -1547,17 +1361,17 @@ variabili ambientali MTuner è stato avviato con</translation>
     <message>
         <location filename="projectsmanager.cpp" line="110"/>
         <source>Are you sure?</source>
-        <translation>Sei sicuro?</translation>
+        <translation>确定吗？</translation>
     </message>
     <message>
         <location filename="projectsmanager.cpp" line="111"/>
         <source>Project list was modified, if you close project manager it will not be saved.</source>
-        <translation>L&apos;elenco dei progetti è stato modificato, se chiudi project manager non verrà salvato.</translation>
+        <translation>项目列表已修改，如果关闭项目管理器将不会保存。</translation>
     </message>
     <message>
         <location filename="projectsmanager.cpp" line="163"/>
         <source>Process inject failed!</source>
-        <translation>Iniezione nel processo non riuscita!</translation>
+        <translation>进程注入失败！</translation>
     </message>
     <message>
         <location filename="projectsmanager.cpp" line="164"/>
@@ -1569,12 +1383,12 @@ missing MTuner inject binaries
     <message>
         <location filename="projectsmanager.cpp" line="311"/>
         <source>select executable</source>
-        <translation>scegli un eseguibile</translation>
+        <translation>选择可执行文件</translation>
     </message>
     <message>
         <location filename="projectsmanager.cpp" line="319"/>
         <source>select working directory</source>
-        <translation>seleziona una directory di lavoro</translation>
+        <translation>选择工作目录</translation>
     </message>
 </context>
 <context>
@@ -1583,302 +1397,281 @@ missing MTuner inject binaries
         <location filename="centralwidget.cpp" line="18"/>
         <location filename="centralwidget.cpp" line="36"/>
         <source>Start Page</source>
-        <translation>Pagina iniziale</translation>
+        <translation>起始页</translation>
     </message>
     <message>
         <location filename="grouplistwidget.cpp" line="527"/>
         <location filename="operationslist.cpp" line="230"/>
         <source>Type</source>
-        <translation>Tipo</translation>
+        <translation>类型</translation>
     </message>
     <message>
         <location filename="grouplistwidget.cpp" line="528"/>
         <location filename="operationslist.cpp" line="230"/>
         <source>Heap</source>
-        <translation>Heap</translation>
+        <translation>堆</translation>
     </message>
     <message>
         <location filename="grouplistwidget.cpp" line="529"/>
         <source>Block size</source>
-        <translation>Dimensione blocco</translation>
+        <translation>块大小</translation>
     </message>
     <message>
         <location filename="grouplistwidget.cpp" line="530"/>
         <source>Total count</source>
-        <translation>Operazioni</translation>
+        <translation>总数</translation>
     </message>
     <message>
         <location filename="grouplistwidget.cpp" line="531"/>
         <source>Live peak count</source>
-        <translation>Numero massimo</translation>
+        <translation>活动峰值数</translation>
     </message>
     <message>
         <location filename="grouplistwidget.cpp" line="532"/>
         <source>Peak count</source>
-        <translation>Numero massimo</translation>
+        <translation>峰值数</translation>
     </message>
     <message>
         <location filename="grouplistwidget.cpp" line="533"/>
         <location filename="operationslist.cpp" line="230"/>
         <source>Alignment</source>
-        <translation>Allineamento</translation>
+        <translation>对齐</translation>
     </message>
     <message>
         <location filename="grouplistwidget.cpp" line="534"/>
         <location filename="operationslist.cpp" line="230"/>
         <source>Size</source>
-        <translation>Dimensione</translation>
+        <translation>大小</translation>
     </message>
     <message>
         <location filename="grouplistwidget.cpp" line="535"/>
         <location filename="grouplistwidget.cpp" line="536"/>
         <source>Peak size</source>
-        <translation>Dimensione di picco</translation>
+        <translation>峰值大小</translation>
     </message>
     <message>
         <location filename="grouplistwidget.cpp" line="537"/>
         <source>Leaked</source>
-        <translation>Leaked</translation>
+        <translation>已泄漏</translation>
     </message>
     <message>
         <location filename="grouplistwidget.cpp" line="576"/>
         <location filename="operationslist.cpp" line="288"/>
         <source>Alloc</source>
-        <translation>Alloc</translation>
+        <translation>分配</translation>
     </message>
     <message>
         <location filename="grouplistwidget.cpp" line="577"/>
         <location filename="operationslist.cpp" line="289"/>
         <source>Alloc aligned</source>
-        <translation>Alloc aligned</translation>
+        <translation>对齐分配</translation>
     </message>
     <message>
         <location filename="grouplistwidget.cpp" line="578"/>
         <location filename="operationslist.cpp" line="290"/>
         <source>Calloc</source>
-        <translation>Calloc</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="grouplistwidget.cpp" line="579"/>
         <location filename="operationslist.cpp" line="291"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>释放</translation>
     </message>
     <message>
         <location filename="grouplistwidget.cpp" line="580"/>
         <location filename="operationslist.cpp" line="292"/>
         <source>Realloc</source>
-        <translation>Realloc</translation>
+        <translation>重新分配</translation>
     </message>
     <message>
         <location filename="grouplistwidget.cpp" line="581"/>
         <location filename="operationslist.cpp" line="293"/>
         <source>Realloc aligned</source>
-        <translation>Realloc aligned</translation>
+        <translation>对齐重新分配</translation>
     </message>
     <message>
         <location filename="grouplistwidget.cpp" line="615"/>
         <location filename="operationslist.cpp" line="307"/>
         <source>Default</source>
-        <translation>Default</translation>
+        <translation>默认</translation>
+    </message>
+    <message>
+        <location filename="histogram.cpp" line="119"/>
+        <source>byte used</source>
+        <translation>字节已使用</translation>
+    </message>
+    <message>
+        <location filename="histogram.cpp" line="121"/>
+        <source>bytes used</source>
+        <translation>字节已使用</translation>
+    </message>
+    <message>
+        <location filename="histogram.cpp" line="125"/>
+        <source>bytes of overhead</source>
+        <translation>字节开销</translation>
+    </message>
+    <message>
+        <location filename="histogram.cpp" line="130"/>
+        <source>allocation</source>
+        <translation>分配</translation>
+    </message>
+    <message>
+        <location filename="histogram.cpp" line="132"/>
+        <source>allocations</source>
+        <translation>分配</translation>
+    </message>
+    <message>
+        <location filename="histogram.cpp" line="231"/>
+        <source>Global</source>
+        <translation>全局</translation>
+    </message>
+    <message>
+        <location filename="histogram.cpp" line="232"/>
+        <source>Snapshot</source>
+        <translation>快照</translation>
+    </message>
+    <message>
+        <location filename="histogram.cpp" line="233"/>
+        <source>Global (peak)</source>
+        <translation>全局（峰值）</translation>
+    </message>
+    <message>
+        <location filename="histogram.cpp" line="234"/>
+        <source>Snapshot (peak)</source>
+        <translation>快照（峰值）</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="107"/>
         <source>select symbol source</source>
-        <translation>scegli fonte dei simboli</translation>
+        <translation>选择符号源</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="125"/>
         <location filename="mtuner.cpp" line="132"/>
         <source>Toolchain is not configured</source>
-        <translation>La toolchain non è configurata</translation>
+        <translation>工具链未配置</translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="125"/>
         <source>Toolchain needs to be configured in order to resolve symbols.
 Would you like to configure the toolchain now?</source>
-        <translation>La toolchain dev&apos;essere configurata per riconoscere i simboli.
-Vorresti configurare ora la toolchain?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mtuner.cpp" line="132"/>
         <source>No debug symbols can be resolved!</source>
-        <translation>Nessun simbolo di debug può essere risolto!</translation>
+        <translation>无法解析调试符号！</translation>
+    </message>
+    <message>
+        <location filename="mtunermain.cpp" line="469"/>
+        <source>Failed to register DIA dll!</source>
+        <translation>注册 DIA dll 失败！</translation>
+    </message>
+    <message>
+        <location filename="mtunermain.cpp" line="469"/>
+        <source>Debug symbols may not be loaded correctly</source>
+        <translation>调试符号可能未正确加载</translation>
     </message>
     <message>
         <location filename="operationslist.cpp" line="230"/>
         <source>Thread ID</source>
-        <translation>ID Thread</translation>
+        <translation>线程 ID</translation>
     </message>
     <message>
         <location filename="operationslist.cpp" line="230"/>
         <source>Address</source>
-        <translation>Indirizzo</translation>
+        <translation>地址</translation>
     </message>
     <message>
         <location filename="operationslist.cpp" line="230"/>
         <source>Time</source>
-        <translation>Tempo</translation>
+        <translation>时间</translation>
     </message>
     <message>
         <location filename="sourceview.cpp" line="52"/>
         <location filename="sourceview.cpp" line="82"/>
         <source>Set tab width to 4</source>
-        <translation>Imposta la larghezza della tab a 4</translation>
+        <translation>将制表符宽度设为 4</translation>
     </message>
     <message>
         <location filename="sourceview.cpp" line="53"/>
         <location filename="sourceview.cpp" line="86"/>
         <source>Set tab width to 8</source>
-        <translation>8Imposta la larghezza della tab a 4</translation>
+        <translation>将制表符宽度设为 8</translation>
     </message>
     <message>
         <location filename="sourceview.cpp" line="54"/>
         <location filename="sourceview.cpp" line="90"/>
         <source>Open in editor</source>
-        <translation>Apri nell&apos;editor</translation>
+        <translation>在编辑器中打开</translation>
     </message>
     <message>
         <location filename="stacktreewidget.cpp" line="365"/>
         <source>Name</source>
-        <translation>Nome</translation>
+        <translation>名称</translation>
     </message>
     <message>
         <location filename="stacktreewidget.cpp" line="366"/>
         <source>Module</source>
-        <translation>Modulo</translation>
+        <translation>模块</translation>
     </message>
     <message>
         <location filename="stacktreewidget.cpp" line="367"/>
         <location filename="tagtreewidget.cpp" line="74"/>
         <source>Usage</source>
-        <translation>Utilizzo</translation>
+        <translation>用量</translation>
     </message>
     <message>
         <location filename="stacktreewidget.cpp" line="368"/>
         <location filename="tagtreewidget.cpp" line="75"/>
         <source>Peak Usage</source>
-        <translation>Utilizzo di picco</translation>
+        <translation>峰值用量</translation>
     </message>
     <message>
         <location filename="stacktreewidget.cpp" line="369"/>
         <source>Allocations</source>
-        <translation>Allocazioni</translation>
+        <translation>分配</translation>
     </message>
     <message>
         <location filename="stacktreewidget.cpp" line="370"/>
         <source>Frees</source>
-        <translation>Deallocazioni</translation>
+        <translation>释放</translation>
     </message>
     <message>
         <location filename="stacktreewidget.cpp" line="371"/>
         <source>Reallocations</source>
-        <translation>Riallocazioni</translation>
+        <translation>重新分配</translation>
     </message>
     <message>
         <location filename="stacktreewidget.cpp" line="372"/>
         <source>File</source>
-        <translation>File</translation>
+        <translation>文件</translation>
     </message>
     <message>
         <location filename="stacktreewidget.cpp" line="373"/>
         <source>Line</source>
-        <translation>Riga</translation>
+        <translation>行</translation>
     </message>
     <message>
         <location filename="tagtreewidget.cpp" line="73"/>
         <source>Tag</source>
-        <translation>Tag</translation>
+        <translation>标签</translation>
     </message>
     <message>
         <location filename="tagtreewidget.cpp" line="76"/>
         <source>Overhead</source>
-        <translation>Overhead</translation>
+        <translation>开销</translation>
     </message>
     <message>
         <location filename="tagtreewidget.cpp" line="77"/>
         <source>Peak Overhead</source>
-        <translation>Overhead di picco</translation>
+        <translation>峰值开销</translation>
     </message>
     <message>
         <location filename="tagtreewidget.cpp" line="86"/>
         <source>Root</source>
-        <translation>Root</translation>
-    </message>
-    <message>
-        <source>Total size: </source>
-        <translation type="vanished">Dimensione totale:</translation>
-    </message>
-    <message>
-        <source>Operations: </source>
-        <translation type="vanished">Operazioni:</translation>
-    </message>
-    <message>
-        <source>    Allocs: </source>
-        <translation type="vanished">Assegnazione:</translation>
-    </message>
-    <message>
-        <source>  Reallocs: </source>
-        <translation type="vanished">Riassegnazioni:</translation>
-    </message>
-    <message>
-        <source>Click to see call stack</source>
-        <translation type="vanished">Clicca per visualizzare lo stack di chiamate</translation>
-    </message>
-    <message>
-        <location filename="histogram.cpp" line="119"/>
-        <source>byte used</source>
-        <translation>byte usato</translation>
-    </message>
-    <message>
-        <location filename="histogram.cpp" line="121"/>
-        <source>bytes used</source>
-        <translation>byte usati</translation>
-    </message>
-    <message>
-        <location filename="histogram.cpp" line="125"/>
-        <source>bytes of overhead</source>
-        <translation>byte di overhead</translation>
-    </message>
-    <message>
-        <location filename="histogram.cpp" line="130"/>
-        <source>allocation</source>
-        <translation>allocazione</translation>
-    </message>
-    <message>
-        <location filename="histogram.cpp" line="132"/>
-        <source>allocations</source>
-        <translation>allocazioni</translation>
-    </message>
-    <message>
-        <location filename="histogram.cpp" line="231"/>
-        <source>Global</source>
-        <translation>Globale</translation>
-    </message>
-    <message>
-        <location filename="histogram.cpp" line="232"/>
-        <source>Snapshot</source>
-        <translation>Snapshot</translation>
-    </message>
-    <message>
-        <location filename="histogram.cpp" line="233"/>
-        <source>Global (peak)</source>
-        <translation>Globale (picco)</translation>
-    </message>
-    <message>
-        <location filename="histogram.cpp" line="234"/>
-        <source>Snapshot (peak)</source>
-        <translation>Snapshot (picco)</translation>
-    </message>
-    <message>
-        <location filename="mtunermain.cpp" line="469"/>
-        <source>Failed to register DIA dll!</source>
-        <translation>Impossibile registrare DIA dll!</translation>
-    </message>
-    <message>
-        <location filename="mtunermain.cpp" line="469"/>
-        <source>Debug symbols may not be loaded correctly</source>
-        <translation>I simboli di debug potrebbero non essere caricati correttamente</translation>
+        <translation>根</translation>
     </message>
 </context>
 <context>
@@ -1886,12 +1679,12 @@ Vorresti configurare ora la toolchain?</translation>
     <message>
         <location filename="sourceview.cpp" line="275"/>
         <source>Failed to start editor!</source>
-        <translation>Errore durante l&apos;apertura dell&apos;editor!</translation>
+        <translation>启动编辑器失败！</translation>
     </message>
     <message>
         <location filename="sourceview.cpp" line="275"/>
         <source>Setup external editor now?</source>
-        <translation>Vuoi configurare l&apos;editor esterno ora?</translation>
+        <translation>现在设置外部编辑器吗？</translation>
     </message>
 </context>
 <context>
@@ -1899,7 +1692,7 @@ Vorresti configurare ora la toolchain?</translation>
     <message>
         <location filename="stackandsource.ui" line="14"/>
         <source>Form</source>
-        <translation>Modulo</translation>
+        <translation>窗体</translation>
     </message>
 </context>
 <context>
@@ -1907,67 +1700,67 @@ Vorresti configurare ora la toolchain?</translation>
     <message>
         <location filename="stacktrace.ui" line="14"/>
         <source>Form</source>
-        <translation>Modulo</translation>
+        <translation>窗体</translation>
     </message>
     <message>
         <location filename="stacktrace.ui" line="66"/>
         <source>Module</source>
-        <translation>Modulo</translation>
-    </message>
-    <message>
-        <location filename="stacktrace.ui" line="76"/>
-        <source>File</source>
-        <translation>File</translation>
-    </message>
-    <message>
-        <location filename="stacktrace.ui" line="81"/>
-        <source>Line</source>
-        <translation>Riga</translation>
+        <translation>模块</translation>
     </message>
     <message>
         <location filename="stacktrace.ui" line="71"/>
         <source>Function</source>
-        <translation>Funzione</translation>
+        <translation>函数</translation>
+    </message>
+    <message>
+        <location filename="stacktrace.ui" line="76"/>
+        <source>File</source>
+        <translation>文件</translation>
+    </message>
+    <message>
+        <location filename="stacktrace.ui" line="81"/>
+        <source>Line</source>
+        <translation>行</translation>
     </message>
     <message>
         <location filename="stacktrace.ui" line="86"/>
         <source>Path</source>
-        <translation>Sentiero</translation>
+        <translation>路径</translation>
     </message>
     <message>
         <location filename="stacktrace.ui" line="112"/>
         <source>Stack trace</source>
-        <translation>Traccia stack</translation>
+        <translation>调用栈</translation>
     </message>
     <message>
         <location filename="stacktrace.ui" line="124"/>
         <source>&lt;</source>
-        <translation>&lt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="stacktrace.ui" line="141"/>
         <source>&gt;</source>
-        <translation>&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="stacktrace.ui" line="150"/>
         <source>of 100</source>
-        <translation>di 100</translation>
+        <translation>/ 100</translation>
     </message>
     <message>
         <location filename="stacktrace.cpp" line="96"/>
         <source>Copy</source>
-        <translation>Copia</translation>
+        <translation>复制</translation>
     </message>
     <message>
         <location filename="stacktrace.cpp" line="97"/>
         <source>Copy all</source>
-        <translation>Copia tutto</translation>
+        <translation>全部复制</translation>
     </message>
     <message>
         <location filename="stacktrace.cpp" line="177"/>
         <source>of</source>
-        <translation>di</translation>
+        <translation>/</translation>
     </message>
 </context>
 <context>
@@ -1975,37 +1768,37 @@ Vorresti configurare ora la toolchain?</translation>
     <message>
         <location filename="startpage.ui" line="14"/>
         <source>StartPageWidget</source>
-        <translation>WidgetPaginaIniziale</translation>
+        <translation>起始页</translation>
     </message>
     <message>
         <location filename="startpage.ui" line="48"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt; font-weight:600; color:#5a5a78;&quot;&gt;M&lt;/span&gt;&lt;span style=&quot; font-size:36pt; font-weight:600; color:#787896;&quot;&gt;Tuner&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt; font-weight:600; color:#5a5a78;&quot;&gt;M&lt;/span&gt;&lt;span style=&quot; font-size:36pt; font-weight:600; color:#787896;&quot;&gt;Tuner&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="startpage.ui" line="77"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Copyright © 2025 by Milos Tosic - All Rights Reserved&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Copyright © 2025 by Milos Tosic - Tutti i diritti riservati&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="startpage.ui" line="150"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/MTuner/resources/images/Run.png&quot;/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/MTuner/resources/images/Run.png&quot;/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="startpage.ui" line="182"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/MTuner/resources/images/Icon128.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/MTuner/resources/images/Icon128.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="startpage.ui" line="225"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Drag &amp;amp; drop an executable&lt;br/&gt;to begin memory profiling&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Trascina &amp;amp; rilascia un eseguibile&lt;br/&gt;per iniziare il profiling della memoria&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="startpage.ui" line="251"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Drag &amp;amp; drop *.MTuner &lt;br/&gt;file to begin memory analysis&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Trascina &amp;amp; rilascia un file *.MTuner &lt;br/&gt;per analizzare la memoria&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2013,152 +1806,152 @@ Vorresti configurare ora la toolchain?</translation>
     <message>
         <location filename="stats.ui" line="20"/>
         <source>Form</source>
-        <translation>Modulo</translation>
+        <translation>窗体</translation>
     </message>
     <message>
         <location filename="stats.ui" line="79"/>
         <source>Usage</source>
-        <translation>Utilizzo</translation>
+        <translation>用量</translation>
     </message>
     <message>
         <location filename="stats.ui" line="84"/>
         <source>Usage peak</source>
-        <translation>Utilizzo di picco</translation>
+        <translation>用量峰值</translation>
     </message>
     <message>
         <location filename="stats.ui" line="89"/>
         <source>Operations</source>
-        <translation>Operazioni</translation>
+        <translation>操作</translation>
     </message>
     <message>
         <location filename="stats.ui" line="94"/>
         <source>Allocations</source>
-        <translation>Allocazioni</translation>
+        <translation>分配</translation>
     </message>
     <message>
         <location filename="stats.ui" line="99"/>
         <source>Reallocations</source>
-        <translation>Riallocazioni</translation>
+        <translation>重新分配</translation>
     </message>
     <message>
         <location filename="stats.ui" line="104"/>
         <source>Frees</source>
-        <translation>Deallocazioni</translation>
+        <translation>释放</translation>
     </message>
     <message>
         <location filename="stats.ui" line="109"/>
         <source>Live blocks</source>
-        <translation>Blocchi attivi</translation>
+        <translation>活动块</translation>
     </message>
     <message>
         <location filename="stats.ui" line="114"/>
         <source>Overhead</source>
-        <translation>Overhead</translation>
+        <translation>开销</translation>
     </message>
     <message>
         <location filename="stats.ui" line="119"/>
         <source>Overhead peak</source>
-        <translation>Overhead di picco</translation>
+        <translation>开销峰值</translation>
     </message>
     <message>
         <location filename="stats.ui" line="124"/>
         <source>Global</source>
-        <translation>Globale</translation>
+        <translation>全局</translation>
     </message>
     <message>
         <location filename="stats.ui" line="129"/>
         <source>Snapshot</source>
-        <translation>Snapshot</translation>
+        <translation>快照</translation>
     </message>
     <message>
         <location filename="stats.ui" line="137"/>
         <source>Total memory usage, in bytes, at process termination</source>
-        <translation>Utilizzo totale della memoria, in byte, al termine del processo</translation>
+        <translation>进程终止时的总内存用量（字节）</translation>
     </message>
     <message>
         <location filename="stats.ui" line="148"/>
         <source>Total memory usage, in bytes, at the end of selected time slice</source>
-        <translation>Utilizzo totale della memoria, in byte, al termine del periodo selezionato</translation>
+        <translation>选定时间片结束时的总内存用量（字节）</translation>
     </message>
     <message>
         <location filename="stats.ui" line="159"/>
         <source>Peak memory usage, in bytes</source>
-        <translation>Utilizzo di picco della memoria, in byte</translation>
+        <translation>峰值内存用量（字节）</translation>
     </message>
     <message>
         <location filename="stats.ui" line="173"/>
         <source>Peak memory usage, in bytes, inside the selected time slice</source>
-        <translation>Utilizzo di picco della memoria, in byte, durante il periodo selezionato</translation>
+        <translation>选定时间片内的峰值内存用量（字节）</translation>
     </message>
     <message>
         <location filename="stats.ui" line="184"/>
         <source>Number of memory operations</source>
-        <translation>Numero di operazioni sulla memoria</translation>
+        <translation>内存操作数量</translation>
     </message>
     <message>
         <location filename="stats.ui" line="195"/>
         <source>Number of memory operations in selected time slice</source>
-        <translation>Numero di operazioni sulla memoria durante il periodo selezionato</translation>
+        <translation>选定时间片内的内存操作数量</translation>
     </message>
     <message>
         <location filename="stats.ui" line="206"/>
         <source>Number of allocations</source>
-        <translation>Numero allocazioni</translation>
+        <translation>分配数量</translation>
     </message>
     <message>
         <location filename="stats.ui" line="217"/>
         <source>Number of allocations in selected time slice</source>
-        <translation>Numero di allocazioni durante il periodo selezionato</translation>
+        <translation>选定时间片内的分配数量</translation>
     </message>
     <message>
         <location filename="stats.ui" line="228"/>
         <source>Number of reallocations</source>
-        <translation>Numero di riallocazioni</translation>
+        <translation>重新分配数量</translation>
     </message>
     <message>
         <location filename="stats.ui" line="239"/>
         <source>Number of reallocations in selected time slice</source>
-        <translation>Numero di riallocazioni durante il periodo selezionato</translation>
+        <translation>选定时间片内的重新分配数量</translation>
     </message>
     <message>
         <location filename="stats.ui" line="250"/>
         <source>Number of free operations</source>
-        <translation>Numero di deallocazioni</translation>
+        <translation>释放操作数量</translation>
     </message>
     <message>
         <location filename="stats.ui" line="261"/>
         <source>Number of free operations in selected time slice</source>
-        <translation>Numero di deallocazioni durante il periodo selezionato</translation>
+        <translation>选定时间片内的释放操作数量</translation>
     </message>
     <message>
         <location filename="stats.ui" line="272"/>
         <source>Number of memory leaks</source>
-        <translation>Numero di leak di memoria</translation>
+        <translation>内存泄漏数量</translation>
     </message>
     <message>
         <location filename="stats.ui" line="283"/>
         <source>Number of memory leaks in selected time slice</source>
-        <translation>Numero di leak di memoria durante il periodo selezionato</translation>
+        <translation>选定时间片内的内存泄漏数量</translation>
     </message>
     <message>
         <location filename="stats.ui" line="294"/>
         <source>Total allocation overhead, in bytes</source>
-        <translation>Overhead totale delle allocazioni, in byte</translation>
+        <translation>总分配开销（字节）</translation>
     </message>
     <message>
         <location filename="stats.ui" line="305"/>
         <source>Total allocation overhead, in bytes, in selected time slice</source>
-        <translation>Overhead totale delle allocazioni, in byte, durante il periodo selezionato</translation>
+        <translation>选定时间片内的总分配开销（字节）</translation>
     </message>
     <message>
         <location filename="stats.ui" line="316"/>
         <source>Peak allocation overhead, in bytes</source>
-        <translation>Overhead di picco delle allocazioni, in byte</translation>
+        <translation>峰值分配开销（字节）</translation>
     </message>
     <message>
         <location filename="stats.ui" line="327"/>
         <source>Peak overhead, in bytes, in selected time slice</source>
-        <translation>Overhead di picco delle allocazioni, in byte, durante il periodo selezionato</translation>
+        <translation>选定时间片内的峰值开销（字节）</translation>
     </message>
 </context>
 <context>
@@ -2166,7 +1959,7 @@ Vorresti configurare ora la toolchain?</translation>
     <message>
         <location filename="symbolstore.cpp" line="135"/>
         <source>select local symbol store directory</source>
-        <translation>scegli una dyrectory per i simboli locali</translation>
+        <translation>选择本地符号存储目录</translation>
     </message>
 </context>
 <context>
@@ -2174,62 +1967,62 @@ Vorresti configurare ora la toolchain?</translation>
     <message>
         <location filename="symbolstore.ui" line="6"/>
         <source>Symbol store setup</source>
-        <translation>Configura fonte dei simboli</translation>
+        <translation>符号存储设置</translation>
     </message>
     <message>
         <location filename="symbolstore.ui" line="21"/>
         <source>User defined</source>
-        <translation>Definiti dall&apos;utente</translation>
+        <translation>用户自定义</translation>
     </message>
     <message>
         <location filename="symbolstore.ui" line="31"/>
         <source>Public store</source>
-        <translation>Fonte pubblica</translation>
+        <translation>公共存储</translation>
     </message>
     <message>
         <location filename="symbolstore.ui" line="41"/>
         <source>Local store</source>
-        <translation>Fonte locale</translation>
+        <translation>本地存储</translation>
     </message>
     <message>
         <location filename="symbolstore.ui" line="64"/>
         <source>Default</source>
-        <translation>Default</translation>
+        <translation>默认</translation>
     </message>
     <message>
         <location filename="symbolstore.ui" line="82"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="symbolstore.ui" line="98"/>
         <source>Environment</source>
-        <translation>Environment</translation>
+        <translation>环境</translation>
     </message>
     <message>
         <location filename="symbolstore.ui" line="104"/>
         <source>_NT_SYMBOL_PATH</source>
-        <translation>_NT_SYMBOL_PATH</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="symbolstore.ui" line="118"/>
         <source>Visit MSDN page explaining in depth how to set up symbol store paths</source>
-        <translation>Leggi la pagina di MSDN riguardo alla configurazione dei percorsi dei simboli di debug</translation>
+        <translation>访问 MSDN 页面，详细了解如何设置符号存储路径</translation>
     </message>
     <message>
         <location filename="symbolstore.ui" line="121"/>
         <source>MSDN info</source>
-        <translation>Informazioni su MSDN</translation>
+        <translation>MSDN 信息</translation>
     </message>
     <message>
         <location filename="symbolstore.ui" line="141"/>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="symbolstore.ui" line="148"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>确定</translation>
     </message>
 </context>
 <context>
@@ -2237,27 +2030,27 @@ Vorresti configurare ora la toolchain?</translation>
     <message>
         <location filename="treemap.ui" line="17"/>
         <source>Form</source>
-        <translation>Modulo</translation>
+        <translation>窗体</translation>
     </message>
     <message>
         <location filename="treemap.ui" line="68"/>
         <source>Memory usage</source>
-        <translation>Utilizzo memoria</translation>
+        <translation>内存用量</translation>
     </message>
     <message>
         <location filename="treemap.ui" line="73"/>
         <source>Memory usage peak</source>
-        <translation>Utilizzo di picco</translation>
+        <translation>内存用量峰值</translation>
     </message>
     <message>
         <location filename="treemap.ui" line="78"/>
         <source>Allocation overhead</source>
-        <translation>Overhead allocazione</translation>
+        <translation>分配开销</translation>
     </message>
     <message>
         <location filename="treemap.ui" line="83"/>
         <source>Allocation overhead peak</source>
-        <translation>Overhead allocazioni di picco</translation>
+        <translation>分配开销峰值</translation>
     </message>
 </context>
 <context>
@@ -2265,27 +2058,27 @@ Vorresti configurare ora la toolchain?</translation>
     <message>
         <location filename="treemapview.cpp" line="218"/>
         <source>Total size</source>
-        <translation>Dimensione totale</translation>
+        <translation>总大小</translation>
     </message>
     <message>
         <location filename="treemapview.cpp" line="219"/>
         <source>Operations</source>
-        <translation>Operazioni</translation>
+        <translation>操作</translation>
     </message>
     <message>
         <location filename="treemapview.cpp" line="220"/>
         <source>  Allocs</source>
-        <translation>  Allocazioni</translation>
+        <translation>  分配</translation>
     </message>
     <message>
         <location filename="treemapview.cpp" line="221"/>
         <source>Reallocs</source>
-        <translation>Riallocazioni</translation>
+        <translation>重新分配</translation>
     </message>
     <message>
         <location filename="treemapview.cpp" line="222"/>
         <source>   Frees</source>
-        <translation>   Deallocazioni</translation>
+        <translation>   释放</translation>
     </message>
 </context>
 <context>
@@ -2293,42 +2086,42 @@ Vorresti configurare ora la toolchain?</translation>
     <message>
         <location filename="welcome.ui" line="20"/>
         <source>Welcome to MTuner!</source>
-        <translation>Benvenuto in MTuner!</translation>
+        <translation>欢迎使用 MTuner！</translation>
     </message>
     <message>
         <location filename="welcome.ui" line="37"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/MTuner/resources/images/Icon64.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/MTuner/resources/images/Icon64.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="welcome.ui" line="54"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt; color:#5a5a78;&quot;&gt;Welcome to M&lt;/span&gt;&lt;span style=&quot; font-size:24pt; color:#787896;&quot;&gt;Tuner&lt;/span&gt;&lt;span style=&quot; font-size:24pt; color:#5a5a78;&quot;&gt;!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt; color:#5a5a78;&quot;&gt;Benvenuto in M&lt;/span&gt;&lt;span style=&quot; font-size:24pt; color:#787896;&quot;&gt;Tuner&lt;/span&gt;&lt;span style=&quot; font-size:24pt; color:#5a5a78;&quot;&gt;!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="welcome.ui" line="78"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Thank you for choosing MTuner!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Before starting to profile MSVC based applications it is important to setup PDB symbol servers.&lt;br/&gt;For more information please visit MTuner website, just click the Documentation button below.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Grazie per aver scelto MTuner!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Prima di misurare applicazioni MSVC è importante configurare i server dei simboli PDB.&lt;br/&gt;Per maggiori informazioni consulta il sito di MTuner cliccando il pulsante Documentazione.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="welcome.ui" line="205"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Setup PDB&lt;br/&gt;symbol servers&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Configura i server&lt;br/&gt;dei simboli PDB&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="welcome.ui" line="225"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Read MTuner&lt;br/&gt;documentation&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Leggi la&lt;br/&gt;documentazione di MTuner&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="welcome.ui" line="266"/>
         <source>Always show on startup</source>
-        <translation>Mostra sempre all&apos;avvio</translation>
+        <translation>启动时始终显示</translation>
     </message>
     <message>
         <location filename="welcome.ui" line="291"/>
         <source>Close</source>
-        <translation>Chiudi</translation>
+        <translation>关闭</translation>
     </message>
 </context>
 <context>
@@ -2336,27 +2129,27 @@ Vorresti configurare ora la toolchain?</translation>
     <message>
         <location filename="env_var.ui" line="20"/>
         <source>Environment variable</source>
-        <translation>Variabile d&apos;ambiente</translation>
+        <translation>环境变量</translation>
     </message>
     <message>
         <location filename="env_var.ui" line="30"/>
         <source>Variable:</source>
-        <translation>Variabile:</translation>
+        <translation>变量：</translation>
     </message>
     <message>
         <location filename="env_var.ui" line="40"/>
         <source>Value:</source>
-        <translation>Valore:</translation>
+        <translation>值：</translation>
     </message>
     <message>
         <location filename="env_var.ui" line="87"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>确定</translation>
     </message>
     <message>
         <location filename="env_var.ui" line="94"/>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation>取消</translation>
     </message>
 </context>
 <context>
@@ -2364,12 +2157,12 @@ Vorresti configurare ora la toolchain?</translation>
     <message>
         <location filename="hotspot.ui" line="14"/>
         <source>Form</source>
-        <translation>Modulo</translation>
+        <translation>窗体</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="92"/>
-        <source>Peak memory usage</source>
-        <translation>Utilizzo di picco della memoria</translation>
+        <location filename="hotspot.ui" line="29"/>
+        <source>Peak live memory blocks</source>
+        <translation>活动内存块峰值</translation>
     </message>
     <message>
         <location filename="hotspot.ui" line="55"/>
@@ -2377,7 +2170,7 @@ Vorresti configurare ora la toolchain?</translation>
         <location filename="hotspot.ui" line="185"/>
         <location filename="hotspot.ui" line="248"/>
         <source>Type</source>
-        <translation>Tipo</translation>
+        <translation>类型</translation>
     </message>
     <message>
         <location filename="hotspot.ui" line="60"/>
@@ -2385,7 +2178,7 @@ Vorresti configurare ora la toolchain?</translation>
         <location filename="hotspot.ui" line="190"/>
         <location filename="hotspot.ui" line="253"/>
         <source>Block size</source>
-        <translation>Dimensione blocco</translation>
+        <translation>块大小</translation>
     </message>
     <message>
         <location filename="hotspot.ui" line="65"/>
@@ -2393,54 +2186,54 @@ Vorresti configurare ora la toolchain?</translation>
         <location filename="hotspot.ui" line="195"/>
         <location filename="hotspot.ui" line="258"/>
         <source>Alignment</source>
-        <translation>Allineamento</translation>
+        <translation>对齐</translation>
     </message>
     <message>
         <location filename="hotspot.ui" line="70"/>
         <location filename="hotspot.ui" line="133"/>
         <source>Peak count</source>
-        <translation>Numero massimo</translation>
+        <translation>峰值数</translation>
     </message>
     <message>
         <location filename="hotspot.ui" line="75"/>
         <location filename="hotspot.ui" line="138"/>
         <source>Peak size</source>
-        <translation>Dimensione di picco</translation>
+        <translation>峰值大小</translation>
     </message>
     <message>
-        <location filename="hotspot.ui" line="29"/>
-        <source>Peak live memory blocks</source>
-        <translation>Numero massimo di blocchi attivi</translation>
-    </message>
-    <message>
-        <location filename="hotspot.ui" line="222"/>
-        <source>Leaked memory by size</source>
-        <translation>Memoria leaked per dimensione</translation>
-    </message>
-    <message>
-        <location filename="hotspot.ui" line="263"/>
-        <source>Count</source>
-        <translation>Numero</translation>
-    </message>
-    <message>
-        <location filename="hotspot.ui" line="268"/>
-        <source>Size</source>
-        <translation>Dimensione</translation>
+        <location filename="hotspot.ui" line="92"/>
+        <source>Peak memory usage</source>
+        <translation>峰值内存用量</translation>
     </message>
     <message>
         <location filename="hotspot.ui" line="159"/>
         <source>Leaked memory by count</source>
-        <translation>Memoria leaked per numero</translation>
+        <translation>按数量统计的泄漏内存</translation>
     </message>
     <message>
         <location filename="hotspot.ui" line="200"/>
         <source>Leaked count</source>
-        <translation>Numero di leak</translation>
+        <translation>泄漏数量</translation>
     </message>
     <message>
         <location filename="hotspot.ui" line="205"/>
         <source>Leaked size</source>
-        <translation>Quantità leaked</translation>
+        <translation>泄漏大小</translation>
+    </message>
+    <message>
+        <location filename="hotspot.ui" line="222"/>
+        <source>Leaked memory by size</source>
+        <translation>按大小统计的泄漏内存</translation>
+    </message>
+    <message>
+        <location filename="hotspot.ui" line="263"/>
+        <source>Count</source>
+        <translation>数量</translation>
+    </message>
+    <message>
+        <location filename="hotspot.ui" line="268"/>
+        <source>Size</source>
+        <translation>大小</translation>
     </message>
 </context>
 <context>
@@ -2448,7 +2241,7 @@ Vorresti configurare ora la toolchain?</translation>
     <message>
         <location filename="stacktree.ui" line="14"/>
         <source>Form</source>
-        <translation>Modulo</translation>
+        <translation>窗体</translation>
     </message>
 </context>
 <context>
@@ -2456,7 +2249,7 @@ Vorresti configurare ora la toolchain?</translation>
     <message>
         <location filename="tagtree.ui" line="14"/>
         <source>Form</source>
-        <translation>Modulo</translation>
+        <translation>窗体</translation>
     </message>
 </context>
 </TS>

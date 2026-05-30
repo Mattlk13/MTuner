@@ -31,9 +31,10 @@ copy ..\..\.zidar\windows\vs2022\MTuner\x64\retail\bin\platforms\qwindows.dll   
 copy ..\..\.zidar\windows\vs2022\MTuner\x64\retail\bin\platforms\qminimal.dll   platforms\qminimal.dll
 
 copy ..\..\src\MTuner\src\mtuner_en.qm translation\MTuner_en.qm
-copy ..\..\src\MTuner\src\mtuner_rs.qm translation\MTuner_rs.qm					
+copy ..\..\src\MTuner\src\mtuner_rs.qm translation\MTuner_rs.qm
 copy ..\..\src\MTuner\src\mtuner_de.qm translation\MTuner_de.qm
 copy ..\..\src\MTuner\src\mtuner_it.qm translation\MTuner_it.qm
+copy ..\..\src\MTuner\src\mtuner_zh.qm translation\MTuner_zh.qm
 
 cd SDK
 mkdir inc

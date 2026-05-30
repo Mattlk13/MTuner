@@ -490,7 +490,17 @@ void MTuner::setupThemeMenu()
 
 	for (size_t i=0; i<sizeof(styles)/sizeof(styles[0]); ++i)
 	{
-		QAction* action = themeMenu->addAction(QString(rqt::appGetStyleName(styles[i])));
+		QString name;
+		switch (styles[i])
+		{
+			case rqt::AppStyle::RTM:			name = tr("MTuner dark");	break;
+			case rqt::AppStyle::PastelMint:		name = tr("Pastel mint");	break;
+			case rqt::AppStyle::Molokai:		name = tr("Molokai");		break;
+			case rqt::AppStyle::TokyoNight:		name = tr("Tokyo Night");	break;
+			default:							name = QString(rqt::appGetStyleName(styles[i]));	break;
+		}
+
+		QAction* action = themeMenu->addAction(name);
 		action->setCheckable(true);
 		action->setData((int)styles[i]);
 		action->setChecked(rqt::appGetStyle() == styles[i]);
