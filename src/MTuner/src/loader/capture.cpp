@@ -380,8 +380,13 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 	if (verHigh > 1)
 		return Capture::LoadFail;
 
-	if (verLow > 2)
+	if (verLow > 3)
 		return Capture::LoadFail;
+
+	// v1.3+ guarantees that every compressed chunk holds only whole operation records
+	// (no record spans a chunk boundary), which lets the loader parse chunks in parallel.
+	const bool recordAlignedChunks = isCompressed && (verHigh > 1 || verLow >= 3);
+	RTM_UNUSED(recordAlignedChunks);
 
 #if RTM_LITTLE_ENDIAN
 	m_swapEndian	= (endianess == 0xff) ? true : false;
@@ -964,6 +969,7 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 		}
 	}
 
+	loader.stop();	// join the background producer before closing the file it reads from
 	fclose(f);
 
 	if (loadSuccess == false)
