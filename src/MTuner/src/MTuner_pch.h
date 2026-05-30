@@ -84,4 +84,10 @@
 
 #include "../3rd/unordered_dense/include/ankerl/unordered_dense.h"
 
+#include <QtGui/QColor>
+
+// Resolves a theme color #define (e.g. "RQT_DEFAULT_BACKGROUND_COLOR") to a QColor so manually
+// painted widgets (graphs, tree maps, ...) can follow the active application theme.
+namespace rqt { QColor appThemeColor(const char* _define, const QColor& _fallback); }
+
 #endif // RTM_MTUNER_PCH_H

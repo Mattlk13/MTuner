@@ -101,7 +101,11 @@ void GraphGrid::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _optio
 	int64_t right = rect.width() + rect.x();
 	int64_t bottom = rect.height() + rect.y();
 
-	_painter->setPen(QPen(Qt::black, 1.0, Qt::SolidLine, Qt::FlatCap, Qt::RoundJoin));
+	const QColor fg     = rqt::appThemeColor("RQT_DEFAULT_TEXT_COLOR",     QColor(190, 190, 190));
+	const QColor accent = rqt::appThemeColor("RQT_HOVER_BACKGROUND_COLOR", QColor( 50, 150, 170));
+	QColor gridColor = fg; gridColor.setAlpha(90);
+
+	_painter->setPen(QPen(fg, 1.0, Qt::SolidLine, Qt::FlatCap, Qt::RoundJoin));
 	_painter->drawLine(QLineF(left,bottom,right,bottom));
 	_painter->drawLine(QLineF(right,bottom,right-5,bottom-5));
 	_painter->drawLine(QLineF(right,bottom,right-5,bottom+5));
@@ -113,8 +117,8 @@ void GraphGrid::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _optio
 
 	// horizontal lines
 	
-	_painter->setPen(QPen(Qt::darkGray, 1.0, Qt::DashLine));
-	
+	_painter->setPen(QPen(gridColor, 1.0, Qt::DashLine));
+
 	uint64_t max = m_curve->getMaxUsage();
 	uint64_t min = m_curve->getMinUsage();
 
@@ -148,9 +152,11 @@ void GraphGrid::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _optio
 	
 		prevY = ycoord;
 
+		_painter->setPen(QPen(gridColor, 1.0, Qt::DashLine));
 		_painter->drawLine(left, ycoord, right, ycoord);
 		QRectF txtR(left-39, ycoord-7, 36, 10);
 		char buffer[64];
+		_painter->setPen(fg);
 		_painter->drawText(txtR, Qt::AlignCenter, getTextFromSize(maxSize, buffer));
 		maxSize >>= 1;
 	}
@@ -172,6 +178,7 @@ void GraphGrid::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _optio
 	QString timeMin = getTimeString(ctx->m_capture->getFloatTime(minTime), &minMSec);
 	QString timeMax = getTimeString(ctx->m_capture->getFloatTime(maxTime), &maxMSec);
 
+	_painter->setPen(fg);
 	_painter->drawText(lcorner, Qt::AlignCenter, timeMin);
 	_painter->drawText(rcorner, Qt::AlignCenter, timeMax);
 
@@ -191,7 +198,7 @@ void GraphGrid::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _optio
 		curr -= curr % round;
 
 		const uint64_t intensity = 255*single/round;
-		_painter->setPen(QPen(QColor(0,0,0,intensity/2), 1.0, Qt::DashLine));
+		_painter->setPen(QPen(QColor(fg.red(), fg.green(), fg.blue(), int(intensity/2)), 1.0, Qt::DashLine));
 
 		while (curr < maxMSec)
 		{
@@ -207,7 +214,7 @@ void GraphGrid::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _optio
 			curr = minMSec + round;
 			curr -= curr % round;
 
-			_painter->setPen(QPen(QColor(0,0,0,(255-intensity)/2), 1.0, Qt::DashLine));
+			_painter->setPen(QPen(QColor(fg.red(), fg.green(), fg.blue(), int((255-intensity)/2)), 1.0, Qt::DashLine));
 
 			while (curr < maxMSec)
 			{
@@ -237,12 +244,12 @@ void GraphGrid::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _optio
 	int highlightXstart	= timeRange > 0 ? timeToPos(highlightTimeStart, minTime, timeRange, drawLeft, drawWidth) : drawLeft;
 	int highlightXend	= timeRange > 0 ? timeToPos(highlightTimeEnd, minTime, timeRange, drawLeft, drawWidth) : drawLeft;
 
-	_painter->setPen(QPen(QColor(255,255,255,255*intensity), 1.0, Qt::DashLine));
+	_painter->setPen(QPen(QColor(accent.red(), accent.green(), accent.blue(), int(255*intensity)), 1.0, Qt::DashLine));
 
 	if (highlightTimeStart != highlightTimeEnd)
 	{
 		_painter->drawRect(highlightXstart, top, highlightXend - highlightXstart, bottom - top);
-		_painter->setBrush(QColor(57,111,122,255*intensity/2));
+		_painter->setBrush(QColor(accent.red(), accent.green(), accent.blue(), int(255*intensity/2)));
 		_painter->drawRect(highlightXstart, top, highlightXend - highlightXstart, bottom - top);
 	}
 	else

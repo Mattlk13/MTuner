@@ -143,9 +143,10 @@ void GraphWidget::drawBackground(QPainter* _painter, const QRectF& _rect)
 	QPolygonF polygon = mapToScene(viewport()->geometry());
 	QRectF fullRect = polygon.boundingRect();
 
+	const QColor base = rqt::appThemeColor("RQT_RENDER_BACKGROUND_COLOR", QColor(Qt::darkGray).darker(200));
 	QLinearGradient gradient(fullRect.topLeft(), fullRect.bottomLeft());
-    gradient.setColorAt(0, QColor(Qt::darkGray).darker(180));
-    gradient.setColorAt(1, QColor(Qt::darkGray).darker(230));
+    gradient.setColorAt(0, base.lighter(115));
+    gradient.setColorAt(1, base.darker(115));
     _painter->setBrush(gradient);
     _painter->drawRect(fullRect);
 }

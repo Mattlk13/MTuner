@@ -29,6 +29,11 @@
 #include <rbase/inc/thread.h>
 #include <rqt/inc/rqt.h>
 
+#include <QtGui/QActionGroup>
+#include <QtWidgets/QGraphicsScene>
+#include <QtWidgets/QGraphicsView>
+#include <QtWidgets/QAbstractItemView>
+
 #if RTM_PLATFORM_WINDOWS
 #define WIN32_LEAN_AND_MEAN
 #include <Shlobj.h>
@@ -201,6 +206,8 @@ MTuner::MTuner(QWidget* _parent, Qt::WindowFlags _flags) :
 	ui.action_Save_capture_window_layout->setEnabled(false);
 
 	connect(ui.action_Contents, SIGNAL(triggered(bool)), this, SLOT(openDocumentation()));
+
+	setupThemeMenu();
 
 	readSettings();
 	emit binLoaded(false);
@@ -463,6 +470,83 @@ void MTuner::setDockWindowIcon(DockWidget* _widget, const QString& _icon)
 	static const char* ss = "background-color: RQT_ACTIVE_BACKGROUND_COLOR;";
 	title->setStyleSheet(rqt::appPreProcessStyleSheet(ss).c_str());
 	_widget->setTitleBarWidget(title);
+}
+
+void MTuner::setupThemeMenu()
+{
+	ui.menu_Settings->addSeparator();
+	QMenu* themeMenu = ui.menu_Settings->addMenu(tr("Theme"));
+
+	m_themeActions = new QActionGroup(this);
+	m_themeActions->setExclusive(true);
+
+	const rqt::AppStyle::Enum styles[] =
+	{
+		rqt::AppStyle::RTM,
+		rqt::AppStyle::PastelMint,
+		rqt::AppStyle::Molokai,
+		rqt::AppStyle::TokyoNight
+	};
+
+	for (size_t i=0; i<sizeof(styles)/sizeof(styles[0]); ++i)
+	{
+		QAction* action = themeMenu->addAction(QString(rqt::appGetStyleName(styles[i])));
+		action->setCheckable(true);
+		action->setData((int)styles[i]);
+		action->setChecked(rqt::appGetStyle() == styles[i]);
+		m_themeActions->addAction(action);
+	}
+
+	connect(m_themeActions, SIGNAL(triggered(QAction*)), this, SLOT(themeSelected(QAction*)));
+}
+
+void MTuner::applyAppTheme(int _style)
+{
+	rqt::appSetStyle(qApp, (rqt::AppStyle::Enum)_style);
+
+	// Dock title bars carry a per-widget stylesheet baked in at creation time, so re-apply it
+	// here to pick up the new theme's colors when switching live.
+	DockWidget* docks[] =
+	{
+		m_graphDock, m_histogramDock, m_statsDock, m_tagTreeDock,
+		m_stackAndSourceDock, m_heapsDock, m_modulesDock
+	};
+
+	static const char* ss = "background-color: RQT_ACTIVE_BACKGROUND_COLOR;";
+	for (size_t i=0; i<sizeof(docks)/sizeof(docks[0]); ++i)
+	{
+		if (docks[i] && docks[i]->titleBarWidget())
+			docks[i]->titleBarWidget()->setStyleSheet(rqt::appPreProcessStyleSheet(ss).c_str());
+	}
+
+	// Custom-painted widgets read theme colors at paint time, so force a full repaint of every
+	// graphics view (graph, histogram, tree map, ...) and item view (tables/trees with custom
+	// delegates). Graphics scenes are invalidated on all layers and any cached viewport content
+	// is reset - otherwise the previously rendered (cached) content is reused and nothing changes.
+	const QList<QGraphicsView*> graphicsViews = findChildren<QGraphicsView*>();
+	for (int i=0; i<graphicsViews.size(); ++i)
+	{
+		QGraphicsView* view = graphicsViews[i];
+		view->resetCachedContent();
+		if (view->scene())
+			view->scene()->invalidate(QRectF(), QGraphicsScene::AllLayers);
+		view->viewport()->update();
+	}
+
+	const QList<QAbstractItemView*> itemViews = findChildren<QAbstractItemView*>();
+	for (int i=0; i<itemViews.size(); ++i)
+		itemViews[i]->viewport()->update();
+}
+
+void MTuner::themeSelected(QAction* _action)
+{
+	if (!_action)
+		return;
+
+	applyAppTheme(_action->data().toInt());
+
+	QSettings settings;
+	settings.setValue("Theme", _action->data().toInt());
 }
 
 void MTuner::setupDockWindows()
@@ -808,6 +892,21 @@ void MTuner::readSettings()
 	// projects
 	m_projectsManager->loadSettings(settings);
 
+	// theme - defaults to the MTuner dark (RTM) style when nothing valid was saved
+	int savedTheme = settings.value("Theme", (int)rqt::AppStyle::RTM).toInt();
+	if ((savedTheme <= (int)rqt::AppStyle::Default) || (savedTheme >= (int)rqt::AppStyle::Count))
+		savedTheme = (int)rqt::AppStyle::RTM;
+
+	applyAppTheme(savedTheme);
+
+	// reflect the active theme in the Theme menu
+	if (m_themeActions)
+	{
+		const QList<QAction*> acts = m_themeActions->actions();
+		for (int i=0; i<acts.size(); ++i)
+			acts[i]->setChecked(acts[i]->data().toInt() == savedTheme);
+	}
+
 	// toolchains
 	m_gccSetup->readSettings(settings);
 }
@@ -825,6 +924,8 @@ void MTuner::writeSettings()
 	settings.setValue("minor",  (int)verMinor);
 	settings.setValue("detail", (int)verDetail);
 	settings.endGroup();
+
+	settings.setValue("Theme", (int)rqt::appGetStyle());
 
 	// MTuner main window
 	settings.beginGroup("MainWindow");

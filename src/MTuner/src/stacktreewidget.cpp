@@ -456,13 +456,17 @@ void ProgressBarDelegate::paint(QPainter* _painter, const QStyleOptionViewItem& 
 		QRect rect(_option.rect);
 		rect.adjust(2,0,-2,0);
 		
+		const QColor fgDim    = rqt::appThemeColor("RQT_INFO_TEXT_COLOR",        QColor(160, 160, 160));
+		const QColor accent   = rqt::appThemeColor("RQT_HOVER_BACKGROUND_COLOR", QColor( 50, 150, 170));
+		const QColor onAccent = rqt::appThemeColor("RQT_HOVER_TEXT_COLOR",       QColor(255, 255, 255));
+
 		_painter->setBrush(Qt::NoBrush);
-		_painter->setPen(Qt::gray);
+		_painter->setPen(fgDim);
 		_painter->drawRect(rect);
 
 		QString txt = QString::number(progress,'f',2) + QString("%");
 		rect.adjust(1,1,0,0);
-		_painter->setPen(Qt::gray);
+		_painter->setPen(fgDim);
 		_painter->drawText(rect, txt, QTextOption(Qt::AlignCenter));
 
 		QRect pRect = rect;
@@ -470,16 +474,16 @@ void ProgressBarDelegate::paint(QPainter* _painter, const QStyleOptionViewItem& 
 
 		QLinearGradient gr(pRect.topLeft(), pRect.topRight());
 
-		QColor c(50, 150, 170, 131);
+		QColor c(accent.red(), accent.green(), accent.blue(), 131);
 
 		gr.setColorAt(0.0f, c);
 		gr.setColorAt(1.0f, c);
-		
+
 		_painter->setBrush(gr);
 		_painter->setPen(Qt::NoPen);
 		_painter->drawRect(pRect);
 
-		_painter->setPen(Qt::white);
+		_painter->setPen(onAccent);
 		_painter->setClipRect(pRect);
 		_painter->drawText(rect, Qt::AlignCenter, txt);
 		_painter->setClipRect(pRect);

@@ -163,9 +163,12 @@ void Histogram::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _optio
 	int right = rect.width() + rect.x();
 	int bottom = rect.height() + rect.y();
 
-	_painter->setPen(QPen(Qt::black, 1.0, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
+	const QColor fg     = rqt::appThemeColor("RQT_DEFAULT_TEXT_COLOR",     QColor(190, 190, 190));
+	const QColor accent = rqt::appThemeColor("RQT_HOVER_BACKGROUND_COLOR", QColor(130, 230, 250));
+
+	_painter->setPen(QPen(fg, 1.0, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
 	_painter->drawLine(left,top,right,top);
-	_painter->setPen(QPen(Qt::black, 1.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+	_painter->setPen(QPen(fg, 1.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 	_painter->drawLine(left,bottom,right,bottom);
 
 	QFont font("Consolas",8,QFont::Normal);
@@ -188,9 +191,9 @@ void Histogram::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _optio
 	{
 		_painter->save();
 		if (i == static_cast<int>(selectedBin))
-			_painter->setPen(QPen(QColor(50+80, 150+80, 170+80), 1.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+			_painter->setPen(QPen(accent, 1.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 		else
-			_painter->setPen(QPen(Qt::lightGray, 1.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+			_painter->setPen(QPen(fg, 1.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 
 		QTransform tr;
 		tr.translate(currPos - 15, boundRect.height() - deltaH + 21);

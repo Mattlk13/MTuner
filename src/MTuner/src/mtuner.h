@@ -66,6 +66,7 @@ private:
 	uint64_t			m_capturePid;
 	SymbolStore*		m_symbolStore;
 	GCCSetup*			m_gccSetup;
+	QActionGroup*		m_themeActions;
 	DockWidget*			m_graphDock;
 	DockWidget*			m_statsDock;
 	DockWidget*			m_histogramDock;
@@ -118,6 +119,7 @@ public Q_SLOTS:
 	void setupSymbols();
 	void setupEditor();
 	void saveCaptureWindowLayout();
+	void themeSelected(QAction* _action);
 	// Help
 	void openDocumentation();
 	void about();
@@ -155,6 +157,8 @@ private:
 	void showWelcomeDialog();
 	void setDockWindowIcon(DockWidget* _widget, const QString& _icon);
 	void setupDockWindows();
+	void setupThemeMenu();
+	void applyAppTheme(int _style);
 	void readSettings();
 	void writeSettings();
 
