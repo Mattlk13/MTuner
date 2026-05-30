@@ -149,5 +149,6 @@ RESOURCES += mtuner.qrc
 TRANSLATIONS += mtuner_en.ts \
 				mtuner_rs.ts \
 				mtuner_it.ts \
-				mtuner_de.ts
+				mtuner_de.ts \
+				mtuner_ja.ts
 
