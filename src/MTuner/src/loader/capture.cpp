@@ -10,6 +10,10 @@
 #include <rbase/inc/endianswap.h>
 #include <rdebug/inc/rdebug.h>
 
+#include <thread>
+#include <algorithm>
+#include <vector>
+
 #if RTM_PLATFORM_WINDOWS && RTM_COMPILER_MSVC
 
 #pragma warning (push)
@@ -35,11 +39,6 @@ struct pSortOpsTime
 
 namespace rtm {
 
-static inline uint64_t stackTraceGetHash(uint64_t* _backTrace, uint32_t _numEntries)
-{
-	return rtm::hashCity64(_backTrace, _numEntries * sizeof(uint64_t));
-}
-
 static inline bool stackTraceCompare(uint64_t* _e1, uint64_t _c1, uint64_t* _e2, uint64_t _c2)
 {
 	if (_c1 != _c2)
@@ -64,6 +63,64 @@ static uint32_t getGranularityMask(uint64_t _ops)
 inline bool psTime(MemoryOperation* inOp1, MemoryOperation* inOp2)
 {
 	return inOp1->m_operationTime < inOp2->m_operationTime;
+}
+
+// Portable parallel stable sort: stable-sorts equal-size blocks on worker threads, then merges
+// the sorted blocks with a pairwise (parallel-per-level) merge tree. Stable, matching the
+// MSVC parallel_radixsort path. Falls back to std::stable_sort for small inputs / single core.
+template <typename Iter, typename Less>
+static void parallelStableSort(Iter _begin, Iter _end, Less _less)
+{
+	const size_t n = (size_t)(_end - _begin);
+
+	unsigned hw = std::thread::hardware_concurrency();
+	if (hw == 0)
+		hw = 4;
+
+	const size_t kMinPerThread = 1u << 16;	// don't spin up threads for small ranges
+
+	size_t threads = hw;
+	if ((threads <= 1) || (n < kMinPerThread * 2))
+	{
+		std::stable_sort(_begin, _end, _less);
+		return;
+	}
+	if ((n / threads) < kMinPerThread)
+		threads = n / kMinPerThread;
+
+	// round down to a power of two so the merge tree is a clean binary tree
+	size_t p = 1;
+	while (p * 2 <= threads)
+		p *= 2;
+	threads = p;
+
+	std::vector<size_t> bounds(threads + 1);
+	for (size_t i = 0; i <= threads; ++i)
+		bounds[i] = (n * i) / threads;
+
+	// sort each block concurrently (this thread takes block 0)
+	std::vector<std::thread> pool;
+	pool.reserve(threads - 1);
+	for (size_t t = 1; t < threads; ++t)
+		pool.emplace_back([=]() { std::stable_sort(_begin + bounds[t], _begin + bounds[t + 1], _less); });
+	std::stable_sort(_begin + bounds[0], _begin + bounds[1], _less);
+	for (size_t t = 0; t < pool.size(); ++t)
+		pool[t].join();
+
+	// merge sorted blocks; merges within a level are independent, so run them in parallel
+	for (size_t width = 1; width < threads; width *= 2)
+	{
+		std::vector<std::thread> mpool;
+		for (size_t t = 0; (t + width) < threads; t += width * 2)
+		{
+			const size_t lo  = bounds[t];
+			const size_t mid = bounds[t + width];
+			const size_t hi  = bounds[((t + width * 2) < threads) ? (t + width * 2) : threads];
+			mpool.emplace_back([=]() { std::inplace_merge(_begin + lo, _begin + mid, _begin + hi, _less); });
+		}
+		for (size_t t = 0; t < mpool.size(); ++t)
+			mpool[t].join();
+	}
 }
 
 static bool isLeakedBlock(const rtm::MemoryOperation* _op)
@@ -377,16 +434,14 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 	if (headerItems != 6)
 		return Capture::LoadFail;
 
-	if (verHigh > 1)
+	// The capture format changed in v1.4 ('Add' stack-trace records carry their 32-bit hash, and
+	// compressed chunks are record-aligned). Older captures are not supported - re-capture.
+	if ((verHigh != 1) || (verLow != 4))
+	{
+		if (m_loadProgressCallback)
+			m_loadProgressCallback(m_loadProgressCustomData, 100.0f, "Unsupported capture version - please re-capture with this build of MTuner.");
 		return Capture::LoadFail;
-
-	if (verLow > 3)
-		return Capture::LoadFail;
-
-	// v1.3+ guarantees that every compressed chunk holds only whole operation records
-	// (no record spans a chunk boundary), which lets the loader parse chunks in parallel.
-	const bool recordAlignedChunks = isCompressed && (verHigh > 1 || verLow >= 3);
-	RTM_UNUSED(recordAlignedChunks);
+	}
 
 #if RTM_LITTLE_ENDIAN
 	m_swapEndian	= (endianess == 0xff) ? true : false;
@@ -621,6 +676,7 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 					else
 					if (stackTraceTag == rmem::EntryTags::Add)
 					{
+						VERIFY_READ_SIZE(stackTraceHash)	// v1.4: Add records carry their hash, before the frame count
 						VERIFY_READ_SIZE(numFrames16)
 					}
 					else
@@ -682,8 +738,7 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 								backTrace64[i] = (uint64_t)backTrace32[i];
 						}
 
-						if (!stackTraceHash)
-							stackTraceHash = (uint32_t)stackTraceGetHash(backTrace64, numFrames32);
+						// stackTraceHash was read straight from the record (v1.4) - no recompute.
 
 						bool allocateAndAdd = true;
 
@@ -988,7 +1043,7 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 	pSortOpsTime psTime(m_operations);
 	concurrency::parallel_radixsort(m_operations.begin(), m_operations.end(), psTime);
 #else
-	std::stable_sort(m_operations.begin(), m_operations.end(), psTime);
+	parallelStableSort(m_operations.begin(), m_operations.end(), psTime);
 #endif
 
 	if (!setLinksAndRemoveInvalid(minMarkerTime))

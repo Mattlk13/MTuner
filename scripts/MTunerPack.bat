@@ -52,7 +52,6 @@ copy ..\..\src\libs\rmem\inc\rmem_entry.h				SDK\inc\rmem_entry.h
 copy ..\..\src\libs\rmem\src\rmem_config.h				SDK\src\rmem_config.h
 copy ..\..\src\libs\rmem\src\rmem_enums.h				SDK\src\rmem_enums.h 
 copy ..\..\src\libs\rmem\src\rmem_get_module_info.cpp	SDK\src\rmem_get_module_info.cpp
-copy ..\..\src\libs\rmem\src\rmem_hash.cpp				SDK\src\rmem_hash.cpp
 copy ..\..\src\libs\rmem\src\rmem_hook.cpp				SDK\src\rmem_hook.cpp
 copy ..\..\src\libs\rmem\src\rmem_hook.h				SDK\src\rmem_hook.h
 copy ..\..\src\libs\rmem\src\rmem_lib.cpp				SDK\src\rmem_lib.cpp
