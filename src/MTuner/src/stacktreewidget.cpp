@@ -635,10 +635,28 @@ QVariant TreeModel::data(const QModelIndex& _index, int _role) const
 	if (!_index.isValid())
 		return QVariant();
 
+	TreeItem* item = static_cast<TreeItem*>(_index.internalPointer());
+
+	// Function names (and source paths) are routinely wider than the column and get elided.
+	// Show the full function plus its module and file:line on hover, regardless of which cell
+	// is under the cursor, so the whole frame is always readable.
+	if (_role == Qt::ToolTipRole)
+	{
+		const QString func   = item->data(Header::Name).toString();
+		const QString module = item->data(Header::Module).toString();
+		const QString file   = item->data(Header::File).toString();
+		const QString line   = item->data(Header::Line).toString();
+
+		QString tip = func;
+		if (!module.isEmpty())
+			tip += QString("\n") + module;
+		if (!file.isEmpty())
+			tip += QString("\n") + file + ((line.isEmpty() || (line == "0")) ? QString() : (QString(":") + line));
+		return tip;
+	}
+
 	if (_role != Qt::DisplayRole)
 		return QVariant();
-
-	TreeItem* item = static_cast<TreeItem*>(_index.internalPointer());
 
 	return item->data(_index.column());
 }

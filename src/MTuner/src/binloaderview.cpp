@@ -22,6 +22,7 @@ BinLoaderView::BinLoaderView(QWidget* _parent, Qt::WindowFlags _flags) :
 	m_histogramScale	= false;
 	m_filteringEnabled	= false;
 	m_currentHeap		= (uint64_t)-1;
+	m_currentThread		= 0;	// 0 = no thread filter (matches Capture::m_filter.m_threadID sentinel)
 
 	m_tab			= findChild<QTabWidget*>("tabWidget");
 	m_treeMap		= m_tab->findChild<TreeMapWidget*>("treeMapWidget");

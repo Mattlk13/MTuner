@@ -161,8 +161,20 @@ inline uint32_t	ReadString(char _string[Len], BinLoader& _loader, bool _swapEndi
 		_string[len] = (char)'\0';
 		return (uint32_t)(len*sizeof(char) + sizeof(uint32_t));
 	}
+	// Name longer than the destination buffer (corrupt/crafted capture, or an unusually long
+	// name): consume the payload anyway so the stream stays aligned. Without this every later
+	// read is misaligned and the rest of the capture silently misparses.
 	_string[0] = (char)'\0';
-	return sizeof(len);
+	size_t toSkip = (size_t)len * sizeof(char);
+	char skip[512];
+	while (toSkip > 0)
+	{
+		const size_t chunk = (toSkip < sizeof(skip)) ? toSkip : sizeof(skip);
+		if (_loader.read(skip, chunk) != 1)
+			break;	// EOF / read error - parsing will fail cleanly on the next read
+		toSkip -= chunk;
+	}
+	return (uint32_t)(len*sizeof(char) + sizeof(uint32_t));
 }
 
 template <uint32_t Len>
@@ -184,8 +196,18 @@ inline uint32_t	ReadString(char16_t _string[Len], BinLoader& _loader, bool _swap
 		_string[len] = (char16_t)'\0';
 		return (uint32_t)(len*sizeof(char16_t) + sizeof(uint32_t));
 	}
+	// See the char overload: skip the over-long payload so the stream stays aligned.
 	_string[0] = (char16_t)'\0';
-	return sizeof(len);
+	size_t toSkip = (size_t)len * sizeof(char16_t);
+	char skip[512];
+	while (toSkip > 0)
+	{
+		const size_t chunk = (toSkip < sizeof(skip)) ? toSkip : sizeof(skip);
+		if (_loader.read(skip, chunk) != 1)
+			break;	// EOF / read error - parsing will fail cleanly on the next read
+		toSkip -= chunk;
+	}
+	return (uint32_t)(len*sizeof(char16_t) + sizeof(uint32_t));
 }
 
 static inline uintptr_t calcGroupHash(MemoryOperation* _op)
@@ -426,6 +448,10 @@ void Capture::clearData()
 	m_heapHandleToIndex.clear();
 	m_threadIds.clear();
 	m_threadIdToIndex.clear();
+	m_threadNames.clear();
+	m_stackTraceStats.clear();
+	m_stackTracePtrToIndex.clear();
+	m_stackTraceStatsBuilt = false;
 	m_loadPrevPointers.clear();
 	m_currentHeap = (uint64_t)-1;
 	m_currentModule  = 0;
@@ -556,7 +582,9 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 
 	// The capture format changed in v1.4 ('Add' stack-trace records carry their 32-bit hash, and
 	// compressed chunks are record-aligned). Older captures are not supported - re-capture.
-	if ((verHigh != 1) || (verLow != 4))
+	// v1.5 adds optional ThreadName records; it is otherwise identical, so v1.4 captures still
+	// load (they simply carry no thread names).
+	if ((verHigh != 1) || ((verLow != 4) && (verLow != 5)))
 	{
 		if (m_loadProgressCallback)
 			m_loadProgressCallback(m_loadProgressCustomData, 100.0f, "Unsupported capture version - please re-capture with this build of MTuner.");
@@ -1148,6 +1176,21 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 				}
 				break;
 
+			case rmem::LogMarkers::ThreadName:
+				{
+					uint64_t	threadID;
+					char		threadName[1024];
+
+					VERIFY_READ_SIZE(threadID);
+					if (m_swapEndian)
+						threadID = endianSwap(threadID);
+					ReadString<1024>(threadName, loader, m_swapEndian);
+
+					// Last writer wins (a thread may be renamed during its lifetime).
+					m_threadNames[threadID] = threadName;
+				}
+				break;
+
 			default:
 				loadSuccess = false;
 				break;
@@ -1609,6 +1652,59 @@ void Capture::buildAnalyzeData(uintptr_t _symResolver)
 
 	if (m_loadProgressCallback)
 		m_loadProgressCallback(m_loadProgressCustomData, 100.0f, "Done!");
+}
+
+//--------------------------------------------------------------------------
+/// Fills the per-call-stack aggregate cache (one op pass). Idempotent.
+//--------------------------------------------------------------------------
+void Capture::buildStackTraceStats()
+{
+	if (m_stackTraceStatsBuilt)
+		return;
+
+	const uint32_t numTraces = (uint32_t)m_stackTraces.size();
+	m_stackTraceStats.assign(numTraces, StackTraceStats());
+	m_stackTracePtrToIndex.clear();
+	m_stackTracePtrToIndex.reserve(numTraces);
+	for (uint32_t i=0; i<numTraces; ++i)
+		m_stackTracePtrToIndex[m_stackTraces[i]] = i;
+
+	const uint32_t numOps = (uint32_t)m_operations.size();
+	for (uint32_t i=0; i<numOps; ++i)
+	{
+		MemoryOperation* op = m_operations[i];
+		if (!isAlloc(op->m_operationType))
+			continue;
+		const uint32_t idx = op->m_stackTraceIndex;
+		if (idx < numTraces)
+		{
+			m_stackTraceStats[idx].m_allocCount++;
+			m_stackTraceStats[idx].m_totalBytes += op->m_allocSize;
+		}
+	}
+
+	// Live (still-allocated) bytes come from the already-computed leak list.
+	const uint32_t numLeaks = (uint32_t)m_memoryLeaks.size();
+	for (uint32_t i=0; i<numLeaks; ++i)
+	{
+		MemoryOperation* op = m_memoryLeaks[i];
+		const uint32_t idx = op->m_stackTraceIndex;
+		if (idx < numTraces)
+			m_stackTraceStats[idx].m_liveBytes += op->m_allocSize;
+	}
+
+	m_stackTraceStatsBuilt = true;
+}
+
+const StackTraceStats& Capture::getStackTraceStats(const StackTrace* _stackTrace)
+{
+	buildStackTraceStats();	// lazy: first caller pays the single op pass, later calls are O(1)
+
+	static const StackTraceStats s_zero;
+	ankerl::unordered_dense::map<const StackTrace*, uint32_t>::const_iterator it = m_stackTracePtrToIndex.find(_stackTrace);
+	if (it == m_stackTracePtrToIndex.end())
+		return s_zero;
+	return m_stackTraceStats[it->second];
 }
 
 //--------------------------------------------------------------------------

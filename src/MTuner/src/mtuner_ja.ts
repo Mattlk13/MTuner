@@ -902,6 +902,25 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>ThreadsWidget</name>
+    <message>
+        <source>Filter:</source>
+        <translation>フィルター :</translation>
+    </message>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thread ID</source>
+        <translation>スレッド ID</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>名前</translation>
+    </message>
+</context>
+<context>
     <name>HeapsWidget</name>
     <message>
         <source>Form</source>
@@ -1006,6 +1025,42 @@ Otherwise, relative scale is used.</source>
 <context>
     <name>MTuner</name>
     <message>
+        <source>Threads</source>
+        <translation>スレッド</translation>
+    </message>
+    <message>
+        <source>Symbol cache not writable</source>
+        <translation>シンボルキャッシュに書き込めません</translation>
+    </message>
+    <message>
+        <source>Downloaded debug symbols cannot be saved to:
+
+%1
+
+Without a writable symbol cache, symbols are downloaded again every time a capture is opened, which is slow. Choose a folder for the local symbol store now?</source>
+        <translation>ダウンロードしたデバッグシンボルを次の場所に保存できません:
+
+%1
+
+書き込み可能なシンボルキャッシュがないと、キャプチャを開くたびにシンボルが再ダウンロードされ、処理が遅くなります。ローカルシンボルストアのフォルダーを今すぐ選択しますか？</translation>
+    </message>
+    <message>
+        <source>Symbol cache</source>
+        <translation>シンボルキャッシュ</translation>
+    </message>
+    <message>
+        <source>Debug symbols downloaded from the symbol server will be cached in:
+
+%1
+
+They are reused on later sessions, so each symbol is downloaded only once. You can choose a different folder in the symbol store settings.</source>
+        <translation>シンボルサーバーからダウンロードしたデバッグシンボルは次の場所にキャッシュされます:
+
+%1
+
+以降のセッションで再利用されるため、各シンボルは一度だけダウンロードされます。シンボルストアの設定で別のフォルダーを選択できます。</translation>
+    </message>
+    <message>
         <source>Memory timeline</source>
         <translation>メモリタイムライン</translation>
     </message>
@@ -1106,6 +1161,14 @@ Information may be missing from the profile!</source>
 </context>
 <context>
     <name>MTunerClass</name>
+    <message>
+        <source>Threads</source>
+        <translation>スレッド</translation>
+    </message>
+    <message>
+        <source>Toggle visibility of threads dock</source>
+        <translation>スレッドドックの表示を切り替え</translation>
+    </message>
     <message>
         <source>MTuner</source>
         <translation>MTuner</translation>
@@ -1702,6 +1765,30 @@ Would you like to configure the toolchain now?</source>
 </context>
 <context>
     <name>StackTrace</name>
+    <message>
+        <source>Sort:</source>
+        <translation>並べ替え :</translation>
+    </message>
+    <message>
+        <source>Filter:</source>
+        <translation>フィルター :</translation>
+    </message>
+    <message>
+        <source>Order</source>
+        <translation>順序</translation>
+    </message>
+    <message>
+        <source>Live bytes</source>
+        <translation>ライブバイト</translation>
+    </message>
+    <message>
+        <source>Allocations</source>
+        <translation>割り当て</translation>
+    </message>
+    <message>
+        <source>Total bytes</source>
+        <translation>合計バイト</translation>
+    </message>
     <message>
         <source>Form</source>
         <translation>フォーム</translation>

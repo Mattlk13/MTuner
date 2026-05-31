@@ -12,6 +12,7 @@
 class ProjectsManager;
 class SymbolStore;
 class HeapsWidget;
+class ThreadsWidget;
 class ModulesWidget;
 class HistogramWidget;
 class StackAndSource;
@@ -80,6 +81,7 @@ private:
 	DockWidget*			m_tagTreeDock;
 	DockWidget*			m_stackAndSourceDock;
 	DockWidget*			m_heapsDock;
+	DockWidget*			m_threadsDock;
 	DockWidget*			m_modulesDock;
 	DockWidget*			m_insightsDock;
 	QProgressBar*		m_loadingProgressBar;
@@ -90,6 +92,7 @@ private:
 	Graph*				m_graph;
 	HistogramWidget*	m_histogramWidget;
 	HeapsWidget*		m_heapsWidget;
+	ThreadsWidget*		m_threadsWidget;
 	ModulesWidget*		m_modulesWidget;
 	InsightsWidget*		m_insights;
 	SourceView*			m_sourceView;
@@ -134,6 +137,7 @@ public Q_SLOTS:
 	void about();
 
 	void heapSelected(uint64_t);
+	void threadSelected(uint64_t);
 	void moduleSelected(void*);
 	void graphModified();
 	void setWidgetSources(CaptureContext* _binView);
@@ -145,6 +149,7 @@ public Q_SLOTS:
 	void showTagTree(bool);
 	void showStackTrace(bool);
 	void showHeaps(bool);
+	void showThreads(bool);
 	void showModules(bool);
 
 	void setStatusBarText(const QString&);
@@ -170,6 +175,11 @@ private:
 	void applyAppTheme(int _style);
 	void readSettings();
 	void writeSettings();
+
+	// Before resolving/downloading symbols for a capture, make sure downloaded PDBs can be
+	// cached persistently. Warns (and offers to open the symbol store settings) if the cache
+	// folder isn't writable, and shows a one-time notice about the default cache location.
+	void ensureSymbolCacheReady();
 
 	static uint32_t makeVersion(uint8_t _major, uint8_t _minor, uint8_t _detail);
 

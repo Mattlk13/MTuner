@@ -22,6 +22,7 @@
 #include <MTuner/src/stackandsource.h>
 #include <MTuner/src/stats.h>
 #include <MTuner/src/symbolstore.h>
+#include <MTuner/src/threadswidget.h>
 #include <MTuner/src/tagtreewidget.h>
 #include <MTuner/src/insightswidget.h>
 #include <MTuner/src/version.h>
@@ -250,6 +251,7 @@ void MTuner::changeEvent(QEvent* _event)
 			if (m_tagTreeDock) m_tagTreeDock->setWindowTitle(tr("Memory tag tree"));
 			if (m_stackAndSourceDock) m_stackAndSourceDock->setWindowTitle(tr("Stack trace"));
 			if (m_heapsDock) m_heapsDock->setWindowTitle(tr("Heaps / Allocators"));
+			if (m_threadsDock) m_threadsDock->setWindowTitle(tr("Threads"));
 			if (m_modulesDock) m_modulesDock->setWindowTitle(tr("Modules"));
 
 			// Ugly hack for a bug in Qt that incorrectly renders QAction items in menu if they have both an icon and are checkable
@@ -257,6 +259,7 @@ void MTuner::changeEvent(QEvent* _event)
 			ui.action_View_Memory_Stats		->setText("      " + ui.action_View_Memory_Stats->text());
 			ui.action_View_Tag_Tree			->setText("      " + ui.action_View_Tag_Tree->text());
 			ui.action_View_Heaps_Allocators	->setText("      " + ui.action_View_Heaps_Allocators->text());
+			ui.action_View_Threads			->setText("      " + ui.action_View_Threads->text());
 			ui.action_View_StackTrace		->setText("      " + ui.action_View_StackTrace->text());
 			ui.action_view_ModulesDock		->setText("      " + ui.action_view_ModulesDock->text());
 			ui.action_View_Memory_Graph		->setText("      " + ui.action_View_Memory_Graph->text());
@@ -408,6 +411,25 @@ void MTuner::heapSelected(uint64_t _handle)
 		CaptureContext* m_context = view ? view->getContext() : nullptr;
 		if (m_context)
 			m_context->m_capture->setCurrentHeap(_handle);
+	}
+}
+
+void MTuner::threadSelected(uint64_t _threadID)
+{
+	BinLoaderView* view = m_centralWidget->getCurrentView();
+	if (view)
+	{
+		view->setCurrentThread(_threadID);
+		CaptureContext* m_context = view->getContext();
+		if (m_context)
+		{
+			// 0 clears the thread filter; any other value filters to that thread. The actual
+			// re-filter + view refresh runs via updateFilterDataIfNeeded() (same path as heaps).
+			if (_threadID == 0)
+				m_context->m_capture->deselectThread();
+			else
+				m_context->m_capture->selectThread(_threadID);
+		}
 	}
 }
 
@@ -579,7 +601,7 @@ void MTuner::applyAppTheme(int _style)
 	DockWidget* docks[] =
 	{
 		m_graphDock, m_histogramDock, m_statsDock, m_tagTreeDock,
-		m_stackAndSourceDock, m_heapsDock, m_modulesDock, m_insightsDock
+		m_stackAndSourceDock, m_heapsDock, m_threadsDock, m_modulesDock, m_insightsDock
 	};
 
 	static const char* ss = "background-color: RQT_ACTIVE_BACKGROUND_COLOR;";
@@ -641,6 +663,7 @@ void MTuner::setupDockWindows()
 	m_tagTreeDock			= new DockWidget(tr("Memory tag tree"),this);
 	m_stackAndSourceDock	= new DockWidget(tr("Stack trace"), this);
 	m_heapsDock				= new DockWidget(tr("Heaps / Allocators"),this);
+	m_threadsDock			= new DockWidget(tr("Threads"),this);
 	m_modulesDock			= new DockWidget(tr("Modules"),this);
 	m_insightsDock			= new DockWidget(tr("Insights"),this);
 
@@ -650,6 +673,7 @@ void MTuner::setupDockWindows()
 	m_tagTreeDock->setObjectName("TagTreeDock");
 	m_stackAndSourceDock->setObjectName("StackTraceDock");
 	m_heapsDock->setObjectName("HeapsDock");
+	m_threadsDock->setObjectName("ThreadsDock");
 	m_modulesDock->setObjectName("ModulesDock");
 	m_insightsDock->setObjectName("InsightsDock");
 
@@ -658,10 +682,12 @@ void MTuner::setupDockWindows()
 	addDockWidget(Qt::LeftDockWidgetArea, m_statsDock);
 	addDockWidget(Qt::LeftDockWidgetArea, m_tagTreeDock);
 	addDockWidget(Qt::LeftDockWidgetArea, m_heapsDock);
+	addDockWidget(Qt::LeftDockWidgetArea, m_threadsDock);
 	addDockWidget(Qt::RightDockWidgetArea, m_stackAndSourceDock);
 	addDockWidget(Qt::RightDockWidgetArea, m_modulesDock);
 	addDockWidget(Qt::LeftDockWidgetArea, m_insightsDock);
 	tabifyDockWidget(m_statsDock, m_insightsDock);	// share space with Statistics as a tab
+	tabifyDockWidget(m_heapsDock, m_threadsDock);	// Threads shares space with Heaps / Allocators
 
 	m_graphDock->setVisible(true);
 	m_statsDock->setVisible(true);
@@ -669,6 +695,7 @@ void MTuner::setupDockWindows()
 	m_tagTreeDock->setVisible(true);
 	m_stackAndSourceDock->setVisible(true);
 	m_heapsDock->setVisible(true);
+	m_threadsDock->setVisible(true);
 	m_modulesDock->setVisible(true);
 	m_insightsDock->setVisible(true);
 
@@ -678,6 +705,7 @@ void MTuner::setupDockWindows()
 	setDockWindowIcon(m_tagTreeDock,		":/MTuner/resources/images/StackTree64.png");
 	setDockWindowIcon(m_stackAndSourceDock,	":/MTuner/resources/images/StackTraceSource64.png");
 	setDockWindowIcon(m_heapsDock,			":/MTuner/resources/images/Heaps.png");
+	setDockWindowIcon(m_threadsDock,		":/MTuner/resources/images/List64.png");
 	setDockWindowIcon(m_modulesDock,		":/MTuner/resources/images/modules64.png");
 	setDockWindowIcon(m_statsDock,			":/MTuner/resources/images/table.png");
 	setDockWindowIcon(m_insightsDock,		":/MTuner/resources/images/Documentation.png");
@@ -706,6 +734,10 @@ void MTuner::setupDockWindows()
 	m_heapsWidget = new HeapsWidget();
 	m_heapsDock->setWidget(m_heapsWidget);
 
+	/// threads dock
+	m_threadsWidget = new ThreadsWidget();
+	m_threadsDock->setWidget(m_threadsWidget);
+
 	/// modules dock
 	m_modulesWidget = new ModulesWidget();
 	m_modulesDock->setWidget(m_modulesWidget);
@@ -726,6 +758,7 @@ void MTuner::setupDockWindows()
 	connect(m_insights, SIGNAL(highlightTime(uint64_t)), m_graph, SLOT(highlightTime(uint64_t)));
 
 	connect(m_heapsWidget,SIGNAL(heapSelected(uint64_t)), this, SLOT(heapSelected(uint64_t)));
+	connect(m_threadsWidget,SIGNAL(threadSelected(uint64_t)), this, SLOT(threadSelected(uint64_t)));
 	connect(m_modulesWidget,SIGNAL(moduleSelected(void*)), this, SLOT(moduleSelected(void*)));
 
 	connect(graphWidget,SIGNAL(snapshotSelected()), m_histogramWidget, SLOT(updateUI()));
@@ -737,6 +770,7 @@ void MTuner::setupDockWindows()
 	connect(m_histogramWidget,SIGNAL(binClicked()), m_centralWidget, SLOT(updateFilterDataIfNeeded()));
 	connect(m_tagTree,SIGNAL(tagClicked()), m_centralWidget, SLOT(updateFilterDataIfNeeded()));
 	connect(m_heapsWidget,SIGNAL(heapSelected(uint64_t)), m_centralWidget, SLOT(updateFilterDataIfNeeded()));
+	connect(m_threadsWidget,SIGNAL(threadSelected(uint64_t)), m_centralWidget, SLOT(updateFilterDataIfNeeded()));
 	connect(m_modulesWidget,SIGNAL(moduleSelected(void*)), m_centralWidget, SLOT(updateFilterDataIfNeeded()));
 }
 
@@ -751,6 +785,7 @@ void MTuner::setWidgetSources(CaptureContext* _context)
 	m_histogramWidget->setContext(ctx, binView);
 	m_tagTree->setContext(ctx);
 	m_heapsWidget->setContext(ctx);
+	m_threadsWidget->setContext(ctx);
 	m_modulesWidget->setContext(ctx);
 	m_stackAndSource->setContext(ctx);
 	m_modulesWidget->setContext(ctx);
@@ -764,6 +799,7 @@ void MTuner::setWidgetSources(CaptureContext* _context)
 		connect(binView, SIGNAL(selectRange(uint64_t,uint64_t)), m_graph->getGraphWidget(), SLOT(selectFromTimes(uint64_t, uint64_t)), Qt::UniqueConnection);
 		connect(binView, SIGNAL(highlightRange(uint64_t, uint64_t)), m_graph, SLOT(highlightRange(uint64_t, uint64_t)), Qt::UniqueConnection);
 		m_heapsWidget->setCurrentHeap(binView->getCurrentHeap());
+		m_threadsWidget->setCurrentThread(binView->getCurrentThread());
 		m_modulesWidget->setCurrentModule(binView->getCurrentModule());
 		GraphWidget* graphWidget = m_graph->getGraphWidget();
 		graphWidget->setMinTime(binView->getMinTime());
@@ -806,6 +842,11 @@ void MTuner::showStackTrace(bool _visible)
 void MTuner::showHeaps(bool _visible)
 {
 	m_heapsDock->setVisible(_visible);
+}
+
+void MTuner::showThreads(bool _visible)
+{
+	m_threadsDock->setVisible(_visible);
 }
 
 void MTuner::showModules(bool _visible)
@@ -967,6 +1008,8 @@ void MTuner::readSettings()
 	ui.action_View_Tag_Tree->setChecked( settings.value("dockTagTr").toBool() );
 	if (settings.contains("dockHeaps"))
 	ui.action_View_Heaps_Allocators->setChecked( settings.value("dockHeaps").toBool() );
+	if (settings.contains("dockThreads"))
+	ui.action_View_Threads->setChecked( settings.value("dockThreads").toBool() );
 	if (settings.contains("dockModules"))
 	ui.action_view_ModulesDock->setChecked(settings.value("dockModules").toBool());
 	if (settings.contains("dockStack"))
@@ -1055,6 +1098,7 @@ void MTuner::writeSettings()
 	settings.setValue("dockHisto",		ui.action_View_Histograms->isChecked());
 	settings.setValue("dockStats",		ui.action_View_Memory_Stats->isChecked());
 	settings.setValue("dockHeaps",		ui.action_View_Heaps_Allocators->isChecked());
+	settings.setValue("dockThreads",	ui.action_View_Threads->isChecked());
 	settings.setValue("dockModules",	ui.action_view_ModulesDock->isChecked());
 	settings.setValue("dockTagTr",		ui.action_View_Tag_Tree->isChecked());
 	settings.setValue("dockStack",		ui.action_View_StackTrace->isChecked());
@@ -1092,6 +1136,74 @@ void loadProgression(void* _customData, float _progress, const char* _message)
 	mt->setLoadingProgress(_progress, QString::fromUtf8(_message));
 }
 
+void MTuner::ensureSymbolCacheReady()
+{
+	// Where downloaded debug symbols will be stored (user-configured local store, or the
+	// persistent per-user default). getSymbolStoreString() uses the same directory.
+	const QString cacheDir = m_symbolStore->getEffectiveCacheDir();
+	const bool usingDefault = m_symbolStore->getLocalStore().isEmpty();
+
+	// Create the folder and probe that we can actually write into it. If we can't, downloaded
+	// symbols won't persist and will be re-fetched on every open - the slowness the user sees.
+	QDir().mkpath(cacheDir);
+	bool writable = false;
+	{
+		const QString probe = QDir(cacheDir).absoluteFilePath(QStringLiteral(".mtuner_cache_test"));
+		QFile f(probe);
+		if (f.open(QIODevice::WriteOnly))
+		{
+			f.close();
+			QFile::remove(probe);
+			writable = true;
+		}
+	}
+
+	if (!writable)
+	{
+		// A real, recurring problem - prompt every time until the user fixes it.
+		QMessageBox box(QMessageBox::Warning,
+			tr("Symbol cache not writable"),
+			tr("Downloaded debug symbols cannot be saved to:\n\n%1\n\n"
+			   "Without a writable symbol cache, symbols are downloaded again every time a "
+			   "capture is opened, which is slow. Choose a folder for the local symbol store now?")
+				.arg(QDir::toNativeSeparators(cacheDir)),
+			QMessageBox::Yes | QMessageBox::No, this);
+		box.setWindowIcon(this->windowIcon());
+		if (box.exec() == QMessageBox::Yes)
+		{
+			// Open the existing symbol-sources dialog (same flow as Settings > Symbols),
+			// then persist whatever the user configured.
+			setupSymbols();
+			writeSettings();
+		}
+		return;
+	}
+
+	// One-time heads-up about the default cache location, so the user knows symbols are kept
+	// between sessions and where to change that. Only shown while using the default folder.
+	QSettings settings;
+	if (usingDefault && !settings.value("SymCacheNoticeShown", false).toBool())
+	{
+		settings.setValue("SymCacheNoticeShown", true);
+
+		QMessageBox box(QMessageBox::Information,
+			tr("Symbol cache"),
+			tr("Debug symbols downloaded from the symbol server will be cached in:\n\n%1\n\n"
+			   "They are reused on later sessions, so each symbol is downloaded only once. "
+			   "You can choose a different folder in the symbol store settings.")
+				.arg(QDir::toNativeSeparators(cacheDir)),
+			QMessageBox::Ok | QMessageBox::Open, this);
+		box.setWindowIcon(this->windowIcon());
+		if (box.exec() == QMessageBox::Open)
+		{
+			// Open the existing symbol-sources dialog (same flow as Settings > Symbols),
+			// then persist whatever the user configured.
+			setupSymbols();
+			writeSettings();
+		}
+	}
+}
+
 void MTuner::openFileFromPath(const QString& _file)
 {
 	QFileInfo info(_file);
@@ -1104,6 +1216,10 @@ void MTuner::openFileFromPath(const QString& _file)
 		std::string fn;
 
 		fn += _file.toUtf8().constData();
+
+		// Make sure downloaded symbols can be cached persistently before we (potentially)
+		// hit the symbol server - otherwise they'd be re-downloaded on every open.
+		ensureSymbolCacheReady();
 
 		// pass symbol store
 		QString symStore = m_symbolStore->getSymbolStoreString();
@@ -1145,16 +1261,38 @@ void MTuner::openFileFromPath(const QString& _file)
 			if (res == rtm::Capture::LoadPartial)
 				statusBar()->showMessage(tr("Capture file was only partially loaded!\nInformation may be missing from the profile!"), 2300);
 
-			// if not a windows toolchain - locate the executable
-			setupLoaderToolchain(ctx, _file, m_gccSetup, m_fileDialog, this, symStore, resolverCallBack);
+			// Symbol resolution + analysis (and building the per-tab widgets) can allocate a great
+			// deal on very large captures (e.g. UnrealEditor). Catch a failure here so it surfaces as
+			// a clear message instead of a silent no-tab or a crash on an escaping exception.
+			bool added = false;
+			try
+			{
+				rtm::Console::info("MTuner: capture loaded (%u operations) - resolving symbols and analyzing...\n",
+								   ctx->m_capture->getOperationCount());
 
-			ctx->m_capture->buildAnalyzeData(ctx->m_symbolResolver);
+				// if not a windows toolchain - locate the executable
+				setupLoaderToolchain(ctx, _file, m_gccSetup, m_fileDialog, this, symStore, resolverCallBack);
 
-			QString ld(tr("Loaded "));
+				ctx->m_capture->buildAnalyzeData(ctx->m_symbolResolver);
 
-			statusBar()->showMessage(ld + QString::fromUtf8(fn.c_str()),3000);
+				m_centralWidget->addTab(ctx, name);
+				added = true;
 
-			m_centralWidget->addTab(ctx, name);
+				statusBar()->showMessage(tr("Loaded ") + QString::fromUtf8(fn.c_str()), 3000);
+				rtm::Console::info("MTuner: capture ready.\n");
+			}
+			catch (const std::exception& _e)
+			{
+				rtm::Console::error("MTuner: failed to analyze capture: %s\n", _e.what());
+				statusBar()->showMessage(tr("Error analyzing capture!"), 3000);
+				QMessageBox info_dlg(QMessageBox::Critical, tr("Failed to analyze capture"),
+					tr("The capture loaded but could not be analyzed. It may be too large for the available memory.\n\nDetails: %1").arg(_e.what()),
+					QMessageBox::Ok);
+				info_dlg.setWindowIcon(this->windowIcon());
+				info_dlg.exec();
+				if (!added)
+					delete ctx;
+			}
 		}
 		else
 		{

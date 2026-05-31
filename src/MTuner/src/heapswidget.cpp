@@ -32,9 +32,16 @@ void HeapsWidget::setContext(CaptureContext* _context)
 
 	m_context = _context;
 
+	// Reset m_currentItem before clear() (clear deletes the items it points at) and block
+	// signals across the repopulate: a clear() that emits itemSelectionChanged would otherwise
+	// run selectionChanged() with a dangling m_currentItem (null-deref) or emit a spurious
+	// heapSelected.
+	m_currentItem = 0;
+	const bool blocked = m_treeWidget->blockSignals(true);
+	m_treeWidget->clear();
+
 	if (m_context)
 	{
-		m_treeWidget->clear();
 		rtm::HeapsType& heaps = m_context->m_capture->getHeaps();
 		rtm::HeapsType::iterator it = heaps.begin();
 		rtm::HeapsType::iterator end = heaps.end();
@@ -49,8 +56,8 @@ void HeapsWidget::setContext(CaptureContext* _context)
 			++it;
 		}
 	}
-	else
-		m_treeWidget->clear();
+
+	m_treeWidget->blockSignals(blocked);
 }
 
 void HeapsWidget::selectionChanged()

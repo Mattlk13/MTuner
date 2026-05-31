@@ -581,6 +581,25 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>ThreadsWidget</name>
+    <message>
+        <source>Filter:</source>
+        <translation>筛选：</translation>
+    </message>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thread ID</source>
+        <translation>线程 ID</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>名称</translation>
+    </message>
+</context>
+<context>
     <name>HeapsWidget</name>
     <message>
         <source>Form</source>
@@ -685,6 +704,42 @@ Otherwise, relative scale is used.</source>
 <context>
     <name>MTuner</name>
     <message>
+        <source>Threads</source>
+        <translation>线程</translation>
+    </message>
+    <message>
+        <source>Symbol cache not writable</source>
+        <translation>符号缓存不可写</translation>
+    </message>
+    <message>
+        <source>Downloaded debug symbols cannot be saved to:
+
+%1
+
+Without a writable symbol cache, symbols are downloaded again every time a capture is opened, which is slow. Choose a folder for the local symbol store now?</source>
+        <translation>无法将下载的调试符号保存到：
+
+%1
+
+如果没有可写的符号缓存，每次打开捕获时都会重新下载符号，速度很慢。现在选择本地符号存储的文件夹吗？</translation>
+    </message>
+    <message>
+        <source>Symbol cache</source>
+        <translation>符号缓存</translation>
+    </message>
+    <message>
+        <source>Debug symbols downloaded from the symbol server will be cached in:
+
+%1
+
+They are reused on later sessions, so each symbol is downloaded only once. You can choose a different folder in the symbol store settings.</source>
+        <translation>从符号服务器下载的调试符号将缓存到：
+
+%1
+
+它们会在以后的会话中重复使用，因此每个符号只需下载一次。您可以在符号存储设置中选择其他文件夹。</translation>
+    </message>
+    <message>
         <source>Memory timeline</source>
         <translation>内存时间线</translation>
     </message>
@@ -784,6 +839,14 @@ Information may be missing from the profile!</source>
 </context>
 <context>
     <name>MTunerClass</name>
+    <message>
+        <source>Threads</source>
+        <translation>线程</translation>
+    </message>
+    <message>
+        <source>Toggle visibility of threads dock</source>
+        <translation>切换线程停靠面板的可见性</translation>
+    </message>
     <message>
         <source>MTuner</source>
         <translation type="unfinished"></translation>
@@ -1378,6 +1441,30 @@ Would you like to configure the toolchain now?</source>
 </context>
 <context>
     <name>StackTrace</name>
+    <message>
+        <source>Sort:</source>
+        <translation>排序：</translation>
+    </message>
+    <message>
+        <source>Filter:</source>
+        <translation>筛选：</translation>
+    </message>
+    <message>
+        <source>Order</source>
+        <translation>顺序</translation>
+    </message>
+    <message>
+        <source>Live bytes</source>
+        <translation>活动字节</translation>
+    </message>
+    <message>
+        <source>Allocations</source>
+        <translation>分配</translation>
+    </message>
+    <message>
+        <source>Total bytes</source>
+        <translation>总字节</translation>
+    </message>
     <message>
         <source>Form</source>
         <translation>窗体</translation>

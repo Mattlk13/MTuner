@@ -28,6 +28,16 @@ public:
 
 	void	changeEvent(QEvent* _event);
 	QString	getSymbolStoreString() const;
+
+	// Directory where downloaded debug symbols are cached. Returns the user-configured local
+	// store when set, otherwise a persistent per-user default (see defaultSymbolCacheDir()).
+	QString	getEffectiveCacheDir() const;
+
+	// Persistent per-user symbol cache (under the local app-data folder). Used so downloaded
+	// PDBs survive between sessions instead of being re-downloaded every time (a volatile
+	// %TEMP% cache gets wiped by Windows disk cleanup, making symbol resolution slow each run).
+	static QString defaultSymbolCacheDir();
+
 	QString	getLocalStore() const;
 	void	setLocalStore(const QString& _localStore);
 	QString	getPublicStore() const;

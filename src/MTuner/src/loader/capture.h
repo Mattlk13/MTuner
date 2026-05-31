@@ -22,6 +22,7 @@ typedef ankerl::unordered_dense::map<uint32_t,  uint32_t>				StackTraceHashType;
 typedef ankerl::unordered_dense::map<uintptr_t, MemoryOperationGroup>	MemoryGroupsHashType;
 typedef ankerl::unordered_dense::map<uint32_t,  MemoryMarkerEvent>		MemoryMarkersHashType;
 typedef ankerl::unordered_dense::map<uint64_t,  std::string>			HeapsType;
+typedef ankerl::unordered_dense::map<uint64_t,  std::string>			ThreadNamesType;	///< thread ID -> human-readable name (from v1.5 ThreadName records)
 // MemoryOpArray is defined in mtunerlib.h (32-bit-index-backed op list)
 
 //--------------------------------------------------------------------------
@@ -29,6 +30,19 @@ struct GraphEntry
 {
 	uint64_t				m_usage;
 	uint64_t				m_numLiveBlocks;
+};
+
+//--------------------------------------------------------------------------
+/// Per-distinct-call-stack aggregates, used to rank the traces in the stack-trace
+/// navigator. Computed lazily on first request (never at load) to avoid stalling on
+/// very large captures.
+//--------------------------------------------------------------------------
+struct StackTraceStats
+{
+	uint64_t				m_allocCount;	///< allocation operations made through this exact call stack
+	uint64_t				m_totalBytes;	///< sum of allocated sizes
+	uint64_t				m_liveBytes;	///< allocated and never freed (still live at capture end)
+	StackTraceStats() : m_allocCount(0), m_totalBytes(0), m_liveBytes(0) {}
 };
 
 //--------------------------------------------------------------------------
@@ -71,6 +85,9 @@ class Capture
 		std::vector<rdebug::ModuleInfo>	m_moduleInfos;			///< Module information data
 		StackTraceHashType				m_stackTracesHash;		///< map of stack traces, key is a stack trace hash
 		std::vector<StackTrace*>		m_stackTraces;
+		std::vector<StackTraceStats>	m_stackTraceStats;		///< Lazily built, parallel to m_stackTraces (see getStackTraceStats)
+		ankerl::unordered_dense::map<const StackTrace*, uint32_t>	m_stackTracePtrToIndex;	///< Lazily built: trace pointer -> index into m_stackTraces/m_stackTraceStats
+		bool							m_stackTraceStatsBuilt = false;
 		MemoryGroupsHashType			m_operationGroups;
 		std::vector<GraphEntry>			m_usageGraph;			///< memory usage graph data (downsampled: one entry per m_usageGraphStride ops)
 		uint32_t						m_usageGraphStride = 1;	///< ops-per-usage-graph-sample; keeps the graph at ~screen resolution instead of one 16B entry per op
@@ -81,6 +98,7 @@ class Capture
 		ankerl::unordered_dense::map<uint64_t, uint32_t>	m_heapHandleToIndex;	///< Load-time reverse map: handle -> index
 		std::vector<uint64_t>			m_threadIds;			///< Index -> thread ID (MemoryOperation::m_threadIndex resolves through this)
 		ankerl::unordered_dense::map<uint64_t, uint32_t>	m_threadIdToIndex;		///< Load-time reverse map: thread ID -> index
+		ThreadNamesType					m_threadNames;			///< thread ID -> name (optional, from v1.5 ThreadName records)
 		ankerl::unordered_dense::map<const MemoryOperation*, uint64_t>	m_loadPrevPointers;	///< Transient: realloc op -> previous pointer; only needed during linking, cleared afterwards
 		uint64_t						m_currentHeap;
 		rdebug::ModuleInfo*				m_currentModule;
@@ -159,7 +177,10 @@ class Capture
 		HeapsType&				getHeaps() { return m_Heaps; }
 		uint64_t				getHeapHandle(uint32_t _index) const { return m_heapHandles[_index]; }	///< Resolves MemoryOperation::m_allocatorIndex to its allocator handle
 		uint64_t				getThreadId(uint32_t _index) const { return m_threadIds[_index]; }	///< Resolves MemoryOperation::m_threadIndex to its thread ID
+		const std::vector<uint64_t>&	getThreadIds() const { return m_threadIds; }	///< All thread IDs seen in the capture (drives the Threads dock)
+		std::string				getThreadName(uint64_t _threadID) const { ThreadNamesType::const_iterator it = m_threadNames.find(_threadID); return (it != m_threadNames.end()) ? it->second : std::string(); }	///< Name for a thread ID, or empty if none was captured
 		StackTrace*				getStackTraceByIndex(uint32_t _index) const { return m_stackTraces[_index]; }	///< Resolves MemoryOperation::m_stackTraceIndex to its stack trace
+		const StackTraceStats&	getStackTraceStats(const StackTrace* _stackTrace);	///< Per-call-stack alloc/byte aggregates; builds the cache lazily on first call
 		MemoryOperation*		getOperationBase() const { return m_operationBase; }
 		MemoryOperation*		getChainPrev(const MemoryOperation* _op) const { return opChainPrev(_op, m_operationBase); }	///< Resolves m_chainPrev to a pointer (NULL if none)
 		MemoryOperation*		getChainNext(const MemoryOperation* _op) const { return opChainNext(_op, m_operationBase); }	///< Resolves m_chainNext to a pointer (NULL if none)
@@ -171,6 +192,7 @@ class Capture
 		void					setCurrentModule(rdebug::ModuleInfo* _module) { m_currentModule = _module; }
 
 	private:
+		void		buildStackTraceStats();	///< Single op pass that fills m_stackTraceStats + m_stackTracePtrToIndex (idempotent)
 		MemoryOperation* allocOperation();	///< Bump-allocates one zeroed op from m_operationArena (creates it on first use)
 		void*		allocStackTrace(uint32_t _size);	///< 8-byte-aligned bump alloc for a StackTrace from m_stackTraceArena (creates it on first use)
 		uint32_t	internHeap(uint64_t _handle);	///< Returns the index for an allocator handle, assigning a new one on first sight

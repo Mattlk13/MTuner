@@ -118,7 +118,7 @@ void CentralWidget::updateFilterDataIfNeeded()
 		return;
 
 	CaptureContext* ctx = view->getContext();
-	if (!ctx->m_capture->getFilteringEnabled())
+	if (!ctx || !ctx->m_capture->getFilteringEnabled())
 		return;
 
 	toggleFilteringForCurrentView(true);

@@ -9,6 +9,8 @@
 #include <MTuner/.qt/qt_ui/stacktrace_ui.h>
 
 class QSpinBox;
+class QComboBox;
+class QLineEdit;
 class StackTrace;
 struct CaptureContext;
 
@@ -46,10 +48,22 @@ private:
 	QToolButton*		m_buttonInc;
 	QSpinBox*			m_spinBox;
 	QLabel*				m_totalTraces;
+	QComboBox*			m_sortCombo;
+	QLineEdit*			m_filterEdit;
+	QLabel*				m_statLabel;
 	CaptureContext*		m_context;
 	rtm::StackTrace*	m_stackTrace;
 	QString				m_selectedFunc;
 	QString				m_settingsGroupName;
+
+	// Filter + ranking over the (possibly thousands of) traces passing through the selected node.
+	// m_view holds indices into m_currentTrace after the fuzzy filter and the chosen sort; the
+	// spinbox/arrows navigate m_view, not the raw array.
+	std::vector<uint32_t>	m_view;
+	std::vector<QString>	m_searchText;	///< per-trace joined function names; built lazily on first filter
+	bool					m_searchBuilt;
+	int						m_sortMode;		///< 0 = recorded order, 1 = live bytes, 2 = allocations, 3 = total bytes
+	uint64_t				m_nodeTotal;	///< sum of the active metric over all node traces (for the "% of node")
 
 public:
 	StackTrace(QWidget* _parent = 0, Qt::WindowFlags _flags = (Qt::WindowFlags)0);
@@ -68,6 +82,8 @@ public:
 public Q_SLOTS:
 	void currentCellChanged(int _currentRow, int _currentColumn, int _previousRow, int _previousColumn);
 	void setStackTrace(rtm::StackTrace** _stackTrace, int);
+	void sortModeChanged(int _index);
+	void filterTextChanged(const QString& _text);
 	void incPressed();
 	void decPressed();
 	void copy();
@@ -79,6 +95,8 @@ Q_SIGNALS:
 
 private:
 	void setCount(uint32_t _cnt);
+	void rebuildView();			///< re-applies the fuzzy filter + sort, producing m_view
+	void ensureSearchText();	///< lazily resolves per-trace function names for filtering
 	Ui::StackTrace ui;
 };
 

@@ -87,6 +87,7 @@
     <addaction name="action_View_Memory_Stats"/>
     <addaction name="action_View_Tag_Tree"/>
     <addaction name="action_View_Heaps_Allocators"/>
+    <addaction name="action_View_Threads"/>
     <addaction name="action_View_StackTrace"/>
     <addaction name="action_view_ModulesDock"/>
     <addaction name="action_View_Memory_Graph"/>
@@ -124,6 +125,7 @@
    <addaction name="action_View_Memory_Stats"/>
    <addaction name="action_View_Tag_Tree"/>
    <addaction name="action_View_Heaps_Allocators"/>
+   <addaction name="action_View_Threads"/>
    <addaction name="action_View_StackTrace"/>
    <addaction name="action_view_ModulesDock"/>
    <addaction name="action_View_Memory_Graph"/>
@@ -365,6 +367,24 @@
    </property>
    <property name="toolTip">
     <string>Toggle visibility of heaps / allocators dock</string>
+   </property>
+  </action>
+  <action name="action_View_Threads">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="mtuner.qrc">
+     <normaloff>:/MTuner/resources/images/List64.png</normaloff>:/MTuner/resources/images/List64.png</iconset>
+   </property>
+   <property name="text">
+    <string>Threads</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle visibility of threads dock</string>
    </property>
   </action>
   <action name="actionOpen_capture_storage">
@@ -693,6 +713,22 @@
    </hints>
   </connection>
   <connection>
+   <sender>action_View_Threads</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MTunerClass</receiver>
+   <slot>showThreads(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>actionOpen_capture_storage</sender>
    <signal>triggered()</signal>
    <receiver>MTunerClass</receiver>
@@ -747,6 +783,7 @@
   <slot>activateMTuner()</slot>
   <slot>setupGCCToolchains()</slot>
   <slot>showHeaps(bool)</slot>
+  <slot>showThreads(bool)</slot>
   <slot>openCaptureLocation()</slot>
   <slot>showModules(bool)</slot>
  </slots>

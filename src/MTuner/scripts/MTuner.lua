@@ -14,6 +14,16 @@ function projectExtraConfig_MTuner()
  		}
 	configuration { "osx" }
 		defines { "QT_STRINGVIEW_LEVEL=2" }
+
+	-- Retail: whole-program optimization / link-time code generation for the MTuner app code.
+	-- Scoped to this project only (the static-lib dependencies are built without it).
+	configuration { "vs*", "retail" }
+		buildoptions { "/GL" }		-- whole-program optimization (compiler)
+		linkoptions  { "/LTCG" }	-- link-time code generation (linker)
+	configuration { "*-gcc*", "retail" }
+		buildoptions { "-flto" }
+		linkoptions  { "-flto" }
+
 	configuration {}
 		-- _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS silences MSVC C4996 (STL4043) emitted
 		-- by concurrency::parallel_radixsort's use of stdext::unchecked_array_iterator.

@@ -142,7 +142,9 @@ std::vector<Insight> captureInsightsAnalyze(rtm::Capture* _capture)
 			if (op->m_tag == 0) untaggedBytes += size;
 			taggedBytes += size;
 
-			if (op->m_alignment != 255)
+			// m_alignment is a power-of-two exponent; 255 = "no specific alignment". Guard < 64
+			// so a corrupt/out-of-range exponent can't shift past the 64-bit width (UB).
+			if (op->m_alignment < 64)
 			{
 				const uint64_t align = (uint64_t)1u << op->m_alignment;
 				if ((align > size) && (size > 0))	// alignment larger than the payload -> wasteful padding

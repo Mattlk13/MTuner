@@ -217,7 +217,9 @@ void HotspotsWidget::leaksSortingDone(GroupMapping* _group)
 
 		rtm::MemoryOperationGroup* group = getGroupFromMapping(_group, i);
 
-		if (group->m_liveCount * group->m_groupOperations[0]->m_allocSize == 0)
+		// Test the factors separately: m_liveCount and m_allocSize are both uint32, so their
+		// product can wrap to 0 in 32-bit even when neither is 0, prematurely truncating the table.
+		if ((group->m_liveCount == 0) || (group->m_groupOperations[0]->m_allocSize == 0))
 			break;
 
 		m_leaksTable->insertRow(i);

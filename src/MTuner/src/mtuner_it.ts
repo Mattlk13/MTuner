@@ -743,6 +743,25 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>ThreadsWidget</name>
+    <message>
+        <source>Filter:</source>
+        <translation>Filtro:</translation>
+    </message>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thread ID</source>
+        <translation>ID thread</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nome</translation>
+    </message>
+</context>
+<context>
     <name>HeapsWidget</name>
     <message>
         <source>Form</source>
@@ -847,6 +866,42 @@ Otherwise, relative scale is used.</source>
 <context>
     <name>MTuner</name>
     <message>
+        <source>Threads</source>
+        <translation>Thread</translation>
+    </message>
+    <message>
+        <source>Symbol cache not writable</source>
+        <translation>Cache dei simboli non scrivibile</translation>
+    </message>
+    <message>
+        <source>Downloaded debug symbols cannot be saved to:
+
+%1
+
+Without a writable symbol cache, symbols are downloaded again every time a capture is opened, which is slow. Choose a folder for the local symbol store now?</source>
+        <translation>Non è possibile salvare i simboli di debug scaricati in:
+
+%1
+
+Senza una cache dei simboli scrivibile, i simboli vengono scaricati di nuovo a ogni apertura di una cattura, il che è lento. Scegliere ora una cartella per l'archivio simboli locale?</translation>
+    </message>
+    <message>
+        <source>Symbol cache</source>
+        <translation>Cache dei simboli</translation>
+    </message>
+    <message>
+        <source>Debug symbols downloaded from the symbol server will be cached in:
+
+%1
+
+They are reused on later sessions, so each symbol is downloaded only once. You can choose a different folder in the symbol store settings.</source>
+        <translation>I simboli di debug scaricati dal server dei simboli verranno memorizzati in:
+
+%1
+
+Vengono riutilizzati nelle sessioni successive, quindi ogni simbolo viene scaricato una sola volta. È possibile scegliere una cartella diversa nelle impostazioni dell'archivio simboli.</translation>
+    </message>
+    <message>
         <source>Memory timeline</source>
         <translation>Timeline memoria</translation>
     </message>
@@ -947,6 +1002,14 @@ Information may be missing from the profile!</source>
 </context>
 <context>
     <name>MTunerClass</name>
+    <message>
+        <source>Threads</source>
+        <translation>Thread</translation>
+    </message>
+    <message>
+        <source>Toggle visibility of threads dock</source>
+        <translation>Mostra/nascondi il pannello dei thread</translation>
+    </message>
     <message>
         <source>MTuner</source>
         <translation>MTuner</translation>
@@ -1545,6 +1608,30 @@ Vorresti configurare ora la toolchain?</translation>
 </context>
 <context>
     <name>StackTrace</name>
+    <message>
+        <source>Sort:</source>
+        <translation>Ordina:</translation>
+    </message>
+    <message>
+        <source>Filter:</source>
+        <translation>Filtro:</translation>
+    </message>
+    <message>
+        <source>Order</source>
+        <translation>Ordine</translation>
+    </message>
+    <message>
+        <source>Live bytes</source>
+        <translation>Byte attivi</translation>
+    </message>
+    <message>
+        <source>Allocations</source>
+        <translation>Allocazioni</translation>
+    </message>
+    <message>
+        <source>Total bytes</source>
+        <translation>Byte totali</translation>
+    </message>
     <message>
         <source>Form</source>
         <translation>Modulo</translation>

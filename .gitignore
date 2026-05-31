@@ -2,5 +2,6 @@
 .qt
 .DS_Store
 .3rd
+scripts/MTuner/*
 
 
