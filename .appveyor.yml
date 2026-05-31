@@ -115,7 +115,13 @@ for:
       - job_name: OSX
 
     init:
-      - export QTDIR="$HOME/Qt/6.6.1/macos/" 
+      # The macOS image no longer ships Qt 6.6.1 under $HOME/Qt, so QTDIR pointed at a missing
+      # tree (moc/uic/rcc + headers absent) and the build failed early. Install it via aqtinstall
+      # in a venv (macOS system/Homebrew Python rejects a plain `pip install`).
+      - python3 -m venv $HOME/aqtvenv
+      - $HOME/aqtvenv/bin/pip install -U pip aqtinstall
+      - $HOME/aqtvenv/bin/aqt install-qt mac desktop 6.6.1 clang_64 -O $HOME/Qt
+      - export QTDIR="$HOME/Qt/6.6.1/macos/"
       - export PATH="$HOME/Qt/6.6.1/macos/bin:$HOME/Qt/6.6.1/macos/libexec:$PATH"
       - export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$HOME/Qt/6.6.1/macos/lib/pkgconfig"
       - curl -L -R -O https://www.lua.org/ftp/lua-5.4.7.tar.gz
