@@ -30,15 +30,15 @@ environment:
      buildcfg: retail64
 
    - job_name: OSX
-     APPVEYOR_BUILD_WORKER_IMAGE: macOS-sonoma
+     APPVEYOR_BUILD_WORKER_IMAGE: macOS-Sonoma
      buildcfg: debug64
 
    - job_name: OSX
-     APPVEYOR_BUILD_WORKER_IMAGE: macOS-sonoma
+     APPVEYOR_BUILD_WORKER_IMAGE: macOS-Sonoma
      buildcfg: release64
 
    - job_name: OSX
-     APPVEYOR_BUILD_WORKER_IMAGE: macOS-sonoma
+     APPVEYOR_BUILD_WORKER_IMAGE: macOS-Sonoma
      buildcfg: retail64
 
 shallow_clone: true
