@@ -82,8 +82,14 @@ for:
       - job_name: Linux
 
     init:
-      - sudo apt install -y lua5.3 lua-filesystem
+      - sudo apt-get update
+      - sudo apt-get install -y lua5.3 lua-filesystem python3-pip libgl1-mesa-dev
       - sudo ln -sf /usr/bin/lua5.3 /usr/bin/lua
+      # The Ubuntu image no longer ships Qt 6.9.2 under $HOME/Qt, so moc/uic/rcc and the Qt
+      # headers were missing and every Qt project failed to build. Install the exact version we
+      # build against via aqtinstall (qtbase covers Core/Gui/Widgets/Network - all we use).
+      - python3 -m pip install --user -U aqtinstall
+      - python3 -m aqt install-qt linux desktop 6.9.2 linux_gcc_64 -O "$HOME/Qt"
       - export QTDIR="$HOME/Qt/6.9.2/gcc_64"
       - export PATH="$HOME/Qt/6.9.2/gcc_64/bin:$HOME/Qt/6.9.2/gcc_64/libexec:$PATH"
       - export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$HOME/Qt/6.9.2/gcc_64/lib/pkgconfig"

@@ -22,19 +22,22 @@
 static bool __uncaught_exception() { return true; }
 #include <ppl.h>
 
+#pragma warning (pop)
+
+#endif // RTM_PLATFORM_WINDOWS && RTM_COMPILER_MSVC
+
+// Projection (parallel_radixsort key) and comparator (parallelStableSort) over op indices, by
+// operation time. Used by BOTH the MSVC parallel_radixsort path and the portable
+// parallelStableSort path, so it must be defined on all platforms - not only under the MSVC
+// guard above (clang/gcc otherwise hit "unknown type name 'pSortOpsTime'").
 struct pSortOpsTime
 {
 	const rtm::MemoryOperation* m_base;
 	pSortOpsTime(const rtm::MemoryOperation* _base) : m_base(_base) {}
 
-	// projection (parallel_radixsort key) and comparator (parallelStableSort) over op indices
 	inline uint64_t operator()(uint32_t _idx) const { return m_base[_idx].m_operationTime; }
 	inline bool operator()(uint32_t _a, uint32_t _b) const { return m_base[_a].m_operationTime < m_base[_b].m_operationTime; }
 };
-
-#pragma warning (pop)
-
-#endif // RTM_PLATFORM_WINDOWS && RTM_COMPILER_MSVC
 
 namespace rtm {
 
