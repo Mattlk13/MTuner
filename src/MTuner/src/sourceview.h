@@ -10,6 +10,7 @@
 
 class ExternalEditor;
 struct CaptureContext;
+class Highlighter;
 
 class SourceView : public QPlainTextEdit
 {
@@ -23,9 +24,12 @@ class SourceView : public QPlainTextEdit
 	QAction*		m_openInEditorAction;
 	ExternalEditor*	m_editorDialog;
 	CaptureContext*	m_context;
+	Highlighter*	m_highlighter;
 
 public:
 	SourceView(QWidget* _parent = 0);
+
+	void refreshTheme();	// re-resolve syntax-highlight colors after a theme change
 
 	void changeEvent(QEvent* _event);
 	void lineNumberAreaPaintEvent(QPaintEvent* _event);

@@ -14,6 +14,8 @@
 
 That history is what makes MTuner different from a typical "live heap" profiler: leaks, peaks, fragmentation, churn and short‑lived spikes are all visible after the fact, for any point or range in your program's run.
 
+> **New in v5:** an **Insights** tab that automatically analyzes a capture and surfaces ranked, explainable recommendations — leaks, churn, repeated reallocations, peak spikes, cross‑thread frees and more — each linking straight to the relevant stack trace and timeline. Plus faster, lighter loading of large captures and several new themes. See [What's new in version 5](#whats-new-in-version-5).
+
 ![MTuner screenshot](img/mtuner_screenshot.png)
 
 ---
@@ -21,6 +23,7 @@ That history is what makes MTuner different from a typical "live heap" profiler:
 ## Table of Contents
 
 - [Features](#features)
+- [What's new in version 5](#whats-new-in-version-5)
 - [Supported platforms](#supported-platforms)
 - [How it works](#how-it-works)
 - [Getting MTuner](#getting-mtuner)
@@ -35,12 +38,29 @@ That history is what makes MTuner different from a typical "live heap" profiler:
 
 - **Full timeline of memory operations** — replay and inspect the heap at any point in time, not just at the end.
 - **Memory leak detection** — every block that is allocated but never freed is reported, with the call stack that allocated it.
+- **Automatic insights** — MTuner analyzes the whole capture and lists ranked, explainable recommendations: leaks, allocation churn, repeated buffer reallocations, short‑lived large allocations, cross‑thread frees, transient peak spikes, allocator overhead, tag coverage and more. Each finding links straight to the offending call stack and point on the timeline — no machine learning, just deterministic rules over the complete history.
 - **Rich visualizations** — memory usage timeline/histogram, call‑stack tree, tree map, and memory hotspots.
 - **Drill‑down by everything** — group and filter operations by call stack, module, allocator/heap, thread, tag and size.
 - **Tags & markers** — annotate the timeline with named scopes and events to correlate memory behavior with what your app was doing.
 - **Low‑overhead capture** — a tiny capture library records operations and writes **LZ4‑compressed** captures on a background thread to keep the profiled app responsive.
 - **Symbol resolution that just works** — PDBs via DIA and the **Microsoft public symbol server** on Windows, and `addr2line`/`nm` for GCC and PlayStation toolchains.
+- **Built for large captures** — compact (48‑byte) operation records in VM‑backed arenas plus multi‑threaded analysis keep multi‑million‑operation captures fast to load and light on memory.
+- **Themes & localization** — multiple dark and light themes (MTuner Dark, Monokai, Shanghai Night, Bright Owl, Wise Green) with fully theme‑aware graphs, tree map and histogram, plus a translatable UI.
 - **Profile almost anything** — designed for C/C++, but any language works as long as matching debug symbols are available. (DMD CodeView/DWARF symbols can be converted to PDB with [cv2pdb](https://github.com/rainers/cv2pdb).)
+
+## What's new in version 5
+
+- **Insights tab** — a new dock that scans the loaded capture and surfaces ranked, actionable findings. The analysis is rule‑based and deterministic (and runs over already‑computed aggregates, so it's instant). Categories include:
+  - **Leaks** — total leaked memory and the largest leak sites.
+  - **Growth / Peak** — steady upward memory trends, and transient peak spikes where the high‑water mark is far above the final usage.
+  - **Churn & reallocations** — call sites that allocate huge numbers of short‑lived blocks, and buffers reallocated over and over (reserve‑capacity candidates).
+  - **Lifetime** — large allocations that are freed almost immediately (scratch/stack candidates).
+  - **Threads** — blocks freed on a different thread than they were allocated on (allocator contention), and threads that dominate allocation traffic.
+  - **Allocator / tags** — bookkeeping overhead, a dominant heap, small‑allocation pressure, over‑alignment waste, and memory‑tag coverage.
+  - Selecting a finding jumps straight to its stack trace and the relevant point on the timeline.
+- **Faster, lighter loading** — memory operations are stored as compact 48‑byte records in virtual‑memory‑backed arenas, and the post‑load analysis (groups, stack‑trace/tag trees, stats) is parallelized, so large captures open quicker and use significantly less RAM.
+- **Reworked appearance** — five built‑in themes (MTuner Dark, Monokai, Shanghai Night, Bright Owl, Wise Green) with theme‑aware custom‑painted views (timeline, tree map, histogram) and syntax highlighting that stays readable on light and dark backgrounds.
+- **Hardening** — an extensive pass over the capture engine, symbol resolution and loader fixing buffer‑overflow, race and lifetime issues across the codebase.
 
 ## Supported platforms
 

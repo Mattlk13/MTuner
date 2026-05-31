@@ -29,6 +29,11 @@ public:
 	void changeEvent(QEvent* _event);
 	void setContext(CaptureContext* _context, BinLoaderView* _binView);
 
+	// Default minimumSizeHint is the layout minimum (driven by the bottom control row), which keeps
+	// the dock too wide. Report a small width so it can be narrowed; the graphics scale and the
+	// controls share/clip the available width.
+	QSize minimumSizeHint() const override;
+
 public Q_SLOTS:
 	void updateUI();
 	void displayTypeChanged(int _index);

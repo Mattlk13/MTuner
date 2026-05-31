@@ -49,7 +49,7 @@ bool handleInject(rtm::CommandLine& _cmdLine)
 
 	Len = rtm::strLen(profileExeConst);
 	char* profileExe = new char[Len + 1];
-	char* workingDir = new char[Len]; // larger than needed by file name
+	char* workingDir = new char[Len + 1]; // holds the exe path (then trimmed to its directory)
 	rtm::strlCpy(profileExe, Len + 1, profileExeConst);
 	rtm::pathCanonicalize(profileExe);
 
@@ -62,13 +62,14 @@ bool handleInject(rtm::CommandLine& _cmdLine)
 
 	if (profileWorkDir == nullptr)
 	{
-		rtm::strlCpy(workingDir, Len, profileExe);
-		size_t end = rtm::strLen(workingDir) - 1;
-		while ((workingDir[end] != '/') && (workingDir[end] != '\\')) --end;
+		rtm::strlCpy(workingDir, Len + 1, profileExe);
+		size_t wlen = rtm::strLen(workingDir);
+		size_t end = wlen ? wlen - 1 : 0;
+		while ((end > 0) && (workingDir[end] != '/') && (workingDir[end] != '\\')) --end;	// bounded: stop at 0 if no separator
 		workingDir[end+1] = '\0';
 	}
 	else
-		rtm::strlCpy(workingDir, Len, profileWorkDir);
+		rtm::strlCpy(workingDir, Len + 1, profileWorkDir);
 	rtm::pathCanonicalize(workingDir);
 
 	const char* profileCmdArgs = nullptr;
@@ -452,8 +453,10 @@ int main(int argc, const char* argv[])
 		shExecInfo.cbSize = sizeof(SHELLEXECUTEINFOW);
 
 		wchar_t diaPathW[512];
-		regArg.toWCharArray(diaPathW);
-		diaPathW[regArg.length()] = 0;
+		// toWCharArray neither bounds nor null-terminates; clamp to the buffer first so a long
+		// install path can't overflow this stack buffer.
+		const int diaPathLen = regArg.left(RTM_NUM_ELEMENTS(diaPathW) - 1).toWCharArray(diaPathW);
+		diaPathW[diaPathLen] = 0;
 
 		shExecInfo.fMask		= 0;
 		shExecInfo.hwnd			= nullptr;

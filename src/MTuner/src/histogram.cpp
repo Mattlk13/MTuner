@@ -155,7 +155,10 @@ void Histogram::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _optio
 	RTM_UNUSED(_widget);
 	CaptureContext* ctx = m_histogramWidget->getContext();
 	if (!ctx)
+	{
+		m_toolTips.clear();		// drop stale hover rects from a previous capture (context cleared)
 		return;
+	}
 
 	QRect rect = m_histogramWidget->getDrawRect();
 	int left = rect.x();
@@ -206,6 +209,12 @@ void Histogram::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _optio
 		currSize <<= 1;
 	}
 
+	// Bar outlines use a dimmed foreground so a bright theme text color (e.g. Shanghai Night's
+	// near-white lavender) doesn't make the bar borders harsh. A soft outline reads well everywhere.
+	QColor barBorder = fg;
+	barBorder.setAlpha(110);
+	_painter->setPen(QPen(barBorder, 1.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+
 	// number of histogram bars per bin, used to figure out thickness of a single bar
 	int barsPerBin = 1;
 	if (m_showPeaks)
@@ -218,13 +227,21 @@ void Histogram::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _optio
 	while (thickness % barsPerBin)
 		thickness -= 2;
 
+	if (thickness <= 0)		// panel too narrow for bars (now reachable since the dock can be made tiny)
+		return;
+
 	rtm::MemoryStats statsGlobal	= ctx->m_capture->getGlobalStats();
 	rtm::MemoryStats statsSnapshot	= ctx->m_capture->getSnapshotStats();
 
-	QColor globalCol(50, 150, 170, 138);
-	QColor globalColPeak(50+60, 150+60, 170+60, 111);
-	QColor snapshotCol(90, 120, 90, 138);
-	QColor snapshotColPeak(90+60, 120+60, 90+60, 111);
+	// Theme-coordinated bar colors: global series uses the theme accent, snapshot a hue-rotated
+	// variant so the two series stay distinct on every theme. Peak variants are lighter.
+	int ah, as, al; accent.getHsl(&ah, &as, &al); if (ah < 0) ah = 0;
+	const QColor secondary = QColor::fromHsl((ah + 150) % 360, as, al);
+
+	QColor globalCol       = accent;             globalCol.setAlpha(138);
+	QColor globalColPeak   = accent.lighter(135);    globalColPeak.setAlpha(120);
+	QColor snapshotCol     = secondary;          snapshotCol.setAlpha(138);
+	QColor snapshotColPeak = secondary.lighter(135); snapshotColPeak.setAlpha(120);
 
 	m_toolTips.clear();
 

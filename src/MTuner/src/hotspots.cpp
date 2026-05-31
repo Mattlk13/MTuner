@@ -15,9 +15,10 @@ HotspotsWidget::HotspotsWidget(QWidget* _parent, Qt::WindowFlags _flags) :
 {
 	ui.setupUi(this);
 
-	m_usageMapping		= nullptr;
-	m_peakUsageMapping	= nullptr;
-	m_leaksMapping		= nullptr;
+	m_usageMapping			= nullptr;
+	m_peakUsageMapping		= nullptr;
+	m_peakCountUsageMapping	= nullptr;	// was left uninitialized -> deref of garbage if hovered before populated
+	m_leaksMapping			= nullptr;
 
 	m_usageTable		= findChild<QTableWidget*>("tableUsage");
 	m_peakUsageTable	= findChild<QTableWidget*>("tablePeak");
@@ -71,6 +72,8 @@ static QString	s_typeName[rmem::LogMarkers::OpCount] = {
 
 static rtm::MemoryOperationGroup* getGroupFromMapping(GroupMapping* _group, int _index)
 {
+	if (!_group)			// table not populated yet
+		return nullptr;
 	const size_t count = _group->m_sortedIdx.size();
 	if ((_index < 0) || ((size_t)_index >= count))
 		return nullptr;

@@ -51,5 +51,7 @@
     <file>../resources/images/twitter.png</file>
 	<file>../resources/images/link64_active.png</file>
 	<file>../resources/images/link64_inactive.png</file>
+    <file>../resources/images/rudji_games_logo.png</file>
+    <file>../resources/images/rudji_games_logo_black.png</file>
   </qresource>
 </RCC>

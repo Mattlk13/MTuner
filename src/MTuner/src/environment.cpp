@@ -28,8 +28,10 @@ void Environment::setEnvironment(QStringList _env)
 	Q_FOREACH(QString e, _env)
 	{
 		int eq = e.indexOf("=");
-		QString variable	= e.left(eq);
-		QString value		= e.right(e.size() - eq - 1);
+		// No '=' -> treat the whole entry as the variable name with an empty value (avoids both
+		// columns getting the full string).
+		QString variable	= (eq < 0) ? e : e.left(eq);
+		QString value		= (eq < 0) ? QString() : e.right(e.size() - eq - 1);
 
 		ui.tableWidget->setItem(row, 0, new QTableWidgetItem(variable));
 		ui.tableWidget->setItem(row, 1, new QTableWidgetItem(value));
@@ -44,8 +46,10 @@ QStringList Environment::getEnvironment()
 	int numRows = ui.tableWidget->rowCount();
 	for (int i=0; i<numRows; ++i)
 	{
-		QString key = ui.tableWidget->item(i, 0)->text();
-		QString val = ui.tableWidget->item(i, 1)->text();
+		QTableWidgetItem* keyItem = ui.tableWidget->item(i, 0);
+		QTableWidgetItem* valItem = ui.tableWidget->item(i, 1);
+		QString key = keyItem ? keyItem->text() : QString();
+		QString val = valItem ? valItem->text() : QString();
 		ret << key + QString("=") + val;
 	}
 
@@ -76,8 +80,10 @@ void Environment::editVar()
 	if (currentRow == -1)
 		return;
 
-	QString key = ui.tableWidget->item(currentRow, 0)->text();
-	QString val = ui.tableWidget->item(currentRow, 1)->text();
+	QTableWidgetItem* keyItem = ui.tableWidget->item(currentRow, 0);
+	QTableWidgetItem* valItem = ui.tableWidget->item(currentRow, 1);
+	QString key = keyItem ? keyItem->text() : QString();
+	QString val = valItem ? valItem->text() : QString();
 
 	EnvVar varEdit;
 	varEdit.set(key, val);

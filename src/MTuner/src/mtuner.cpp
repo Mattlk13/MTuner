@@ -23,6 +23,7 @@
 #include <MTuner/src/stats.h>
 #include <MTuner/src/symbolstore.h>
 #include <MTuner/src/tagtreewidget.h>
+#include <MTuner/src/insightswidget.h>
 #include <MTuner/src/version.h>
 #include <MTuner/src/welcome.h>
 
@@ -578,7 +579,7 @@ void MTuner::applyAppTheme(int _style)
 	DockWidget* docks[] =
 	{
 		m_graphDock, m_histogramDock, m_statsDock, m_tagTreeDock,
-		m_stackAndSourceDock, m_heapsDock, m_modulesDock
+		m_stackAndSourceDock, m_heapsDock, m_modulesDock, m_insightsDock
 	};
 
 	static const char* ss = "background-color: RQT_ACTIVE_BACKGROUND_COLOR;";
@@ -612,6 +613,12 @@ void MTuner::applyAppTheme(int _style)
 	const QList<QAbstractItemView*> itemViews = findChildren<QAbstractItemView*>();
 	for (int i=0; i<itemViews.size(); ++i)
 		itemViews[i]->viewport()->update();
+
+	// Syntax highlighters bake keyword colors at build time; re-resolve them so keywords keep
+	// contrast across light/dark themes (and for the initial saved-theme apply at startup).
+	const QList<SourceView*> sourceViews = findChildren<SourceView*>();
+	for (SourceView* sv : sourceViews)
+		sv->refreshTheme();
 }
 
 void MTuner::themeSelected(QAction* _action)
@@ -635,6 +642,7 @@ void MTuner::setupDockWindows()
 	m_stackAndSourceDock	= new DockWidget(tr("Stack trace"), this);
 	m_heapsDock				= new DockWidget(tr("Heaps / Allocators"),this);
 	m_modulesDock			= new DockWidget(tr("Modules"),this);
+	m_insightsDock			= new DockWidget(tr("Insights"),this);
 
 	m_graphDock->setObjectName("GraphDock");
 	m_histogramDock->setObjectName("HistogramDock");
@@ -643,6 +651,7 @@ void MTuner::setupDockWindows()
 	m_stackAndSourceDock->setObjectName("StackTraceDock");
 	m_heapsDock->setObjectName("HeapsDock");
 	m_modulesDock->setObjectName("ModulesDock");
+	m_insightsDock->setObjectName("InsightsDock");
 
 	addDockWidget(Qt::BottomDockWidgetArea, m_graphDock);
 	addDockWidget(Qt::BottomDockWidgetArea, m_histogramDock);
@@ -651,6 +660,8 @@ void MTuner::setupDockWindows()
 	addDockWidget(Qt::LeftDockWidgetArea, m_heapsDock);
 	addDockWidget(Qt::RightDockWidgetArea, m_stackAndSourceDock);
 	addDockWidget(Qt::RightDockWidgetArea, m_modulesDock);
+	addDockWidget(Qt::LeftDockWidgetArea, m_insightsDock);
+	tabifyDockWidget(m_statsDock, m_insightsDock);	// share space with Statistics as a tab
 
 	m_graphDock->setVisible(true);
 	m_statsDock->setVisible(true);
@@ -659,6 +670,7 @@ void MTuner::setupDockWindows()
 	m_stackAndSourceDock->setVisible(true);
 	m_heapsDock->setVisible(true);
 	m_modulesDock->setVisible(true);
+	m_insightsDock->setVisible(true);
 
 	setDockWindowIcon(m_graphDock,			":/MTuner/resources/images/Graph64.png");
 	setDockWindowIcon(m_statsDock,			":/MTuner/resources/images/table.png");
@@ -668,6 +680,7 @@ void MTuner::setupDockWindows()
 	setDockWindowIcon(m_heapsDock,			":/MTuner/resources/images/Heaps.png");
 	setDockWindowIcon(m_modulesDock,		":/MTuner/resources/images/modules64.png");
 	setDockWindowIcon(m_statsDock,			":/MTuner/resources/images/table.png");
+	setDockWindowIcon(m_insightsDock,		":/MTuner/resources/images/Documentation.png");
 
 	/// histogram dock
 	m_histogramWidget = new HistogramWidget();
@@ -701,7 +714,16 @@ void MTuner::setupDockWindows()
 	m_stackAndSource = new StackAndSource(m_externalEditor);
 	m_stackAndSourceDock->setWidget(m_stackAndSource);
 
+	/// insights dock
+	m_insights = new InsightsWidget();
+	m_insightsDock->setWidget(m_insights);
+
 	connect(m_centralWidget, SIGNAL(setStackTrace(rtm::StackTrace**,int)), m_stackAndSource, SLOT(setStackTrace(rtm::StackTrace**,int)));
+
+	// Insights deep-link into the existing views: selecting a finding shows its stack trace and
+	// highlights the relevant point on the memory timeline.
+	connect(m_insights, SIGNAL(setStackTrace(rtm::StackTrace**,int)), m_stackAndSource, SLOT(setStackTrace(rtm::StackTrace**,int)));
+	connect(m_insights, SIGNAL(highlightTime(uint64_t)), m_graph, SLOT(highlightTime(uint64_t)));
 
 	connect(m_heapsWidget,SIGNAL(heapSelected(uint64_t)), this, SLOT(heapSelected(uint64_t)));
 	connect(m_modulesWidget,SIGNAL(moduleSelected(void*)), this, SLOT(moduleSelected(void*)));
@@ -732,6 +754,7 @@ void MTuner::setWidgetSources(CaptureContext* _context)
 	m_modulesWidget->setContext(ctx);
 	m_stackAndSource->setContext(ctx);
 	m_modulesWidget->setContext(ctx);
+	m_insights->setContext(ctx);
 
 	if (binView)
 	{
@@ -827,6 +850,8 @@ void MTuner::captureSetProcessID(uint64_t _pid)
 bool isProcessRunning(uint64_t _pid)
 {
 	HANDLE process = OpenProcess(SYNCHRONIZE, FALSE, (DWORD)_pid);
+	if (!process)
+		return false;	// can't open (exited or insufficient rights) -> treat as not running; avoids CloseHandle(NULL)
 	DWORD ret = WaitForSingleObject(process, 0);
 	CloseHandle(process);
 	return ret == WAIT_TIMEOUT;

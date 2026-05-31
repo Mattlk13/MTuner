@@ -78,7 +78,7 @@ class Capture
 		MemoryTagTree					m_tagTree;				///< Global tag tree
 		HeapsType						m_Heaps;
 		std::vector<uint64_t>			m_heapHandles;			///< Index -> allocator handle (MemoryOperation::m_allocatorIndex resolves through this)
-		ankerl::unordered_dense::map<uint64_t, uint16_t>	m_heapHandleToIndex;	///< Load-time reverse map: handle -> index
+		ankerl::unordered_dense::map<uint64_t, uint32_t>	m_heapHandleToIndex;	///< Load-time reverse map: handle -> index
 		std::vector<uint64_t>			m_threadIds;			///< Index -> thread ID (MemoryOperation::m_threadIndex resolves through this)
 		ankerl::unordered_dense::map<uint64_t, uint32_t>	m_threadIdToIndex;		///< Load-time reverse map: thread ID -> index
 		ankerl::unordered_dense::map<const MemoryOperation*, uint64_t>	m_loadPrevPointers;	///< Transient: realloc op -> previous pointer; only needed during linking, cleared afterwards
@@ -152,11 +152,12 @@ class Capture
 		const MemoryOpArray& getMemoryOps() const { return m_operations; }
 		const MemoryOpArray& getMemoryOpsInvalid() const { return m_operationsInvalid; }
 		const MemoryOpArray& getMemoryOpsFiltered() const { return m_filter.m_operations; }
+		const MemoryOpArray& getMemoryLeaks() const { return m_memoryLeaks; }	///< allocations with no matching free
 		const MemoryGroupsHashType&	getMemoryGroups() const { return m_operationGroups; }
 		const MemoryGroupsHashType&	getMemoryGroupsFiltered() const { return m_filter.m_operationGroups; }
 		rmem::ToolChain::Enum	getToolchain() { return m_toolchain; }
 		HeapsType&				getHeaps() { return m_Heaps; }
-		uint64_t				getHeapHandle(uint16_t _index) const { return m_heapHandles[_index]; }	///< Resolves MemoryOperation::m_allocatorIndex to its allocator handle
+		uint64_t				getHeapHandle(uint32_t _index) const { return m_heapHandles[_index]; }	///< Resolves MemoryOperation::m_allocatorIndex to its allocator handle
 		uint64_t				getThreadId(uint32_t _index) const { return m_threadIds[_index]; }	///< Resolves MemoryOperation::m_threadIndex to its thread ID
 		StackTrace*				getStackTraceByIndex(uint32_t _index) const { return m_stackTraces[_index]; }	///< Resolves MemoryOperation::m_stackTraceIndex to its stack trace
 		MemoryOperation*		getOperationBase() const { return m_operationBase; }
@@ -172,7 +173,7 @@ class Capture
 	private:
 		MemoryOperation* allocOperation();	///< Bump-allocates one zeroed op from m_operationArena (creates it on first use)
 		void*		allocStackTrace(uint32_t _size);	///< 8-byte-aligned bump alloc for a StackTrace from m_stackTraceArena (creates it on first use)
-		uint16_t	internHeap(uint64_t _handle);	///< Returns the index for an allocator handle, assigning a new one on first sight
+		uint32_t	internHeap(uint64_t _handle);	///< Returns the index for an allocator handle, assigning a new one on first sight
 		uint32_t	internThread(uint64_t _threadID);	///< Returns the index for a thread ID, assigning a new one on first sight
 		bool		loadModuleInfo(BinLoader& _loader, uint64_t inFileSize);
 		bool		setLinksAndRemoveInvalid(uint64_t inMinMarkerTime);

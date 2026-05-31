@@ -19,6 +19,7 @@ SourceView::SourceView(QWidget* _parent) :
 	m_openInEditorAction	= nullptr;
 	m_editorDialog			= nullptr;
 	m_context				= nullptr;
+	m_highlighter			= nullptr;
 
 	connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth(int)));
 	connect(this, SIGNAL(updateRequest(QRect,int)), this, SLOT(updateLineNumberArea(QRect,int)));
@@ -38,9 +39,16 @@ SourceView::SourceView(QWidget* _parent) :
 	setCenterOnScroll(true);
 	setTabWidth(4);
 
-	new Highlighter(document());
+	m_highlighter = new Highlighter(document());
 
 	createCustomContextMenu();
+}
+
+void SourceView::refreshTheme()
+{
+	if (m_highlighter)
+		m_highlighter->applyTheme();	// re-resolve keyword colors for the new theme (light vs dark)
+	highlightCurrentLine();				// re-resolve the current-line highlight color for the new theme
 }
 
 void SourceView::changeEvent(QEvent* _event)
@@ -197,7 +205,7 @@ void SourceView::highlightCurrentLine()
 {
 	QList<QTextEdit::ExtraSelection> extraSelections;
 
-	QColor lineColor = QColor(121,121,124);
+	QColor lineColor = rqt::appThemeColor("RQT_SELECTED_BACKGROUND_COLOR", QColor(121,121,124));
 
 	QTextEdit::ExtraSelection selection;
 	selection.format.setBackground(lineColor);
@@ -249,6 +257,9 @@ void SourceView::setTabWidthTo8()
 
 void SourceView::openInEditor()
 {
+	if (!m_editorDialog)
+		return;
+
 	QString argsTemplate = m_editorDialog->getEditorArgs();
 
 	QTextCursor cursor = textCursor();
@@ -266,11 +277,8 @@ void SourceView::openInEditor()
 		args << tok;
 	}
 
-	QProcess* launchEditor = new QProcess(this);
-	launchEditor->setProgram(m_editorDialog->getEditorPath());
-	launchEditor->setArguments(args);
-
-	if (!launchEditor->startDetached())
+	// Static startDetached: no heap QProcess to leak (one accrued per invocation previously).
+	if (!QProcess::startDetached(m_editorDialog->getEditorPath(), args))
 	{
 		int b = QMessageBox::question(this, tr("Failed to start editor!"), tr("Setup external editor now?"), (QMessageBox::StandardButtons)(QMessageBox::Yes | QMessageBox::No), QMessageBox::No);
 		if (b == QMessageBox::StandardButton::Yes)
@@ -279,5 +287,4 @@ void SourceView::openInEditor()
 			openInEditor();
 		}
 	}
-	launchEditor->close();
 }

@@ -175,10 +175,22 @@ void GraphCurve::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _opti
 		xcoord += 1;
 	}
 
+	// Theme-coordinated series colors: usage curve uses the theme accent, the live-blocks curve a
+	// hue-rotated variant so the two series stay distinct on every theme.
+	const QColor usageCol = rqt::appThemeColor("RQT_HOVER_BACKGROUND_COLOR", QColor(50, 150, 170));
+	int uh, us, ul; usageCol.getHsl(&uh, &us, &ul); if (uh < 0) uh = 0;
+	const QColor liveCol = QColor::fromHsl((uh + 150) % 360, us, ul);
+
+	QColor liveLine  = liveCol;  liveLine.setAlpha(110);
+	QColor liveFill0 = liveCol;  liveFill0.setAlpha(0);
+	QColor liveFill1 = liveCol;  liveFill1.setAlpha(23);
+	QColor usageFill0 = usageCol; usageFill0.setAlpha(33);
+	QColor usageFill1 = usageCol; usageFill1.setAlpha(0);
+
 	_painter->setBrush(Qt::NoBrush);
-	_painter->setPen(QPen(QColor(131, 207, 183, 90), 2.0, Qt::SolidLine));
+	_painter->setPen(QPen(liveLine, 2.0, Qt::SolidLine));
 	_painter->drawPath(pathLiveCurve);
-	_painter->setPen(QPen(QColor(50, 150, 170), 2.0, Qt::SolidLine));
+	_painter->setPen(QPen(usageCol, 2.0, Qt::SolidLine));
 	_painter->drawPath(pathUsageCurve);
 
 	// close 'em
@@ -188,14 +200,14 @@ void GraphCurve::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _opti
 	pathLiveCurve.lineTo(left, bottom);
 
 	QLinearGradient gradLive(QPoint(left, top), QPoint(left, bottom));
-	gradLive.setColorAt(0, QColor(131, 207, 183, 0));
-	gradLive.setColorAt(1, QColor(131, 207, 183, 23));
+	gradLive.setColorAt(0, liveFill0);
+	gradLive.setColorAt(1, liveFill1);
 	_painter->setPen(Qt::NoPen);
 	_painter->fillPath(pathLiveCurve, gradLive);
 
 	QLinearGradient gradUsage(QPoint(left, top), QPoint(left, bottom));
-	gradUsage.setColorAt(0, QColor(50, 150, 170, 33));
-	gradUsage.setColorAt(1, QColor(50, 150, 170, 0));
+	gradUsage.setColorAt(0, usageFill0);
+	gradUsage.setColorAt(1, usageFill1);
 	_painter->setPen(Qt::NoPen);
 	_painter->fillPath(pathUsageCurve, gradUsage);
 }

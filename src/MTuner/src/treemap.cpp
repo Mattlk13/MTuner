@@ -19,7 +19,7 @@ TreeMapWidget::TreeMapWidget(QWidget* _parent, Qt::WindowFlags _flags) :
 
 	m_scene = new QGraphicsScene(this);
     m_scene->setItemIndexMethod(QGraphicsScene::NoIndex);
-	m_scene->setBackgroundBrush(QColor(33, 80, 90, 235));
+	m_scene->setBackgroundBrush(treeMapCellColor());
 
     m_graphicsView->setScene(m_scene);
     m_graphicsView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);

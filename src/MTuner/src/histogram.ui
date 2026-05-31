@@ -28,7 +28,7 @@
     <number>0</number>
    </property>
    <property name="sizeConstraint">
-    <enum>QLayout::SetMinimumSize</enum>
+    <enum>QLayout::SetDefaultConstraint</enum>
    </property>
    <property name="margin" stdset="0">
     <number>0</number>

@@ -168,6 +168,8 @@ bool ProjectsManager::run(const QString& _executable, const QString& _cmd, const
 
 	if (_shouldLoad)
 	{
+		if (m_watcher)				// drop a previous watcher (repeated capture) instead of orphaning it
+			m_watcher->deleteLater();
 		m_watcher = new QFileSystemWatcher(this);
 		connect(m_watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(dirChanged(const QString&)));
 

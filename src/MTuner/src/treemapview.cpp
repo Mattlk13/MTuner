@@ -7,9 +7,36 @@
 #include <MTuner/src/treemapview.h>
 #include <MTuner/src/treemap.h>
 #include <MTuner/src/capturecontext.h>
+#include <rqt/inc/rqt.h>
 
 static QFont s_sizeFont(QFont("Arial", 7));
 static QFont s_toolTipFont(QFont("Arial", 8));
+
+// The classic teal was tuned for (and looks best on) the dark "MTuner Dark" / "Shanghai Night"
+// themes, so keep it there; every other theme follows its render background.
+static inline bool treeMapUsesClassicTeal()
+{
+	const rqt::AppStyle::Enum style = rqt::appGetStyle();
+	return (style == rqt::AppStyle::RTM) || (style == rqt::AppStyle::Shanghai);
+}
+
+QColor treeMapCellColor()
+{
+	if (treeMapUsesClassicTeal())
+		return QColor(33, 80, 90);
+	if (rqt::appGetStyle() == rqt::AppStyle::Monokai)
+		// Monokai's render background is near-black, which makes the tiles read as too dark; lift it.
+		return rqt::appThemeColor("RQT_RENDER_BACKGROUND_COLOR", QColor(30, 31, 27)).lighter(190);
+	return rqt::appThemeColor("RQT_RENDER_BACKGROUND_COLOR", QColor(33, 80, 90));
+}
+
+// Linear blend of two colors: _t=0 -> _a, _t=1 -> _b.
+static inline QColor blendColor(const QColor& _a, const QColor& _b, float _t)
+{
+	return QColor((int)(_a.red()   + (_b.red()   - _a.red())   * _t),
+				  (int)(_a.green() + (_b.green() - _a.green()) * _t),
+				  (int)(_a.blue()  + (_b.blue()  - _a.blue())  * _t));
+}
 
 QString QStringColor(const QString& _string, const char* _color, bool _addColon = true);
 
@@ -173,11 +200,15 @@ TreeMapView::TreeMapView(QWidget* _parent) :
 	m_highlightNode	= NULL;
 	m_clickedNode	= NULL;
 	m_mapType		= 0;
+	m_item			= NULL;	// set later via setItem(); guard redraw() until then (resizeEvent can fire first)
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setMouseTracking(true);
 	m_toolTipLabel = new QLabel;
 	m_toolTipLabel->setWindowFlag(Qt::ToolTip);
+	// Force a dark tooltip background regardless of theme: the tooltip's rich-text uses fixed
+	// light/saturated label colors, which are unreadable on the light themes' default light tooltip.
+	m_toolTipLabel->setStyleSheet("QLabel { background-color: rgb(30,30,30); color: rgb(230,230,230); border: 1px solid rgb(90,90,90); padding: 2px; }");
 
 	s_sizeFont.setStyleHint(QFont::Monospace);
 	s_toolTipFont.setStyleHint(QFont::Monospace);
@@ -195,7 +226,8 @@ void TreeMapView::setMapType(uint32_t _type)
 	m_tree.clear();
 	m_treeLines.clear();
 	buildTree();
-	m_item->redraw();
+	if (m_item)
+		m_item->redraw();
 	repaint();
 }
 
@@ -221,7 +253,8 @@ void TreeMapView::updateHighlight(const QPoint& _pos)
 								QStringColor(tr("Reallocs"), "ffffffff") + m_locale.toString(qulonglong(m_highlightNode->m_tree->m_opCount[rtm::StackTraceTree::Realloc])) + QString("<br>") +
 								QStringColor(tr("   Frees"), "ffffffff") + m_locale.toString(qulonglong(m_highlightNode->m_tree->m_opCount[rtm::StackTraceTree::Free])) + QString("</pre>");
 		m_toolTipLabel->setText(str);
-		m_item->redraw();
+		if (m_item)
+			m_item->redraw();
 		invalidateScene();
 		return;
 	}
@@ -252,6 +285,13 @@ void TreeMapView::buildTreeRecurse(rtm::StackTraceTree* _tree)
 void TreeMapView::buildTree()
 {
 	m_tree.clear();
+	// m_tree is rebuilt (and reallocated) below; the hover/click nodes point into it, so clear them
+	// to avoid dangling pointers that leave a phantom cell stuck highlighted/selected.
+	const bool hadSelection = (m_clickedNode != NULL);
+	m_highlightNode	= NULL;
+	m_clickedNode	= NULL;
+	if (hadSelection)
+		emit setStackTrace(NULL, 0);	// selected cell is gone (filter/map-type/reload) - clear downstream views
 	if (!(m_context && m_context->m_capture))
 		return;
 
@@ -266,7 +306,8 @@ void TreeMapView::buildTree()
 void TreeMapView::resizeEvent(QResizeEvent* _event)
 {
 	RTM_UNUSED(_event);
-	m_item->redraw();
+	if (m_item)
+		m_item->redraw();
 	invalidateScene();
 }
 
@@ -277,6 +318,7 @@ void TreeMapView::mousePressEvent(QMouseEvent* _event)
 
 void TreeMapView::mouseMoveEvent(QMouseEvent* _event)
 {
+	TreeMapNode* prev = m_highlightNode;
 	updateHighlight(_event->pos());
 
 	if (m_highlightNode)
@@ -292,28 +334,29 @@ void TreeMapView::mouseMoveEvent(QMouseEvent* _event)
 
 	QGraphicsView::mouseMoveEvent(_event);
 
-	static TreeMapNode* lastHLnode = 0;
-	if (lastHLnode != m_highlightNode)
-	{
-		lastHLnode = m_highlightNode;
+	// Per-instance hover tracking (a static would be shared across capture tabs); repaint when the
+	// hovered cell changes - including moving onto a gap, so the previous hover is cleared.
+	if (prev != m_highlightNode)
 		repaint();
-	}
 }
 
 void TreeMapView::mouseReleaseEvent(QMouseEvent* _event)
 {
 	if (_event->button() == Qt::LeftButton)
 	{
-		if (m_highlightNode)
+		if (m_highlightNode && (m_clickedNode == m_highlightNode))
 		{
+			// Clicking the already-selected cell clears the selection (toggle off).
+			m_clickedNode = NULL;
+			emit setStackTrace(NULL, 0);
+			repaint();
+		}
+		else if (m_highlightNode)
+		{
+			m_clickedNode = m_highlightNode;
+
 			rtm::StackTrace** trace = &m_highlightNode->m_tree->m_stackTraceList;
 			emit setStackTrace(trace, 1);
-
-			if (m_clickedNode != m_highlightNode)
-			{
-				m_clickedNode = m_highlightNode;
-				repaint();
-			}
 
 			const uint32_t numOps =	m_highlightNode->m_tree->m_opCount[rtm::StackTraceTree::Alloc] +
 									m_highlightNode->m_tree->m_opCount[rtm::StackTraceTree::Free]  +
@@ -322,11 +365,15 @@ void TreeMapView::mouseReleaseEvent(QMouseEvent* _event)
 				emit highlightTime(m_highlightNode->m_tree->m_minTime);
 			else
 				emit highlightRange(m_highlightNode->m_tree->m_minTime, m_highlightNode->m_tree->m_maxTime);
+
+			repaint();
 		}
 		else
 		{
+			// Clicked empty space: clear any selection (repaint so the darker cell is restored).
 			emit setStackTrace(NULL, 0);
 			m_clickedNode = NULL;
+			repaint();
 		}
 	}
 
@@ -370,7 +417,7 @@ QRectF TreeMapGraphicsItem::boundingRect() const
 	return m_treeView->mapToScene(QRect(0, 0, m_treeView->width(), m_treeView->height())).boundingRect();
 }
 
-static inline void drawBlockText(const QString& _text, QPainter* _painter, int _fontHeight, const QFontMetrics& _metrics, QRectF& _rect, bool _highlight)
+static inline void drawBlockText(const QString& _text, QPainter* _painter, int _fontHeight, const QFontMetrics& _metrics, QRectF& _rect, bool _highlight, const QColor& _textColor, const QColor& _highlightTextColor)
 {
 	if ((_rect.height() <= _fontHeight))
 		return;
@@ -379,10 +426,7 @@ static inline void drawBlockText(const QString& _text, QPainter* _painter, int _
 	if (_rect.width() - width <= 6.0f)
 		return;
 
-	if (_highlight)
-		_painter->setPen(Qt::yellow);
-	else
-		_painter->setPen(Qt::white);
+	_painter->setPen(_highlight ? _highlightTextColor : _textColor);
 
 	QRectF textRect = _rect.adjusted(3.0f,0,-3.0f,14-_rect.height());
 	_painter->setFont(s_sizeFont);
@@ -408,28 +452,73 @@ void TreeMapGraphicsItem::paint(QPainter* _painter, const QStyleOptionGraphicsIt
 	TreeMapNode* highlight = m_treeView->getHighlightNode();
 	TreeMapNode* clicked   = m_treeView->getClickedNode();
 
-	_painter->setPen(QPen(Qt::black, 1.0, Qt::SolidLine));
+	// Palette (re-read each paint; appThemeColor's cache invalidates on theme change). The classic
+	// teal is kept for MTuner Dark / Shanghai Night; other themes follow their palette.
+	const bool classic = treeMapUsesClassicTeal();
+	const QColor blockBg = treeMapCellColor();
 
-	QColor c1(33, 80, 70, 255);
-	QColor c2(33, 80, 90, 255);
-	QColor c3(33, 70, 80, 255);
+	QColor gridLine, clickedCol, textCol, textOnHi, hoverA, hoverB;
+	if (classic)
+	{
+		gridLine   = QColor(0, 0, 0);
+		// Selected was near-identical to the tile (33,80,90); use a clearly brighter blue-teal so the
+		// selection stands out, with a soft lighter-teal hover below it (the two stay distinct).
+		clickedCol = QColor(46, 125, 150);
+		textCol    = QColor(255, 255, 255);
+		textOnHi   = QColor(102, 217, 239);		// cyan highlighted-cell text (replaces the old yellow tone)
+		hoverA     = QColor(50, 112, 126);
+		hoverB     = QColor(40, 95, 107);
+	}
+	else
+	{
+		gridLine   = rqt::appThemeColor("RQT_BORDER_COLOR",              QColor(20, 50, 55));
+		clickedCol = rqt::appThemeColor("RQT_SELECTED_BACKGROUND_COLOR", QColor(33, 70, 80));
+		textCol    = rqt::appThemeColor("RQT_DEFAULT_TEXT_COLOR",        QColor(Qt::white));
+		textOnHi   = textCol;					// hover is subtle, so normal text stays readable
 
-	_painter->setBrush(c2);
+		const rqt::AppStyle::Enum style = rqt::appGetStyle();
+		if (style == rqt::AppStyle::Monokai)
+		{
+			const QColor accent = rqt::appThemeColor("RQT_HOVER_BACKGROUND_COLOR", QColor(176, 64, 104));
+			// Hover = the menu highlight color (the accent); slight gradient for depth.
+			hoverA     = accent;
+			hoverB     = accent.darker(112);
+			// Selected = a clearly less-pronounced (muted toward the tile) variant of the same pink,
+			// so hover and selection are distinguishable.
+			clickedCol = blendColor(accent, blockBg, 0.55f);
+			textOnHi   = rqt::appThemeColor("RQT_HOVER_TEXT_COLOR", QColor(255, 255, 255));	// readable on the accent
+		}
+		else
+		{
+			if (style == rqt::AppStyle::WiseGreen)
+				// The default selected color reads too brown; use a sage-green tint from the accent.
+				clickedCol = rqt::appThemeColor("RQT_HOVER_BACKGROUND_COLOR", QColor(95, 111, 82)).lighter(150);
+
+			// Toned-down hover: a gentle shift of the block background, not the bright accent.
+			const bool darkBg = blockBg.lightnessF() < 0.5f;
+			hoverA = darkBg ? blockBg.lighter(140) : blockBg.darker(114);
+			hoverB = darkBg ? blockBg.lighter(118) : blockBg.darker(106);
+		}
+	}
+
+	// Fill the painted region with the block background (also covers the scene background brush).
+	_painter->fillRect(rect, blockBg);
+
+	_painter->setPen(QPen(gridLine, 1.0, Qt::SolidLine));
 	_painter->drawLines(lines.data(), lines.size());
 
 	if (clicked && (clicked != highlight))
 	{
-		QRectF highlightRect = clicked->m_rect;
-		_painter->setBrush(c3);
-		_painter->drawRect(highlightRect);
+		_painter->setBrush(clickedCol);
+		_painter->drawRect(clicked->m_rect);
 	}
 
 	if (highlight)
 	{
 		QRectF highlightRect = highlight->m_rect;
 		QLinearGradient gr(highlightRect.topLeft(), highlightRect.bottomRight());
-		gr.setColorAt(0.0f, c1);
-		gr.setColorAt(1.0f, c2);
+		gr.setColorAt(0.0f, hoverA);
+		gr.setColorAt(1.0f, hoverB);
 		_painter->setBrush(gr);
 		_painter->drawRect(highlightRect);
 	}
@@ -447,6 +536,6 @@ void TreeMapGraphicsItem::paint(QPainter* _painter, const QStyleOptionGraphicsIt
 			continue;
 
 		QString text = m_locale->toString(qulonglong(info.m_size));
-		drawBlockText(text, _painter, s_fontHeight, metrics, nodeRect, &info == highlight);
+		drawBlockText(text, _painter, s_fontHeight, metrics, nodeRect, &info == highlight, textCol, textOnHi);
 	}
 }

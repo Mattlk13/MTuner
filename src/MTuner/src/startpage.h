@@ -16,8 +16,11 @@ public:
 	StartPageWidget(QWidget* _parent = 0, Qt::WindowFlags _flags = (Qt::WindowFlags)0);
 
 	void changeEvent(QEvent* _event);
+	bool eventFilter(QObject* _obj, QEvent* _event) override;	// makes the Rudji Games logo clickable
 
 private:
+	void updateLogo();		// picks the theme-appropriate logo and scales it to the title height
+
 	Ui::StartPageWidget ui;
 };
 

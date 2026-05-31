@@ -9,6 +9,10 @@
 class TreeMapGraphicsItem;
 struct CaptureContext;
 
+// Tree-map cell/background color for the active theme. The classic teal reads best on the dark
+// "MTuner Dark"/"Shanghai Night" themes; other themes follow their render background.
+QColor treeMapCellColor();
+
 struct TreeMapNode
 {
 	rtm::StackTraceTree*		m_tree;		///< Pointer to the actual stact trace tree node, used to resolve symbols

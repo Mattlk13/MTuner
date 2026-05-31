@@ -40,7 +40,10 @@ BinLoader::BinLoader(FILE* _file, bool _compressed) :
 
 BinLoader::~BinLoader()
 {
-	stop();
+	stop();		// join the producer first so it can't touch m_file after we close it
+
+	if (m_file)
+		fclose(m_file);
 
 	if (m_data)
 		delete[] m_data;
@@ -106,34 +109,54 @@ void BinLoader::producerThread()
 				if (sig == endianSwap(uint32_t(0x23234646)))
 					size = endianSwap(size);
 
-				if ((int32_t)size > srcCap)
+				// A legitimate chunk is LZ4-compressed from at most rmem's BufferSize, so its
+				// compressed size is bounded. Reject implausible sizes from a corrupt/hostile
+				// file instead of over-reading into src or allocating wildly. (unsigned compare)
+				const uint32_t kMaxCompressed = (uint32_t)rmem::MemoryHook::BufferSize * 4u;
+				if ((size == 0) || (size > kMaxCompressed))
 				{
-					delete[] src;
-					srcCap	= (int32_t)size;
-					src		= new uint8_t[srcCap];
-				}
-
-				e = fread(src, 1, size, m_file);
-				if (e != size)
 					chunk.m_error = true;
+				}
 				else
 				{
-					// A chunk is compressed from at most rmem's buffer, so the decompressed
-					// payload never exceeds BufferSize. We still grow defensively if needed.
-					int32_t  dstCap = rmem::MemoryHook::BufferSize;
-					uint8_t* dst	= new uint8_t[dstCap];
-					int32_t  avail	= LZ4_decompress_safe((const char*)src, (char*)dst, size, dstCap);
-					while (avail < 0)
+					if (size > (uint32_t)srcCap)
 					{
-						delete[] dst;
-						dstCap	*= 2;
-						dst		 = new uint8_t[dstCap];
-						avail	 = LZ4_decompress_safe((const char*)src, (char*)dst, size, dstCap);
+						delete[] src;
+						srcCap	= (int32_t)size;
+						src		= new uint8_t[srcCap];
 					}
 
-					chunk.m_data			= dst;
-					chunk.m_size			= avail;
-					chunk.m_compressedSize	= size + 2 * (uint32_t)sizeof(uint32_t);	// payload + sig + size header
+					e = fread(src, 1, size, m_file);
+					if (e != size)
+						chunk.m_error = true;
+					else
+					{
+						// Decompressed payload never exceeds BufferSize; grow defensively but with a
+						// hard cap so corrupt data (decompress always failing) can't spin/overflow.
+						const int32_t kMaxDecompressed = rmem::MemoryHook::BufferSize * 16;
+						int32_t  dstCap = rmem::MemoryHook::BufferSize;
+						uint8_t* dst	= new uint8_t[dstCap];
+						int32_t  avail	= LZ4_decompress_safe((const char*)src, (char*)dst, size, dstCap);
+						while ((avail < 0) && (dstCap < kMaxDecompressed))
+						{
+							delete[] dst;
+							dstCap	*= 2;
+							dst		 = new uint8_t[dstCap];
+							avail	 = LZ4_decompress_safe((const char*)src, (char*)dst, size, dstCap);
+						}
+
+						if (avail < 0)
+						{
+							delete[] dst;			// genuinely corrupt payload - terminate the stream
+							chunk.m_error = true;
+						}
+						else
+						{
+							chunk.m_data			= dst;
+							chunk.m_size			= avail;
+							chunk.m_compressedSize	= size + 2 * (uint32_t)sizeof(uint32_t);	// payload + sig + size header
+						}
+					}
 				}
 			}
 		}

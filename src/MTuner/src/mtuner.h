@@ -21,6 +21,7 @@ class SourceView;
 class Graph;
 class TagTreeWidget;
 class GCCSetup;
+class InsightsWidget;
 
 class DockWidget : public QDockWidget
 {
@@ -80,6 +81,7 @@ private:
 	DockWidget*			m_stackAndSourceDock;
 	DockWidget*			m_heapsDock;
 	DockWidget*			m_modulesDock;
+	DockWidget*			m_insightsDock;
 	QProgressBar*		m_loadingProgressBar;
 	QLabel*				m_statusBarRedDot;
 	CentralWidget*		m_centralWidget;
@@ -89,6 +91,7 @@ private:
 	HistogramWidget*	m_histogramWidget;
 	HeapsWidget*		m_heapsWidget;
 	ModulesWidget*		m_modulesWidget;
+	InsightsWidget*		m_insights;
 	SourceView*			m_sourceView;
 	StackAndSource*		m_stackAndSource;
 	ExternalEditor*		m_externalEditor;

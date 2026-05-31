@@ -349,10 +349,17 @@ Qt::AlignmentFlag OperationTableSource::getAlignment(uint32_t _index)
 
 uint32_t OperationTableSource::getItemIndex(void* _item)
 {
-	uint32_t index = m_context->m_capture->getOperationRow((rtm::MemoryOperation*)_item);
-	if (m_sortOrder == Qt::DescendingOrder)
-		index = m_numRows - index - 1;
-	return index;
+	const rtm::MemoryOperation* op = (const rtm::MemoryOperation*)_item;
+	uint32_t row = m_context->m_capture->getOperationRow(op);	// ascending display row in the current sort
+
+	// The row mapping is shared across views (valid/filtered/leaks); verify the op is actually at
+	// that row in THIS view. After a filter/leaks toggle it may have been filtered out, in which
+	// case the mapping holds a stale row. Report "not in view" (0xffffffff) so callers fall back:
+	// BigTable treats it as no selection (int32 -1) and FindNext* search from the top (+1 wraps to 0).
+	if ((row >= m_numRows) || (m_mapping.m_allOps->operator[](m_mapping.m_sortedIndex[row]) != op))
+		return 0xffffffff;
+
+	return (m_sortOrder == Qt::DescendingOrder) ? (m_numRows - row - 1) : row;
 }
 
 void OperationTableSource::sortColumn(uint32_t _columnIndex, Qt::SortOrder _sortOrder)
@@ -508,7 +515,22 @@ void OperationsList::setFilteringState(bool _state, bool _leaksOnly)
 {
 	m_enableFiltering = _state;
 	m_tableSource->prepareData(_leaksOnly);
+	reapplySort();					// prepareData resets to identity/Time; restore the active sort + header
 	m_operationList->resetView();
+}
+
+// prepareData() rebuilds the row mapping in identity (Time/ascending) order and clears the
+// table source's tracked sort. Re-apply the sort currently shown in the header so the displayed
+// rows and the header indicator stay in agreement (and the op->row mapping is rebuilt for it).
+void OperationsList::reapplySort()
+{
+	int col = m_operationList->getHeader()->sortIndicatorSection();
+	Qt::SortOrder order = m_operationList->getHeader()->sortIndicatorOrder();
+	if ((col < 0) || (col >= OperationColumn::Count))
+		col = OperationColumn::Time;
+
+	m_tableSource->sortColumn((uint32_t)col, order);
+	m_operationList->getHeader()->setSortIndicator(col, order);
 }
 
 bool OperationsList::getFilteringState() const
@@ -547,6 +569,11 @@ void OperationsList::saveState(QSettings& _settings)
 void OperationsList::selectionChanged(void* _item)
 {
 	m_currentItem = (rtm::MemoryOperation*)_item;
+	if (!m_currentItem || !m_context || !m_context->m_capture)
+	{
+		emit setStackTrace(NULL, 0);	// nothing selected -> clear the stack-trace view
+		return;
+	}
 	m_selectedStackTrace = m_context->m_capture->getStackTraceByIndex(m_currentItem->m_stackTraceIndex);
 	emit setStackTrace(&m_selectedStackTrace,1);
 
@@ -622,5 +649,6 @@ void OperationsList::selectNextBySize(uint64_t _size)
 void OperationsList::toggleLeaksOnly(bool _show)
 {
 	m_tableSource->prepareData(_show);
+	reapplySort();						// prepareData resets to identity/Time; restore the active sort + header
 	m_operationList->resetView();		// row count changes when filtering; refresh the view & scrollbar
 }

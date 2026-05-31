@@ -28,8 +28,27 @@ HistogramWidget::HistogramWidget(QWidget* _parent, Qt::WindowFlags _flags) :
 
 	m_chkScale = findChild<QCheckBox*>("checkBoxScale");
 	connect(m_chkScale, SIGNAL(stateChanged(int)), this, SLOT(scalePeaksChanged(int)));
-	
+
+	// Let the dock/window be made much narrower: the combos otherwise pin a wide minimum (their
+	// longest item). Allow them to shrink (the histogram graphics already scale to the view size).
+	for (QComboBox* cb : { m_comboType, m_comboHist })
+	{
+		cb->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLengthWithIcon);
+		cb->setMinimumContentsLength(4);
+		cb->setMinimumWidth(0);
+	}
+	m_histogramView->setMinimumWidth(0);	// graphics scale via getDrawRect(); no fixed floor needed
+
 	setContext(NULL,NULL);
+}
+
+QSize HistogramWidget::minimumSizeHint() const
+{
+	// Keep the layout's minimum height, but allow the width to go well below the control-row width
+	// so the dock/window can be resized narrow (graphics scale via HistogramView::getDrawRect()).
+	QSize s = QWidget::minimumSizeHint();
+	s.setWidth(48);
+	return s;
 }
 
 void HistogramWidget::changeEvent(QEvent* _event)

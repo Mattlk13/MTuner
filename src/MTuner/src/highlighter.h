@@ -13,6 +13,10 @@ class Highlighter : public QSyntaxHighlighter
 public:
     Highlighter(QTextDocument* _parent = 0);
 
+    // (Re)builds the highlighting rules using the active theme's colors and re-highlights. Call when
+    // the application theme changes so keyword colors keep good contrast (light vs dark themes).
+    void applyTheme();
+
 protected:
     void highlightBlock(const QString& _text);
 

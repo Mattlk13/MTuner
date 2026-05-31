@@ -54,7 +54,7 @@ struct MemoryOperation
 	uint32_t			m_threadIndex;			//< Index into Capture::m_threadIds (thread ID table)
 	uint32_t			m_allocSize;
 	uint32_t			m_overhead;
-	uint16_t			m_allocatorIndex;		//< Index into Capture::m_heapHandles (allocator handle table)
+	uint32_t			m_allocatorIndex;		//< Index into Capture::m_heapHandles (allocator handle table)
 	uint16_t			m_tag;
 	uint8_t				m_operationType			: 5;	//< rmem::LogMarkers Op* value (max 5, fits 5 bits)
 	uint8_t				m_isValid				: 1;

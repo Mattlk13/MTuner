@@ -55,6 +55,8 @@ public Q_SLOTS:
 	void toggleLeaksOnly(bool);
 
 private:
+	void reapplySort();		// re-applies the header's sort after prepareData() rebuilds in identity order
+
 	Ui::OperationsListWidget ui;
 };
 

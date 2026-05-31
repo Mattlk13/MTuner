@@ -323,13 +323,13 @@ void* Capture::allocStackTrace(uint32_t _size)
 /// time a handle is seen. Allocators are few, so the index fits in 16 bits
 /// and lets MemoryOperation store m_allocatorIndex instead of a 64-bit handle.
 //--------------------------------------------------------------------------
-uint16_t Capture::internHeap(uint64_t _handle)
+uint32_t Capture::internHeap(uint64_t _handle)
 {
-	ankerl::unordered_dense::map<uint64_t, uint16_t>::iterator it = m_heapHandleToIndex.find(_handle);
+	ankerl::unordered_dense::map<uint64_t, uint32_t>::iterator it = m_heapHandleToIndex.find(_handle);
 	if (it != m_heapHandleToIndex.end())
 		return it->second;
 
-	const uint16_t index = (uint16_t)m_heapHandles.size();
+	const uint32_t index = (uint32_t)m_heapHandles.size();
 	m_heapHandles.push_back(_handle);
 	m_heapHandleToIndex[_handle] = index;
 	return index;
@@ -391,6 +391,7 @@ void Capture::clearData()
 	rgArenaDestroy(&m_stackTraceArena);	// recreate fresh per load -> zero-filled pages for StackTrace::init
 	m_operations.clear();
 	m_operationsInvalid.clear();
+	m_memoryLeaks.clear();
 	m_statsGlobal.reset();
 	m_statsSnapshot.reset();
 
@@ -516,7 +517,10 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 
 	uint32_t compressSignature;
 	if (!fread(&compressSignature, 1, sizeof(uint32_t), f))
+	{
+		fclose(f);		// not yet handed to a BinLoader, close it ourselves
 		return Capture::LoadFail;
+	}
 
 #if RTM_PLATFORM_WINDOWS
 	_fseeki64(f, 0, SEEK_SET);
@@ -1164,8 +1168,7 @@ Capture::LoadResult Capture::loadBin(const char* _path)
 		}
 	}
 
-	loader.stop();	// join the background producer before closing the file it reads from
-	fclose(f);
+	loader.stop();	// join the background producer; the BinLoader destructor closes the file it owns
 
 	if (loadSuccess == false)
 	{
@@ -1426,6 +1429,9 @@ bool Capture::loadModuleInfo(BinLoader& _loader, uint64_t _fileSize)
 		else
 			bytesRead += ReadString<1024>(exePathA, _loader, m_swapEndian, 0x23);
 
+		if (bytesRead == 0)			// EOF / read failure on a truncated capture - stop, don't spin forever
+			break;
+
 		if (bytesRead == sizeof(uint32_t))
 			break;
 
@@ -1437,8 +1443,13 @@ bool Capture::loadModuleInfo(BinLoader& _loader, uint64_t _fileSize)
 		else
 			executablePath = QString::fromUtf8((const char*)exePathA).toUtf8();
 
-		char pathBuffer[2048];
+		// exePath holds up to 1023 UTF-16 units; UTF-8 expansion is up to ~3 bytes/unit, so size
+		// the buffer for the worst case and still clamp defensively (a corrupt/crafted capture can
+		// otherwise overflow this stack buffer).
+		char pathBuffer[4096];
 		size_t sz = executablePath.size();
+		if (sz > sizeof(pathBuffer) - 1)
+			sz = sizeof(pathBuffer) - 1;
 		memcpy(pathBuffer, executablePath.data(), sz);
 		pathBuffer[sz] = 0;
 		rtm::pathCanonicalize(pathBuffer);
@@ -1609,6 +1620,7 @@ bool Capture::setLinksAndRemoveInvalid(uint64_t inMinMarkerTime)
 	uint32_t numOps = (uint32_t)m_operations.size();
 	uint32_t nextProgressPoint = 0;
 	uint32_t numOpsOver100 = numOps/100;
+	if (!numOpsOver100) numOpsOver100 = 1; // prevent division by zero / progress spam for < 100 ops
 
 	for (uint32_t i=0; i<numOps; i++)
 	{

@@ -279,7 +279,8 @@ void StackTrace::hideToolTip()
 
 void StackTrace::incPressed()
 {
-	if (m_currentTraceIdx == (m_currentTraceCnt-1))
+	// >= guards the count==0 case (count-1 would wrap to UINT_MAX and let the index run past the end).
+	if ((m_currentTraceCnt == 0) || (m_currentTraceIdx >= m_currentTraceCnt - 1))
 		return;
 	++m_currentTraceIdx;
 	updateView();

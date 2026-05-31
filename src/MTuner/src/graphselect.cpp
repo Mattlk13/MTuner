@@ -47,7 +47,9 @@ void GraphSelect::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _opt
 	int top = rect.y();
 	int bottom = rect.height() + rect.y();
 
+	QColor selCol = rqt::appThemeColor("RQT_HOVER_BACKGROUND_COLOR", QColor(50, 150, 170));
+	selCol.setAlpha(138);
 	_painter->setPen(Qt::NoPen);
-	_painter->setBrush(QColor(50, 150, 170, 138));
+	_painter->setBrush(selCol);
 	_painter->drawRect(minX,top,maxX-minX,bottom-top);
 }
