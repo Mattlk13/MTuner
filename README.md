@@ -6,7 +6,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/8ops3q96bhvpoy4t?svg=true)](https://ci.appveyor.com/project/milostosic/mtuner)
 [![License](https://img.shields.io/badge/license-BSD--2%20clause-blue.svg)](https://github.com/RudjiGames/MTuner/blob/master/LICENSE)
-[![Capture targets](https://img.shields.io/badge/capture-Windows%20%7C%20PS3%2F4%2F5%20%7C%20Switch%20%7C%20Android-lightgrey.svg)](#supported-platforms)
+[![Capture targets](https://img.shields.io/badge/capture-Windows%20%7C%20PS3%2F4%2F5%20%7C%20%20%7C%20Android-lightgrey.svg)](#supported-platforms)
 
 </div>
 
@@ -43,7 +43,7 @@ That history is what makes MTuner different from a typical "live heap" profiler:
 - **Drill‑down by everything** — group and filter operations by call stack, module, allocator/heap, thread, tag and size.
 - **Tags & markers** — annotate the timeline with named scopes and events to correlate memory behavior with what your app was doing.
 - **Low‑overhead capture** — a tiny capture library records operations and writes **LZ4‑compressed** captures on a background thread to keep the profiled app responsive.
-- **Symbol resolution that just works** — PDBs via DIA and the **Microsoft public symbol server** on Windows, and `addr2line`/`nm` for GCC and PlayStation toolchains.
+- **Symbol resolution that just works** — PDBs via DIA and the **Microsoft public symbol server** on Windows, and `addr2line`/`nm` for GCC and Clang toolchains.
 - **Built for large captures** — compact (48‑byte) operation records in VM‑backed arenas plus multi‑threaded analysis keep multi‑million‑operation captures fast to load and light on memory.
 - **Themes & localization** — multiple dark and light themes (MTuner Dark, Monokai, Shanghai Night, Bright Owl, Wise Green) with fully theme‑aware graphs, tree map and histogram, plus a translatable UI.
 - **Profile almost anything** — designed for C/C++, but any language works as long as matching debug symbols are available. (DMD CodeView/DWARF symbols can be converted to PDB with [cv2pdb](https://github.com/rainers/cv2pdb).)
@@ -71,9 +71,7 @@ You **capture** from your application on one of the targets below, then analyze 
 | Capture target | How |
 |---|---|
 | **Windows** | inject into a process, or link the SDK |
-| **PlayStation 3 / 4 / 5** | link the SDK |
-| **Nintendo Switch** | link the SDK |
-| **Android** | link the SDK |
+| **Other** | link the SDK |
 
 > The capture library also has Linux/macOS support, but the desktop application that reads captures is Windows‑only for now.
 

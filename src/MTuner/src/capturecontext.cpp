@@ -58,9 +58,6 @@ void CaptureContext::setupResolver(rdebug::Toolchain& _tc, std::string& _executa
 			}
 			break;
 		case rdebug::Toolchain::GCC:
-		case rdebug::Toolchain::PS3SNC:
-		case rdebug::Toolchain::PS4:
-		case rdebug::Toolchain::PS5:
 		case rdebug::Toolchain::Unknown:
 			break;
 	};

@@ -167,13 +167,8 @@ int handleCommandLine(int argc, char const* argv[])
 						rtm::Console::print("Properly configured GCC toolchains:\n");
 					rtm::Console::print("   ");
 					numToolchains++;
-					if (tc.m_toolchain == rmem::ToolChain::PS3_gcc)
-						rtm::Console::print("Playstation 3 GCC");
-					else
-					{
-						rtm::Console::print(nameUTF8.data());
-						rtm::Console::print(" 64bit");
-					}
+					rtm::Console::print(nameUTF8.data());
+					rtm::Console::print(" 64bit");
 					rtm::Console::print("\n");
 				}
 
@@ -184,13 +179,8 @@ int handleCommandLine(int argc, char const* argv[])
 						rtm::Console::print("Properly configured GCC toolchains:\n");
 					rtm::Console::print("   ");
 					numToolchains++;
-					if (tc.m_toolchain == rmem::ToolChain::PS3_gcc)
-						rtm::Console::print("Playstation 3 SNC");
-					else
-					{
-						rtm::Console::print(nameUTF8.data());
-						rtm::Console::print(" 32bit");
-					}
+					rtm::Console::print(nameUTF8.data());
+					rtm::Console::print(" 32bit");
 					rtm::Console::print("\n");
 				}
 			}

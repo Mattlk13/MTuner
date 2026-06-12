@@ -142,15 +142,6 @@ bool GCCSetup::isConfigured(rmem::ToolChain::Enum _toolchain, bool _64bit)
 
 rdebug::Toolchain GCCSetup::getToolchainInfo(rmem::ToolChain::Enum _toolchain, bool _64bit)
 {
-	// special case ProDG for PS3
-	if ((_toolchain == rmem::ToolChain::PS3_gcc) ||
-		(_toolchain == rmem::ToolChain::PS4_clang) ||
-		(_toolchain == rmem::ToolChain::PS5_clang))
-		_64bit = true;
-
-	if (_toolchain == rmem::ToolChain::PS3_snc)
-		_toolchain = rmem::ToolChain::PS3_gcc;
-
 	rdebug::Toolchain tc;
 	for (int i=0; i<m_toolchains.length(); ++i)
 	{
@@ -169,9 +160,6 @@ rdebug::Toolchain::Type getTCType(rmem::ToolChain::Enum _toolchain)
 	switch (_toolchain)
 	{
 		case rmem::ToolChain::Win_MSVC: return rdebug::Toolchain::MSVC;
-		case rmem::ToolChain::PS3_snc:	return rdebug::Toolchain::PS3SNC;
-		case rmem::ToolChain::PS4_clang:return rdebug::Toolchain::PS4;
-		case rmem::ToolChain::PS5_clang:return rdebug::Toolchain::PS5;
 		default:						return rdebug::Toolchain::GCC;
 	};
 }
@@ -193,13 +181,6 @@ bool GCCSetup::resolveToolchain(Toolchain& _toolchain, bool _64bit, rdebug::Tool
 	QString append21 = "llvm-symbolizer";
 	QString append30 = "c++filt";
 	QString append31 = "llvm-cxxfilt";
-
-	if ((_toolchain.m_toolchain == rmem::ToolChain::PS3_gcc) && (_64bit == false))
-	{
-		append10 = "ps3bin";
-		append20 = "ps3bin";
-		append30 = "ps3name";
-	}
 
 #if RTM_PLATFORM_WINDOWS
 	append10 += QString(".exe"); append11 += QString(".exe");
@@ -287,36 +268,6 @@ void GCCSetup::setupDefaultTC(QVector<Toolchain>& _toolchains)
 	minGW.m_ToolchainPrefix64		= "";
 	minGW.m_toolchain				= rmem::ToolChain::Win_gcc;
 
-	Toolchain ps3gcc;
-	ps3gcc.m_name					= "PlayStation 3";
-	ps3gcc.m_Environment32			= "SCE_PS3_ROOT";
-	ps3gcc.m_ToolchainPath32		= "/host-win32/sn/bin/";
-	ps3gcc.m_ToolchainPrefix32		= "";
-	ps3gcc.m_Environment64			= "SCE_PS3_ROOT";
-	ps3gcc.m_ToolchainPath64		= "/host-win32/ppu/bin/";
-	ps3gcc.m_ToolchainPrefix64		= "ppu-lv2-";
-	ps3gcc.m_toolchain				= rmem::ToolChain::PS3_gcc;
-
-	Toolchain ps4clang;
-	ps4clang.m_name					= "PlayStation 4";
-	ps4clang.m_Environment32		= "SCE_ORBIS_SDK_DIR";
-	ps4clang.m_ToolchainPath32		= "/host_tools/bin/";
-	ps4clang.m_ToolchainPrefix32	= "";
-	ps4clang.m_Environment64		= "SCE_ORBIS_SDK_DIR";
-	ps4clang.m_ToolchainPath64		= "/host_tools/bin/";
-	ps4clang.m_ToolchainPrefix64	= "orbis-";
-	ps4clang.m_toolchain			= rmem::ToolChain::PS4_clang;
-
-	Toolchain ps5clang;
-	ps5clang.m_name					= "PlayStation 5";
-	ps5clang.m_Environment32		= "";
-	ps5clang.m_ToolchainPath32		= "";
-	ps5clang.m_ToolchainPrefix32	= "";
-	ps5clang.m_Environment64		= "SCE_PROSPERO_SDK_DIR";
-	ps5clang.m_ToolchainPath64		= "/host_tools/bin/";
-	ps5clang.m_ToolchainPrefix64	= "prospero-";
-	ps5clang.m_toolchain			= rmem::ToolChain::PS5_clang;
-
 	Toolchain androidARM;
 	androidARM.m_name				= "Android ARM";
 	androidARM.m_Environment32		= "ANDROID_NDK_ROOT";
@@ -347,25 +298,11 @@ void GCCSetup::setupDefaultTC(QVector<Toolchain>& _toolchains)
 	androidX86.m_ToolchainPrefix64	= "aarch64-linux-android-";
 	androidX86.m_toolchain			= rmem::ToolChain::Android_x86;
 
-	Toolchain nintSwitch;
-	nintSwitch.m_name				= "Nintendo Switch";
-	nintSwitch.m_Environment32		= "";
-	nintSwitch.m_ToolchainPath32	= "";
-	nintSwitch.m_ToolchainPrefix32	= "";
-	nintSwitch.m_Environment64		= "NINTENDO_SDK_ROOT";
-	nintSwitch.m_ToolchainPath64	= "/Compilers/NX/nx/aarch64/bin/";
-	nintSwitch.m_ToolchainPrefix64	= "aarch64-nintendo-nx-elf-";
-	nintSwitch.m_toolchain			= rmem::ToolChain::Nintendo_Switch;
-
 	_toolchains.append(minGW);
-	_toolchains.append(ps3gcc);
-	_toolchains.append(ps4clang);
-	_toolchains.append(ps5clang);
 	_toolchains.append(androidARM);
 	_toolchains.append(androidMIPS);
 	_toolchains.append(androidX86);
-	_toolchains.append(nintSwitch);
-
+	
 	for (int i=0; i<9; ++i)
 	{
 		rmem::ToolChain::Enum tc = (rmem::ToolChain::Enum)(rmem::ToolChain::Custom1 + i);
@@ -391,24 +328,9 @@ void GCCSetup::toolchainSelected(int _index)
 		m_ToolchainNameEdit->hide();
 	}
 
-	if (m_toolchains[_index].m_toolchain == rmem::ToolChain::PS3_gcc)
-	{
-		m_group32->hide();
-		m_groupProDGps3->show();
-	}
-	else
-	{
-		m_group32->show();
-		m_groupProDGps3->hide();
-	}
-
-
-	if ((m_toolchains[_index].m_toolchain == rmem::ToolChain::PS4_clang) ||
-		(m_toolchains[_index].m_toolchain == rmem::ToolChain::PS5_clang))
-		m_group32->setEnabled(false);
-	else
-		m_group32->setEnabled(true);
-
+	m_group32->show();
+	m_groupProDGps3->hide();
+	m_group32->setEnabled(true);
 
 	Toolchain& tc = m_toolchains[m_currentToolchain];
 
@@ -481,11 +403,6 @@ void GCCSetup::pathBrowse64()
 {
 	QString caption = tr("Select folder with binutils");
 	Toolchain& tc = m_toolchains[m_currentToolchain];
-	if (tc.m_toolchain == rmem::ToolChain::PS4_clang)
-		caption = tr("Select folder with orbis-bin.exe");
-
-	if (tc.m_toolchain == rmem::ToolChain::PS5_clang)
-		caption = tr("Select folder with prospero-bin.exe");
 
 	QString path = QFileDialog::getExistingDirectory(this, caption);
 	if (path.length()>0)
@@ -528,8 +445,6 @@ void GCCSetup::setLabels()
 	Toolchain& tc = m_toolchains[m_currentToolchain];
 
 	rmem::ToolChain::Enum tc32 = tc.m_toolchain;
-	if (tc.m_toolchain == rmem::ToolChain::PS3_gcc)
-		tc32 = rmem::ToolChain::PS3_snc;
 
 	bool config64 = isConfigured( tc.m_toolchain, true );
 	bool config32 = isConfigured( tc32, false );
@@ -538,22 +453,6 @@ void GCCSetup::setLabels()
 	m_labelOk32->setText( config32 ? ok : notok );
 	m_labelOkProDGps3->setText( config32 ? ok : notok );
 
-	if (tc.m_toolchain == rmem::ToolChain::PS4_clang)
-	{
-		m_labelFound64->setText( config64 ? tr("orbis tools found!") : tr("orbis tools not found!") );
-		m_labelFound32->setText( config32 ? tr("orbis tools found!") : tr("orbis tools not found!") );
-	}
-	else
-	if (tc.m_toolchain == rmem::ToolChain::PS5_clang)
-	{
-		m_labelFound64->setText(config64 ? tr("prospero tools found!") : tr("prospero tools not found!"));
-		m_labelFound32->setText(config32 ? tr("prospero tools found!") : tr("prospero tools not found!"));
-	}
-	else
-	{
-		m_labelFound64->setText( config64 ? tr("toolchain found!") : tr("toolchain not found!") );
-		m_labelFound32->setText( config32 ? tr("toolchain found!") : tr("toolchain not found!") );
-	}
-
-	m_labelFoundProDGps3->setText( config32 ? tr("ps3 tools found!") : tr("ps3 tools not found!") );
+	m_labelFound64->setText( config64 ? tr("toolchain found!") : tr("toolchain not found!") );
+	m_labelFound32->setText( config32 ? tr("toolchain found!") : tr("toolchain not found!") );
 }
